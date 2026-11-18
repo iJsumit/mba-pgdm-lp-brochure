@@ -67,7 +67,7 @@ sup {
 }
 
 .b-sec {
-  padding: 76px 0;
+  padding: 55px 0;
   background: #fff;
 }
 
@@ -3965,6 +3965,7 @@ ul.jqphone-flags-list,
   margin: 0;
   padding: 0;
   overflow: hidden;
+  padding: 45px 0;
 }
 .b-one-jaipuria-wrap {
   width: min(100% - 40px, 1180px);
@@ -3975,6 +3976,7 @@ ul.jqphone-flags-list,
   display: block;
   width: 100%;
   height: auto;
+  border-radius: 12px;
 }
 @media (max-width: 768px) {
   .b-one-jaipuria-wrap {
