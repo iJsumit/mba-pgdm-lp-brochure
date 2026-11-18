@@ -4137,6 +4137,86 @@ height: auto;
 }
 
 .b-alum-dot.is-active{
+  background:#b0895a;
+  transform:scale(1.2);
+}
+/*.b-alum-nav:hover{ transform: translateY(-1px); }*/
+/* ===== FAQ ===== */
+  .faq{
+    padding: 20px 0;
+    background: #f8fbff;
+  }
+
+  .faq .container{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .faq-title{
+    margin: 0;
+    font-size: clamp(30px, 3.8vw, 56px);
+    font-weight: 900;
+    color: #000;
+    letter-spacing: -0.6px;
+    line-height: 1.05;
+  }
+
+  .faq-subtitle{
+    margin: 12px auto 30px;
+    max-width: 760px;
+    color: rgba(15,23,42,.55);
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.55;
+  }
+
+  .faq-list{
+    margin: 0 auto;
+    max-width: 860px;
+    display: grid;
+    gap: 16px;
+    text-align: left;
+  }
+
+  /* details card */
+  .faq-item{
+    background: #fff;
+    border: 1px solid rgba(15,23,42,.10);
+    border-radius: 14px;
+    box-shadow: 0 14px 28px rgba(15,23,42,.07);
+    overflow: hidden;
+  }
+
+  .faq-item summary{
+    list-style: none;
+    cursor: pointer;
+    padding: 20px 56px 20px 22px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #000;
+    position: relative;
+    outline: none;
+  }
+
+  /* remove default marker */
+  .faq-item summary::-webkit-details-marker{ display:none; }
+
+  /* chevron */
+  .faq-item summary::after{
+    content: "";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px 18px;
+    opacity: .8;
+    /* inline SVG chevron */
 
 @media (max-width: 780px) {
   .b-alumni-legacy .b-alum-grid { grid-template-columns: 1fr !important; }
