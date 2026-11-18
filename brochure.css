@@ -3041,3 +3041,71 @@ ul.jqphone-flags-list,
     margin: 12px 0 14px;
   }
 }
+
+/* ===== Persistent Download Brochure sticky CTA (desktop + mobile) ===== */
+body {
+  padding-bottom: 88px;
+}
+
+.b-sticky {
+  display: block;
+  position: fixed;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  z-index: 1100;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(43, 42, 46, .24);
+}
+
+.b-sticky a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 76px;
+  padding: 16px 24px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: clamp(17px, 1.5vw, 22px);
+  letter-spacing: .2px;
+  background: linear-gradient(90deg, #b8365f, #6b4a8c);
+  transition: filter .2s ease, box-shadow .2s ease;
+}
+
+.b-sticky a:hover,
+.b-sticky a:focus-visible {
+  filter: brightness(1.08);
+}
+
+.b-sticky a:focus-visible {
+  outline: 3px solid #e6b98d;
+  outline-offset: -5px;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding-bottom: 78px;
+  }
+
+  .b-sticky {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+  }
+
+  .b-sticky a {
+    min-height: 64px;
+    padding: 14px 18px calc(14px + env(safe-area-inset-bottom));
+    font-size: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .b-sticky a {
+    transition: none;
+  }
+}
