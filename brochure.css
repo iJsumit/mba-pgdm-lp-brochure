@@ -290,7 +290,7 @@ h3.b-tag {
 .b-hero {
   position: relative;
   color: #fff;
-  padding: 56px 0 64px;
+  padding: 47px 0 64px;
   background: #141212 url("images/v3/hero-desktop.webp") 12% 32% / cover no-repeat;
 }
 
@@ -367,7 +367,7 @@ h3.b-tag {
 
 .b-hero-title {
   margin: 0 0 26px;
-  font-size: clamp(30px, 3.6vw, 50px);
+  font-size: clamp(30px, 3.6vw, 48px);
   font-weight: 800;
   line-height: 1.1;
   text-transform: uppercase;
@@ -3030,7 +3030,7 @@ ul.jqphone-flags-list,
 /* ===== Official "Be You. Be Limitless." logo (hero) – 28 Oct ===== */
 .b-belimitless-logo {
   display: block;
-  width: min(330px, 80%);
+  width: min(320px, 80%);
   height: auto;
   margin: 16px 0 18px;
 }
