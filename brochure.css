@@ -4014,7 +4014,7 @@ ul.jqphone-flags-list,
 .b-alum p { position: relative; z-index: 2; margin: 4px 0 0; padding: 0 16px; color: #5d5665; font-size: 12px; line-height: 1.4; }
 .b-alum .b-co { margin-top: 5px; color: #8b4779; font-weight: 800; }
 .b-alum .b-batch { margin-top: 7px; color: #8b8490; font-size: 10px; letter-spacing: .7px; text-transform: uppercase; }
-.b-alum:hover img, .b-alum:focus-within img { z-index: 4; transform: translateY(-14px) scale(1.08); }
+.b-alum:hover img, .b-alum:focus-within img { z-index: 1; transform: none; }
 .b-alum-pagination { display: flex; justify-content: center; align-items: center; gap: 7px; min-height: 10px; padding-top: 8px; }
 .b-alum-pagination button { width: 5px; height: 5px; padding: 0; border: 0; border-radius: 99px; background: #d7cbd6; cursor: pointer; transition: width .25s ease, background .25s ease; }
 .b-alum-pagination button.is-active { width: 18px; background: #e6a12e; }
@@ -4036,15 +4036,3 @@ ul.jqphone-flags-list,
 }
 @media (prefers-reduced-motion: reduce) { .b-alum-track, .b-alum img { transition: none; } }
 
-
-/* Alumni portrait hover: reserve headroom so the image can rise above its card without being clipped. */
-.b-alum-viewport {
-  padding: 22px 4px 14px;
-  margin-top: -22px;
-}
-.b-alum-carousel {
-  overflow: visible;
-}
-@media (prefers-reduced-motion: reduce) {
-  .b-alum img { transform: none !important; }
-}
