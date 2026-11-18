@@ -1063,9 +1063,13 @@ ul.jqphone-flags-list,
 .b-alumni-banner {
   position: relative;
   color: #fff;
-  padding: 86px 0 70px;
+  height: 350px;
+  min-height: 350px;
+  box-sizing: border-box;
+  padding: 48px 0 32px;
   margin-bottom: 40px;
-  background: #0e4f7c var(--bg) 70% 40% / cover no-repeat;
+  overflow: hidden;
+  background: #0e4f7c var(--bg) center top / cover no-repeat;
 }
 
 .b-alumni-banner::before {
