@@ -126,7 +126,7 @@
     var pagination = root.querySelector('.b-alum-pagination');
     if (!viewport || !track || !pagination) return;
 
-    var originalCards = Array.from(track.querySelectorAll(':scope > .b-alum')).map(function (card) {
+    var originalCards = Array.from(track.querySelectorAll('.b-alum-card')).map(function (card) {
       return card.cloneNode(true);
     });
     if (!originalCards.length) return;
