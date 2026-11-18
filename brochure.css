@@ -3807,10 +3807,10 @@ ul.jqphone-flags-list,
   align-items: center;
   justify-content: flex-start;
   padding: 20px 16px 18px;
-  border: 1px solid rgba(94, 74, 112, .12);
+  border: 1px solid rgba(94, 74, 112, .16);
   border-radius: 18px;
-  background: rgba(255,255,255,.94);
-  box-shadow: 0 10px 28px rgba(43, 34, 55, .07);
+  background: transparent;
+  box-shadow: none;
   text-align: center;
 }
 .b-global-country {
@@ -3896,4 +3896,23 @@ ul.jqphone-flags-list,
 }
 @media (prefers-reduced-motion: reduce) {
   .b-global-track { transition: none; }
+}
+
+
+/* Global exposure refinements: transparent partner tiles and native brochure heading */
+.b-global-heading {
+  display: block;
+  margin-bottom: 28px;
+}
+.b-global-heading .b-tag {
+  margin: 0;
+  max-width: 760px;
+}
+.b-global-card {
+  background: transparent;
+  box-shadow: none;
+  border-color: rgba(94, 74, 112, .18);
+}
+.b-global-card:hover {
+  border-color: rgba(142, 71, 121, .38);
 }
