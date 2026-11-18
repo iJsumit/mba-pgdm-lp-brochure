@@ -3389,3 +3389,58 @@ ul.jqphone-flags-list,
     transition: none;
   }
 }
+
+
+/* ===== Placement section: compact image and stronger LPA figures ===== */
+#placements {
+  padding: 48px 0;
+}
+
+.b-placement-split {
+  gap: 42px;
+}
+
+.b-placement-split .b-split-img--wide {
+  aspect-ratio: 2.05 / 1;
+  max-height: 285px;
+}
+
+.b-placement-split .b-bigstats {
+  margin-bottom: 20px;
+}
+
+.b-placement-split .b-bigstats strong {
+  font-size: clamp(30px, 3vw, 42px);
+}
+
+.b-placement-split .b-bigstats small {
+  font-size: .72em;
+  font-weight: 800;
+}
+
+@media (max-width: 767px) {
+  #placements {
+    padding: 44px 0;
+  }
+
+  .b-placement-split {
+    gap: 24px;
+  }
+
+  .b-placement-split .b-split-img--wide {
+    aspect-ratio: 16 / 9;
+    max-height: none;
+  }
+
+  .b-placement-split .b-bigstats {
+    margin-bottom: 18px;
+  }
+
+  .b-placement-split .b-bigstats strong {
+    font-size: clamp(28px, 7vw, 36px);
+  }
+
+  .b-placement-split .b-bigstats small {
+    font-size: .7em;
+  }
+}
