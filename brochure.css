@@ -367,7 +367,7 @@ h3.b-tag {
 
 .b-hero-title {
   margin: 0 0 26px;
-  font-size: clamp(30px, 3.6vw, 48px);
+  font-size: clamp(28px, 3.6vw, 48px);
   font-weight: 800;
   line-height: 1.1;
   text-transform: uppercase;
@@ -2755,7 +2755,7 @@ ul.jqphone-flags-list,
   }
 
   .b-hero-copy {
-    padding-top: 260px;
+    padding-top: 60px;
   }
 
   .b-logo-lockup b {
@@ -2767,7 +2767,7 @@ ul.jqphone-flags-list,
   }
 
   .b-hero-kicker {
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .b-hero-facts strong {
@@ -2775,7 +2775,7 @@ ul.jqphone-flags-list,
   }
 
   .b-hero-facts span {
-    font-size: 12.5px;
+    font-size: 21px;
   }
 
   .b-usps {
@@ -3041,7 +3041,7 @@ ul.jqphone-flags-list,
 
 @media (max-width:640px) {
   .b-belimitless-logo {
-    width: min(250px, 75%);
+    width: min(240px, 75%);
     margin: 12px 0 14px;
   }
 }
