@@ -3277,3 +3277,114 @@ ul.jqphone-flags-list,
     transition: none;
   }
 }
+
+
+/* ===== Refined recruiter category tabs ===== */
+#recruiters .b-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto 30px;
+  padding: 14px;
+  border: 1px solid rgba(107, 74, 140, .12);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fff 0%, #fbf8fb 100%);
+  box-shadow: 0 10px 28px rgba(49, 35, 55, .07);
+}
+
+#recruiters .b-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 17px;
+  border: 1px solid #e8e0e8;
+  border-radius: 999px;
+  background: #fff;
+  color: #49404d;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: .05px;
+  white-space: normal;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(43, 42, 46, .025);
+  transition: color .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+#recruiters .b-tab:hover {
+  color: #6b4a8c;
+  border-color: #c8b4d3;
+  background: #fbf7fc;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(73, 48, 88, .08);
+}
+
+#recruiters .b-tab.is-active {
+  color: #fff;
+  border-color: transparent;
+  background: linear-gradient(105deg, #b8365f 0%, #8a4779 52%, #6b4a8c 100%);
+  box-shadow: 0 6px 16px rgba(107, 74, 140, .24);
+}
+
+#recruiters .b-tab:focus-visible {
+  outline: 3px solid rgba(101, 207, 197, .75);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  #recruiters .b-tabs {
+    justify-content: flex-start;
+    gap: 9px;
+    padding: 12px;
+  }
+
+  #recruiters .b-tab {
+    min-height: 40px;
+    padding: 9px 14px;
+    font-size: 12.5px;
+  }
+}
+
+@media (max-width: 640px) {
+  #recruiters .b-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 8px;
+    margin: 0 -4px 22px;
+    padding: 10px 4px 13px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #recruiters .b-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  #recruiters .b-tab {
+    flex: 0 0 auto;
+    min-height: 39px;
+    max-width: 240px;
+    padding: 9px 14px;
+    white-space: nowrap;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #recruiters .b-tab {
+    transition: none;
+  }
+}
