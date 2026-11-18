@@ -3988,12 +3988,12 @@ ul.jqphone-flags-list,
 .b-alum-carousel { position: relative; padding: 12px 0 28px; overflow: hidden; }
 .b-alum-viewport { width: 100%; overflow: hidden; padding: 0 4px 14px; }
 .b-alum-track {
-  display: flex; align-items: stretch; gap: 22px; width: max-content;
+  display: flex; align-items: stretch; gap: 22px; width: 100%;
   will-change: transform; transition: transform .72s cubic-bezier(.22,.7,.2,1);
 }
 .b-alum {
-  position: relative; flex: 0 0 calc((min(100%, 1240px) - 66px) / 4);
-  width: calc((min(100%, 1240px) - 66px) / 4); min-width: 0; min-height: 0;
+  position: relative; flex: 0 0 calc((100% - 66px) / 4);
+  width: auto; min-width: 0; min-height: 0;
   padding: 0 0 16px; overflow: visible; border-radius: 18px;
   background: #fff; box-shadow: 0 8px 24px rgba(40,32,48,.09); text-align: left;
 }
@@ -4018,18 +4018,18 @@ ul.jqphone-flags-list,
 .b-alum-pagination button.is-active { width: 18px; background: #e6a12e; }
 @media (max-width: 1100px) {
   .b-alum-track { gap: 16px; }
-  .b-alum { flex-basis: calc((100% - 32px) / 3); width: calc((100% - 32px) / 3); }
+  .b-alum { flex-basis: calc((100% - 32px) / 3); width: auto; }
   .b-alum img { height: 205px; }
 }
 @media (max-width: 700px) {
   .b-alum-track { gap: 14px; }
-  .b-alum { flex-basis: calc((100% - 14px) / 2); width: calc((100% - 14px) / 2); }
+  .b-alum { flex-basis: calc((100% - 14px) / 2); width: auto; }
   .b-alum img { height: 190px; }
   .b-alum h4 { padding: 16px 12px 2px; font-size: 14px; }
   .b-alum p { padding: 0 12px; font-size: 11px; }
 }
 @media (max-width: 420px) {
-  .b-alum { flex-basis: 100%; width: 100%; }
+  .b-alum { flex-basis: 100%; width: auto; }
   .b-alum img { height: 220px; }
 }
 @media (prefers-reduced-motion: reduce) { .b-alum-track, .b-alum img { transition: none; } }
