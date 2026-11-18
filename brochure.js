@@ -247,22 +247,6 @@
     });
   });
 
-  // ---- Alumni cards: click zooms only the portrait image ----
-  document.querySelectorAll('[data-alum-carousel] .b-alum-track').forEach(function (track) {
-    function togglePortrait(card) {
-      if (card && card.classList.contains('b-alum-card')) card.classList.toggle('is-image-zoomed');
-    }
-    track.addEventListener('click', function (event) {
-      togglePortrait(event.target.closest('.b-alum-card'));
-    });
-    track.addEventListener('keydown', function (event) {
-      if ((event.key === 'Enter' || event.key === ' ') && event.target.classList.contains('b-alum-card')) {
-        event.preventDefault();
-        togglePortrait(event.target);
-      }
-    });
-  });
-
   // ---- Global Exposure partner logo carousel ----
   var globalRoot = document.getElementById('global');
   if (globalRoot) {
