@@ -3953,3 +3953,27 @@ ul.jqphone-flags-list,
 @media (max-width: 640px) {
   .b-global-logo { padding: 4px; }
 }
+
+
+/* One Jaipuria banner: reused from the previous LP, directly after Global Exposure */
+.b-one-jaipuria {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.b-one-jaipuria-wrap {
+  width: min(100% - 40px, 1180px);
+  margin: 0 auto;
+}
+.b-one-jaipuria picture,
+.b-one-jaipuria img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 768px) {
+  .b-one-jaipuria-wrap {
+    width: 100%;
+  }
+}
