@@ -3916,3 +3916,15 @@ ul.jqphone-flags-list,
 .b-global-card:hover {
   border-color: rgba(142, 71, 121, .38);
 }
+
+
+/* Match Global Exposure heading to the centered two-line brochure section titles */
+.b-global-heading .b-tag {
+  max-width: none;
+  margin: 0 auto;
+  text-align: center;
+}
+.b-global-heading .b-bar {
+  margin-left: auto;
+  margin-right: auto;
+}
