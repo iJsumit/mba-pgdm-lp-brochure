@@ -3981,3 +3981,138 @@ ul.jqphone-flags-list,
     width: 100%;
   }
 }
+
+
+/* ===== Alumni cards: overlapping portrait layout ===== */
+.b-alum-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 28px;
+  align-items: stretch;
+}
+
+.b-alum {
+  position: relative;
+  min-width: 0;
+  padding: 0 0 18px;
+  overflow: visible;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(35, 28, 44, .09);
+  text-align: left;
+  isolation: isolate;
+}
+
+.b-alum img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 250px;
+  margin: 0 auto -48px;
+  aspect-ratio: auto;
+  object-fit: contain;
+  object-position: center bottom;
+  border: 0;
+  border-radius: 20px 20px 0 0;
+  filter: none;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+  transform-origin: center bottom;
+}
+
+.b-alum h4 {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  padding: 20px 18px 3px;
+  border-radius: 18px 18px 0 0;
+  background: #fff;
+  font-size: 16px;
+  line-height: 1.3;
+  color: #48345e;
+}
+
+.b-alum p {
+  position: relative;
+  z-index: 2;
+  padding: 0 18px;
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #5d5665;
+}
+
+.b-alum .b-co {
+  margin-top: 5px;
+  color: #8b4779;
+  font-weight: 800;
+}
+
+.b-alum .b-batch {
+  margin-top: 8px;
+  color: #8b8490;
+  font-size: 11px;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+
+.b-alum:hover img,
+.b-alum:focus-within img {
+  z-index: 3;
+  transform: translateY(-12px) scale(1.07);
+}
+
+@media (max-width: 1200px) {
+  .b-alum-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+  }
+}
+
+@media (max-width: 760px) {
+  .b-alum-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 14px;
+  }
+
+  .b-alum img {
+    height: 210px;
+    margin-bottom: -40px;
+  }
+
+  .b-alum h4 {
+    padding: 17px 13px 3px;
+    font-size: 14px;
+  }
+
+  .b-alum p {
+    padding: 0 13px;
+    font-size: 11.5px;
+  }
+}
+
+@media (max-width: 420px) {
+  .b-alum-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .b-alum img {
+    height: 245px;
+    margin-bottom: -46px;
+  }
+
+  .b-alum h4 {
+    padding: 19px 16px 3px;
+    font-size: 16px;
+  }
+
+  .b-alum p {
+    padding: 0 16px;
+    font-size: 12.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .b-alum img { transition: none; }
+}
