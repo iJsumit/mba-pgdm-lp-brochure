@@ -119,65 +119,119 @@
   });
 
 
-  // ---- Alumni single-row continuous carousel ----
+  // ---- Alumni carousel: match the previous LP's paged slide animation ----
   document.querySelectorAll('[data-alum-carousel]').forEach(function (root) {
     var viewport = root.querySelector('.b-alum-viewport');
     var track = root.querySelector('.b-alum-track');
     var pagination = root.querySelector('.b-alum-pagination');
     if (!viewport || !track || !pagination) return;
-    var originals = Array.from(track.children);
-    if (originals.length < 2) return;
-    var originalCount = originals.length;
-    originals.forEach(function (card) { track.appendChild(card.cloneNode(true)); });
-    var index = 0, timer = null, paused = false, dots = [];
-    function gap() { return parseFloat(getComputedStyle(track).gap) || 0; }
-    function step() { return originals[0].getBoundingClientRect().width + gap(); }
-    function visible() { return Math.max(1, Math.floor((viewport.clientWidth + gap()) / step())); }
+
+    var originalCards = Array.from(track.querySelectorAll(':scope > .b-alum')).map(function (card) {
+      return card.cloneNode(true);
+    });
+    if (!originalCards.length) return;
+
+    var index = 0, timer = null, startX = 0, deltaX = 0, mobileMode = null;
+    var INTERVAL = 4200;
+
+    function perPage() {
+      return window.matchMedia('(max-width: 780px)').matches ? 1 : 5;
+    }
+    function pages() {
+      return Array.from(track.querySelectorAll('.b-alum-page'));
+    }
+    function buildPages() {
+      track.innerHTML = '';
+      var count = perPage();
+      for (var i = 0; i < originalCards.length; i += count) {
+        var page = document.createElement('div');
+        page.className = 'b-alum-page';
+        var grid = document.createElement('div');
+        grid.className = 'b-alum-grid';
+        originalCards.slice(i, i + count).forEach(function (card) {
+          grid.appendChild(card.cloneNode(true));
+        });
+        page.appendChild(grid);
+        track.appendChild(page);
+      }
+      mobileMode = count;
+    }
     function buildDots() {
-      pagination.innerHTML = ''; dots = [];
-      var pages = Math.ceil(originalCount / visible());
-      for (var d = 0; d < pages; d++) {
+      pagination.innerHTML = '';
+      pages().forEach(function (_, i) {
         var dot = document.createElement('button');
         dot.type = 'button';
-        dot.setAttribute('aria-label', 'Show alumni group ' + (d + 1));
-        (function (pageIndex, button) {
-          button.addEventListener('click', function () {
-            index = Math.min(pageIndex * visible(), originalCount - 1);
-            update(true); start();
-          });
-        })(d, dot);
-        pagination.appendChild(dot); dots.push(dot);
-      }
+        dot.className = 'b-alum-dot' + (i === index ? ' is-active' : '');
+        dot.setAttribute('aria-label', 'Go to alumni slide ' + (i + 1));
+        dot.addEventListener('click', function () {
+          index = i;
+          update();
+          restart();
+        });
+        pagination.appendChild(dot);
+      });
     }
-    function update(animate) {
-      track.style.transition = animate === false ? 'none' : '';
-      track.style.transform = 'translate3d(' + (-index * step()) + 'px,0,0)';
-      var page = Math.floor(index / visible()) % dots.length;
-      dots.forEach(function (dot, i) { dot.classList.toggle('is-active', i === page); });
-      if (animate === false) { track.offsetHeight; track.style.transition = ''; }
+    function update() {
+      var allPages = pages();
+      if (!allPages.length) return;
+      if (index >= allPages.length) index = 0;
+      if (index < 0) index = allPages.length - 1;
+      track.style.transform = 'translate3d(' + (-index * 100) + '%,0,0)';
+      Array.from(pagination.querySelectorAll('.b-alum-dot')).forEach(function (dot, i) {
+        dot.classList.toggle('is-active', i === index);
+      });
     }
-    function stop() { if (timer) window.clearInterval(timer); timer = null; }
+    function stop() {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+    }
     function start() {
       stop();
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       timer = window.setInterval(function () {
-        if (paused || document.hidden) return;
-        index++;
-        if (index >= originalCount) {
-          index = originalCount;
-          update(true);
-          window.setTimeout(function () { index = 0; update(false); }, 760);
-        } else update(true);
-      }, 2300);
+        if (!document.hidden) {
+          index++;
+          update();
+        }
+      }, INTERVAL);
     }
-    root.addEventListener('mouseenter', function () { paused = true; });
-    root.addEventListener('mouseleave', function () { paused = false; });
-    root.addEventListener('focusin', function () { paused = true; });
-    root.addEventListener('focusout', function () { paused = false; });
-    window.addEventListener('resize', function () {
-      index = 0; buildDots(); update(false); start();
+    function restart() { stop(); start(); }
+
+    viewport.addEventListener('touchstart', function (event) {
+      stop();
+      startX = event.touches[0].clientX;
+      deltaX = 0;
+    }, { passive: true });
+    viewport.addEventListener('touchmove', function (event) {
+      deltaX = event.touches[0].clientX - startX;
+    }, { passive: true });
+    viewport.addEventListener('touchend', function () {
+      if (Math.abs(deltaX) > 40) {
+        index += deltaX < 0 ? 1 : -1;
+        update();
+      }
+      start();
     });
-    buildDots(); update(false); start();
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+
+    function init() {
+      index = 0;
+      buildPages();
+      buildDots();
+      update();
+      start();
+    }
+    init();
+    window.addEventListener('resize', function () {
+      var nextMode = perPage();
+      if (nextMode !== mobileMode) {
+        stop();
+        init();
+      }
+    });
   });
 
   // ---- Global Exposure partner logo carousel ----
