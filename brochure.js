@@ -78,6 +78,18 @@
     faqBtn.textContent = all ? 'Read less' : 'Know more';
   });
 
+  // ---- FAQ accordion: keep only one answer expanded at a time ----
+  if (faqs) {
+    faqs.querySelectorAll('.b-faq').forEach(function (faq) {
+      faq.addEventListener('toggle', function () {
+        if (!faq.open) return;
+        faqs.querySelectorAll('.b-faq[open]').forEach(function (otherFaq) {
+          if (otherFaq !== faq) otherFaq.open = false;
+        });
+      });
+    });
+  }
+
   // ---- carousels (native scroll-snap + arrows + optional autoplay) ----
   document.querySelectorAll('[data-carousel]').forEach(function (car) {
     var track = car.querySelector('.b-car-track');
