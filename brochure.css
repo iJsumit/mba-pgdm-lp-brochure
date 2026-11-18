@@ -4371,4 +4371,4 @@ ul.jqphone-flags-list,
   .b-alum-batch, .b-alum-role { font-size: 16px; }
   .b-alum-logo { height: 54px; }
 }
-@media (prefers-reduced-motion: reduce) { .b-alumni-legacy .b-alum-track { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .b-alumni-legacy .b-alum-track { transition: none; } }}
