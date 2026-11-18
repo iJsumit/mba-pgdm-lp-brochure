@@ -4554,3 +4554,10 @@ ul.jqphone-flags-list,
 @media (prefers-reduced-motion: reduce) {
   .b-alum-track { transition: none !important; }
 }
+
+@media (max-width: 900px) {
+  .b-alum-card { width: auto !important; max-width: none !important; }
+}
+@media (max-width: 600px) {
+  .b-alum-card { width: auto !important; max-width: none !important; }
+}
