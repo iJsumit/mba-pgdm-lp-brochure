@@ -4652,16 +4652,9 @@ ul.jqphone-flags-list,
 
 
 /* Alumni cards: compact name/batch row with centered details */
-#alumni .b-alum-carousel {
-  overflow: visible;
-  padding: 26px 0 28px
-}
+#alumni .b-alum-carousel{position:relative;overflow:visible!important;padding:70px 0 28px}
 
-#alumni .b-alum-viewport {
-  overflow-x: hidden;
-  overflow-y: visible;
-  width: 100%
-}
+#alumni .b-alum-viewport{width:100%;overflow-x:clip!important;overflow-y:visible!important;padding:0 4px 14px}
 
 #alumni .b-alum-track {
   display: flex;
@@ -4694,20 +4687,7 @@ ul.jqphone-flags-list,
   isolation: isolate
 }
 
-#alumni .b-alum-photo {
-  position: absolute;
-  z-index: 1;
-  top: -26px;
-  left: 8px;
-  width: calc(100% - 16px);
-  height: 190px;
-  margin: 0;
-  overflow: visible;
-  border: 0;
-  border-radius: 8px 8px 0 0;
-  background: transparent;
-  pointer-events: none
-}
+#alumni .b-alum-photo{position:absolute;z-index:20;top:-26px;left:8px;width:calc(100% - 16px);height:190px;margin:0;overflow:visible;border:0;border-radius:8px 8px 0 0;background:transparent;pointer-events:none}
 
 #alumni .b-alum-photo img {
   display: block;
