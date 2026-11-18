@@ -4687,7 +4687,7 @@ ul.jqphone-flags-list,
   isolation: isolate
 }
 
-#alumni .b-alum-photo{position:absolute;z-index:20;top:-26px;left:8px;width:calc(100% - 16px);height:190px;margin:0;overflow:visible;border:0;border-radius:8px 8px 0 0;background:transparent;pointer-events:none}
+#alumni .b-alum-photo{position:absolute;z-index:1;top:-26px;left:8px;width:calc(100% - 16px);height:190px;margin:0;overflow:visible;border:0;border-radius:8px 8px 0 0;background:transparent;pointer-events:none}
 
 #alumni .b-alum-photo img {
   display: block;
@@ -4889,3 +4889,8 @@ ul.jqphone-flags-list,
     font-size: 9px;
   }
 }
+
+/* Portrait must stay behind the white information panel */
+#alumni .b-alum-photo,
+#alumni .b-alum-photo img{z-index:1!important}
+#alumni .b-alum-info{position:relative;z-index:2!important}
