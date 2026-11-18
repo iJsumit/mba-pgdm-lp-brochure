@@ -118,6 +118,66 @@
     }
   });
 
+  // ---- Global Exposure partner logo carousel ----
+  var globalRoot = document.getElementById('global');
+  if (globalRoot) {
+    var globalViewport = globalRoot.querySelector('.b-global-viewport');
+    var globalTrack = globalRoot.querySelector('.b-global-track');
+    var globalPrev = globalRoot.querySelector('.b-global-prev');
+    var globalNext = globalRoot.querySelector('.b-global-next');
+    var globalCards = globalTrack ? Array.from(globalTrack.querySelectorAll('.b-global-card')) : [];
+    var globalIndex = 0, globalTimer = null, globalPaused = false;
+    var globalDelay = 3600;
+    function globalStep() {
+      if (!globalCards.length) return 0;
+      return globalCards[0].getBoundingClientRect().width + (parseFloat(getComputedStyle(globalTrack).gap) || 0);
+    }
+    function globalMax() {
+      return Math.max(0, Math.round((globalTrack.scrollWidth - globalViewport.clientWidth) / globalStep()));
+    }
+    function globalUpdate(animate) {
+      if (!globalTrack || !globalCards.length) return;
+      globalTrack.style.transition = animate === false ? 'none' : '';
+      globalTrack.style.transform = 'translateX(' + (-globalIndex * globalStep()) + 'px)';
+      if (animate === false) {
+        globalTrack.offsetHeight;
+        globalTrack.style.transition = '';
+      }
+    }
+    function globalStop() { if (globalTimer) window.clearInterval(globalTimer); globalTimer = null; }
+    function globalStart() {
+      globalStop();
+      if (globalMax() < 1 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      globalTimer = window.setInterval(function () {
+        if (globalPaused || document.hidden) return;
+        globalIndex = globalIndex >= globalMax() ? 0 : globalIndex + 1;
+        globalUpdate(true);
+      }, globalDelay);
+    }
+    function globalMove(direction) {
+      globalIndex = direction > 0 ? (globalIndex >= globalMax() ? 0 : globalIndex + 1) : (globalIndex <= 0 ? globalMax() : globalIndex - 1);
+      globalUpdate(true);
+      globalStart();
+    }
+    if (globalViewport && globalTrack && globalCards.length) {
+      if (globalPrev) globalPrev.addEventListener('click', function () { globalMove(-1); });
+      if (globalNext) globalNext.addEventListener('click', function () { globalMove(1); });
+      globalRoot.addEventListener('mouseenter', function () { globalPaused = true; });
+      globalRoot.addEventListener('mouseleave', function () { globalPaused = false; });
+      globalRoot.addEventListener('focusin', function () { globalPaused = true; });
+      globalRoot.addEventListener('focusout', function () { globalPaused = false; });
+      globalViewport.addEventListener('touchstart', function () { globalPaused = true; }, { passive: true });
+      globalViewport.addEventListener('touchend', function () { globalPaused = false; }, { passive: true });
+      window.addEventListener('resize', function () {
+        globalIndex = Math.min(globalIndex, globalMax());
+        globalUpdate(false);
+        globalStart();
+      });
+      globalUpdate(false);
+      globalStart();
+    }
+  }
+
   // ---- sticky Download Brochure: reveal only after the complete hero leaves view ----
   var stickyCta = document.querySelector('.b-sticky');
   var hero = document.querySelector('.b-hero');
