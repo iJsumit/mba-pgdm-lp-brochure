@@ -31,15 +31,30 @@
     });
   });
 
-  // ---- recruiter category filter ----
+  // ---- recruiter category filter + keep the next tabs discoverable ----
   var logoTrack = document.getElementById('bLogos');
-  document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, _, all) {
+  var recruiterTabs = document.querySelector('[data-filter="rec"]');
+  document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
     btn.addEventListener('click', function () {
       all.forEach(function (b) { b.classList.toggle('is-active', b === btn); b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
       var c = btn.getAttribute('data-cat');
       logoTrack.querySelectorAll('.b-logo').forEach(function (l) { l.hidden = !(c === 'all' || l.getAttribute('data-cat') === c); });
       logoTrack.scrollLeft = 0;
       window.dispatchEvent(new Event('resize'));
+
+      // If the selected tab is the last one currently visible, slide the row
+      // just enough to bring the next category into view.
+      var nextTab = all[index + 1];
+      if (nextTab && recruiterTabs) {
+        var rowRect = recruiterTabs.getBoundingClientRect();
+        var nextRect = nextTab.getBoundingClientRect();
+        if (nextRect.right > rowRect.right - 8) {
+          recruiterTabs.scrollTo({
+            left: recruiterTabs.scrollLeft + (nextRect.right - rowRect.right) + 20,
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+          });
+        }
+      }
     });
   });
 

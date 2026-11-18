@@ -3279,28 +3279,51 @@ ul.jqphone-flags-list,
 }
 
 
-/* ===== Refined recruiter category tabs ===== */
+/* ===== Single-row, horizontally navigable recruiter tabs ===== */
 #recruiters .b-tabs {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 10px;
-  margin: 0 auto 30px;
-  padding: 14px;
-  border: 1px solid rgba(107, 74, 140, .12);
-  border-radius: 18px;
-  background: linear-gradient(135deg, #fff 0%, #fbf8fb 100%);
-  box-shadow: 0 10px 28px rgba(49, 35, 55, .07);
+  width: 100%;
+  margin: 0 0 28px;
+  padding: 10px 4px 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(107, 74, 140, .35) transparent;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
+}
+
+#recruiters .b-tabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+#recruiters .b-tabs::-webkit-scrollbar-track {
+  background: rgba(107, 74, 140, .08);
+  border-radius: 99px;
+}
+
+#recruiters .b-tabs::-webkit-scrollbar-thumb {
+  background: rgba(107, 74, 140, .35);
+  border-radius: 99px;
 }
 
 #recruiters .b-tab {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
   min-height: 42px;
-  padding: 10px 17px;
+  max-width: none;
+  padding: 10px 18px;
   border: 1px solid #e8e0e8;
   border-radius: 999px;
   background: #fff;
@@ -3308,13 +3331,14 @@ ul.jqphone-flags-list,
   font-family: inherit;
   font-size: 13px;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.2;
   letter-spacing: .05px;
-  white-space: normal;
+  white-space: nowrap;
   text-align: center;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(43, 42, 46, .025);
+  box-shadow: 0 2px 5px rgba(43, 42, 46, .035);
   transition: color .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  scroll-snap-align: nearest;
 }
 
 #recruiters .b-tab:hover {
@@ -3337,36 +3361,12 @@ ul.jqphone-flags-list,
   outline-offset: 3px;
 }
 
-@media (max-width: 900px) {
-  #recruiters .b-tabs {
-    justify-content: flex-start;
-    gap: 9px;
-    padding: 12px;
-  }
-
-  #recruiters .b-tab {
-    min-height: 40px;
-    padding: 9px 14px;
-    font-size: 12.5px;
-  }
-}
-
 @media (max-width: 640px) {
   #recruiters .b-tabs {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
     gap: 8px;
     margin: 0 -4px 22px;
-    padding: 10px 4px 13px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
+    padding: 8px 4px 12px;
     scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
   }
 
   #recruiters .b-tabs::-webkit-scrollbar {
@@ -3374,16 +3374,17 @@ ul.jqphone-flags-list,
   }
 
   #recruiters .b-tab {
-    flex: 0 0 auto;
     min-height: 39px;
-    max-width: 240px;
     padding: 9px 14px;
-    white-space: nowrap;
     font-size: 12px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  #recruiters .b-tabs {
+    scroll-behavior: auto;
+  }
+
   #recruiters .b-tab {
     transition: none;
   }
