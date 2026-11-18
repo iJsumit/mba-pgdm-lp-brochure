@@ -119,67 +119,68 @@
   });
 
 
-  // ---- Alumni carousel: match the previous LP's paged slide animation ----
+  // ---- Alumni cards: continuous animated carousel based on supplied reference video ----
   document.querySelectorAll('[data-alum-carousel]').forEach(function (root) {
     var viewport = root.querySelector('.b-alum-viewport');
     var track = root.querySelector('.b-alum-track');
     var pagination = root.querySelector('.b-alum-pagination');
     if (!viewport || !track || !pagination) return;
 
-    var originalCards = Array.from(track.querySelectorAll('.b-alum-card')).map(function (card) {
+    var cards = Array.from(track.querySelectorAll('.b-alum-card')).map(function (card) {
       return card.cloneNode(true);
     });
-    if (!originalCards.length) return;
+    if (!cards.length) return;
 
-    var index = 0, timer = null, startX = 0, deltaX = 0, mobileMode = null;
-    var INTERVAL = 4200;
+    var index = 0, timer = null, startX = 0, deltaX = 0, visible = 4, step = 0;
+    var INTERVAL = 3600;
 
-    function perPage() {
-      return window.matchMedia('(max-width: 780px)').matches ? 1 : 5;
+    function visibleCount() {
+      if (window.matchMedia('(max-width: 600px)').matches) return 1;
+      if (window.matchMedia('(max-width: 900px)').matches) return 2;
+      return 4;
     }
-    function pages() {
-      return Array.from(track.querySelectorAll('.b-alum-page'));
+    function measure() {
+      visible = visibleCount();
+      var first = track.querySelector('.b-alum-card');
+      if (!first) return;
+      var gap = parseFloat(window.getComputedStyle(track).columnGap || window.getComputedStyle(track).gap) || 18;
+      step = first.getBoundingClientRect().width + gap;
     }
-    function buildPages() {
-      track.innerHTML = '';
-      var count = perPage();
-      for (var i = 0; i < originalCards.length; i += count) {
-        var page = document.createElement('div');
-        page.className = 'b-alum-page';
-        var grid = document.createElement('div');
-        grid.className = 'b-alum-grid';
-        originalCards.slice(i, i + count).forEach(function (card) {
-          grid.appendChild(card.cloneNode(true));
-        });
-        page.appendChild(grid);
-        track.appendChild(page);
-      }
-      mobileMode = count;
-    }
-    function buildDots() {
+    function renderDots() {
       pagination.innerHTML = '';
-      pages().forEach(function (_, i) {
+      var count = Math.max(1, cards.length);
+      for (var i = 0; i < count; i++) {
         var dot = document.createElement('button');
         dot.type = 'button';
-        dot.className = 'b-alum-dot' + (i === index ? ' is-active' : '');
-        dot.setAttribute('aria-label', 'Go to alumni slide ' + (i + 1));
-        dot.addEventListener('click', function () {
-          index = i;
-          update();
-          restart();
-        });
+        dot.className = 'b-alum-dot' + (i === index % count ? ' is-active' : '');
+        dot.setAttribute('aria-label', 'Show alumni card ' + (i + 1));
+        (function (target) {
+          dot.addEventListener('click', function () {
+            index = target;
+            move(true);
+            restart();
+          });
+        })(i);
         pagination.appendChild(dot);
+      }
+    }
+    function move(animate) {
+      measure();
+      track.style.transition = animate === false ? 'none' : 'transform .65s cubic-bezier(.22,.61,.36,1)';
+      track.style.transform = 'translate3d(' + (-index * step) + 'px,0,0)';
+      Array.from(pagination.children).forEach(function (dot, i) {
+        dot.classList.toggle('is-active', i === index % cards.length);
       });
     }
-    function update() {
-      var allPages = pages();
-      if (!allPages.length) return;
-      if (index >= allPages.length) index = 0;
-      if (index < 0) index = allPages.length - 1;
-      track.style.transform = 'translate3d(' + (-index * 100) + '%,0,0)';
-      Array.from(pagination.querySelectorAll('.b-alum-dot')).forEach(function (dot, i) {
-        dot.classList.toggle('is-active', i === index);
-      });
+    function next() {
+      index++;
+      move(true);
+      if (index >= cards.length) {
+        window.setTimeout(function () {
+          index = 0;
+          move(false);
+        }, 680);
+      }
     }
     function stop() {
       if (timer) window.clearInterval(timer);
@@ -189,13 +190,21 @@
       stop();
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       timer = window.setInterval(function () {
-        if (!document.hidden) {
-          index++;
-          update();
-        }
+        if (!document.hidden) next();
       }, INTERVAL);
     }
     function restart() { stop(); start(); }
+
+    track.innerHTML = '';
+    cards.forEach(function (card) { track.appendChild(card.cloneNode(true)); });
+    cards.slice(0, visibleCount()).forEach(function (card) {
+      var clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
+    renderDots();
+    move(false);
+    start();
 
     viewport.addEventListener('touchstart', function (event) {
       stop();
@@ -207,29 +216,33 @@
     }, { passive: true });
     viewport.addEventListener('touchend', function () {
       if (Math.abs(deltaX) > 40) {
-        index += deltaX < 0 ? 1 : -1;
-        update();
+        index = (index + (deltaX < 0 ? 1 : -1) + cards.length) % cards.length;
+        move(true);
       }
-      start();
+      restart();
     });
     root.addEventListener('mouseenter', stop);
     root.addEventListener('mouseleave', start);
     root.addEventListener('focusin', stop);
     root.addEventListener('focusout', start);
-
-    function init() {
-      index = 0;
-      buildPages();
-      buildDots();
-      update();
-      start();
-    }
-    init();
     window.addEventListener('resize', function () {
-      var nextMode = perPage();
-      if (nextMode !== mobileMode) {
+      var nextVisible = visibleCount();
+      if (nextVisible !== visible) {
         stop();
-        init();
+        measure();
+        track.innerHTML = '';
+        cards.forEach(function (card) { track.appendChild(card.cloneNode(true)); });
+        cards.slice(0, nextVisible).forEach(function (card) {
+          var clone = card.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          track.appendChild(clone);
+        });
+        index = 0;
+        renderDots();
+        move(false);
+        start();
+      } else {
+        move(false);
       }
     });
   });
