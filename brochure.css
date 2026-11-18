@@ -4508,3 +4508,49 @@ ul.jqphone-flags-list,
     }
   }
 }
+
+/* Alumni animated cards: horizontal moving strip matching the supplied reference */
+.b-alum-viewport { overflow: hidden; width: 100%; }
+.b-alum-track {
+  display: flex;
+  gap: 18px;
+  align-items: stretch;
+  will-change: transform;
+}
+.b-alum-page { display: contents; }
+.b-alum-grid { display: contents; }
+.b-alum-card {
+  flex: 0 0 calc((100% - 54px) / 4);
+  min-width: 0;
+  padding: 10px 10px 14px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(20, 34, 48, .10);
+  text-align: left;
+}
+.b-alum-photo {
+  height: 168px;
+  border: 0;
+  border-radius: 8px 8px 0 0;
+  background: #f3f4f2;
+}
+.b-alum-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
+.b-alum-name { margin: 12px 8px 0; font-size: 15px; font-weight: 650; }
+.b-alum-batch { margin: 6px 8px 0; font-size: 10px; letter-spacing: .4px; font-weight: 500; }
+.b-alum-now { margin: 8px 8px 0; padding-top: 0; }
+.b-alum-role { margin-top: 2px; font-size: 12px; font-weight: 500; line-height: 1.35; }
+.b-alum-company { margin: 8px 8px 0; padding: 0; background: transparent; }
+.b-alum-logo { max-width: 125px; max-height: 30px; width: auto; object-fit: contain; }
+.b-alum-pagination { gap: 5px; margin-top: 16px; }
+.b-alum-dot { width: 5px; height: 5px; background: #d9d9d9; }
+.b-alum-dot.is-active { width: 20px; height: 5px; border-radius: 5px; background: #e6a12e; transform: none; }
+@media (max-width: 900px) {
+  .b-alum-card { flex-basis: calc((100% - 18px) / 2); }
+}
+@media (max-width: 600px) {
+  .b-alum-card { flex-basis: 100%; }
+  .b-alum-photo { height: 260px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .b-alum-track { transition: none !important; }
+}
