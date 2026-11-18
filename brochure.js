@@ -91,6 +91,21 @@
     }
   });
 
+  // ---- sticky Download Brochure: reveal only after the complete hero leaves view ----
+  var stickyCta = document.querySelector('.b-sticky');
+  var hero = document.querySelector('.b-hero');
+  if (stickyCta && hero && 'IntersectionObserver' in window) {
+    var heroVisible = true;
+    var updateSticky = function () {
+      stickyCta.classList.toggle('is-visible', !heroVisible);
+    };
+    new IntersectionObserver(function (entries) {
+      heroVisible = entries[0].isIntersecting;
+      updateSticky();
+    }, { threshold: 0 }).observe(hero);
+    updateSticky();
+  }
+
   // ---- floating "Apply Now": visible after scrolling, hidden while the form is on screen ----
   var floatBtn = document.getElementById('bFloat');
   var form = document.getElementById('apply-now');

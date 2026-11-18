@@ -3042,37 +3042,50 @@ ul.jqphone-flags-list,
   }
 }
 
-/* ===== Persistent Download Brochure sticky CTA (desktop + mobile) ===== */
-body {
-  padding-bottom: 88px;
-}
-
+/* ===== Download Brochure sticky CTA: reveal after hero ===== */
 .b-sticky {
   display: block;
   position: fixed;
-  left: 6px;
-  right: 6px;
-  bottom: 6px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 1100;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 8px 28px rgba(43, 42, 46, .24);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 -4px 18px rgba(43, 42, 46, .16);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(100%);
+  transition: opacity .22s ease, transform .22s ease, visibility .22s ease;
+}
+
+.b-sticky.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .b-sticky a {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 76px;
-  padding: 16px 24px;
+  width: 100%;
+  min-height: 54px;
+  margin: 0;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 0;
   color: #fff;
   text-align: center;
   text-decoration: none;
   font-weight: 800;
-  font-size: clamp(17px, 1.5vw, 22px);
+  font-size: clamp(16px, 1.35vw, 19px);
   letter-spacing: .2px;
+  line-height: 1.2;
   background: linear-gradient(90deg, #b8365f, #6b4a8c);
-  transition: filter .2s ease, box-shadow .2s ease;
+  transition: filter .2s ease;
 }
 
 .b-sticky a:hover,
@@ -3082,29 +3095,19 @@ body {
 
 .b-sticky a:focus-visible {
   outline: 3px solid #e6b98d;
-  outline-offset: -5px;
+  outline-offset: -4px;
 }
 
 @media (max-width: 640px) {
-  body {
-    padding-bottom: 78px;
-  }
-
-  .b-sticky {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 0;
-  }
-
   .b-sticky a {
-    min-height: 64px;
-    padding: 14px 18px calc(14px + env(safe-area-inset-bottom));
-    font-size: 17px;
+    min-height: 50px;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    font-size: 16px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .b-sticky,
   .b-sticky a {
     transition: none;
   }
