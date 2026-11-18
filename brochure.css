@@ -4033,3 +4033,16 @@ ul.jqphone-flags-list,
   .b-alum img { height: 220px; }
 }
 @media (prefers-reduced-motion: reduce) { .b-alum-track, .b-alum img { transition: none; } }
+
+
+/* Alumni portrait hover: reserve headroom so the image can rise above its card without being clipped. */
+.b-alum-viewport {
+  padding: 22px 4px 14px;
+  margin-top: -22px;
+}
+.b-alum-carousel {
+  overflow: visible;
+}
+@media (prefers-reduced-motion: reduce) {
+  .b-alum img { transform: none !important; }
+}
