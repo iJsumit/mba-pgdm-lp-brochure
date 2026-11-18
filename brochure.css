@@ -3930,7 +3930,11 @@ ul.jqphone-flags-list,
 }
 
 
-/* Global partner logos: crisp white logo plates, country label below institute */
+/* Global partner cards: restore white card backgrounds */
+.b-global-card {
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(43, 34, 55, .07);
+}
 .b-global-logo {
   background: #fff;
   border-radius: 7px;
