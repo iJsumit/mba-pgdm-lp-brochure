@@ -118,6 +118,68 @@
     }
   });
 
+
+  // ---- Alumni single-row continuous carousel ----
+  document.querySelectorAll('[data-alum-carousel]').forEach(function (root) {
+    var viewport = root.querySelector('.b-alum-viewport');
+    var track = root.querySelector('.b-alum-track');
+    var pagination = root.querySelector('.b-alum-pagination');
+    if (!viewport || !track || !pagination) return;
+    var originals = Array.from(track.children);
+    if (originals.length < 2) return;
+    var originalCount = originals.length;
+    originals.forEach(function (card) { track.appendChild(card.cloneNode(true)); });
+    var index = 0, timer = null, paused = false, dots = [];
+    function gap() { return parseFloat(getComputedStyle(track).gap) || 0; }
+    function step() { return originals[0].getBoundingClientRect().width + gap(); }
+    function visible() { return Math.max(1, Math.floor((viewport.clientWidth + gap()) / step())); }
+    function buildDots() {
+      pagination.innerHTML = ''; dots = [];
+      var pages = Math.ceil(originalCount / visible());
+      for (var d = 0; d < pages; d++) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', 'Show alumni group ' + (d + 1));
+        (function (pageIndex, button) {
+          button.addEventListener('click', function () {
+            index = Math.min(pageIndex * visible(), originalCount - 1);
+            update(true); start();
+          });
+        })(d, dot);
+        pagination.appendChild(dot); dots.push(dot);
+      }
+    }
+    function update(animate) {
+      track.style.transition = animate === false ? 'none' : '';
+      track.style.transform = 'translate3d(' + (-index * step()) + 'px,0,0)';
+      var page = Math.floor(index / visible()) % dots.length;
+      dots.forEach(function (dot, i) { dot.classList.toggle('is-active', i === page); });
+      if (animate === false) { track.offsetHeight; track.style.transition = ''; }
+    }
+    function stop() { if (timer) window.clearInterval(timer); timer = null; }
+    function start() {
+      stop();
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      timer = window.setInterval(function () {
+        if (paused || document.hidden) return;
+        index++;
+        if (index >= originalCount) {
+          index = originalCount;
+          update(true);
+          window.setTimeout(function () { index = 0; update(false); }, 760);
+        } else update(true);
+      }, 2300);
+    }
+    root.addEventListener('mouseenter', function () { paused = true; });
+    root.addEventListener('mouseleave', function () { paused = false; });
+    root.addEventListener('focusin', function () { paused = true; });
+    root.addEventListener('focusout', function () { paused = false; });
+    window.addEventListener('resize', function () {
+      index = 0; buildDots(); update(false); start();
+    });
+    buildDots(); update(false); start();
+  });
+
   // ---- Global Exposure partner logo carousel ----
   var globalRoot = document.getElementById('global');
   if (globalRoot) {
