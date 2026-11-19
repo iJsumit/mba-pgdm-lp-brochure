@@ -5070,3 +5070,170 @@ ul.jqphone-flags-list,
     transition: none;
   }
 }
+
+
+/* ===== Differentiators: six-state responsive mosaic ===== */
+#differentiators .b-diff-grid {
+  display: grid !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(245px, auto));
+  grid-template-areas:
+    "active active active active small1 small1 small2 small2 small3 small3 small3 small3"
+    "active active active active small4 small4 small4 small4 small5 small5 small5 small5";
+  gap: 14px;
+  align-items: stretch;
+  width: 100%;
+  margin-top: 30px;
+}
+
+#differentiators .b-diff-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  padding: 20px 16px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(43, 42, 46, .14);
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(43, 42, 46, .055);
+  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+
+#differentiators .b-diff-card::before { left: 7%; right: 7%; height: 6px; }
+#differentiators .b-diff-card__top { display: none; }
+
+#differentiators .b-diff-card h3 {
+  margin: 0;
+  color: #30283a;
+  font-size: clamp(14px, 1.15vw, 18px);
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+#differentiators .b-diff-card ul { display: none; margin: 16px 0 0; }
+#differentiators .b-diff-card li { font-size: clamp(12px, .92vw, 15px); line-height: 1.48; }
+
+#differentiators .b-diff-card.is-active {
+  grid-area: active;
+  justify-content: flex-start;
+  padding: 25px 24px;
+  border-color: rgba(184, 54, 95, .24);
+  background: linear-gradient(135deg, #d52b70 0%, #84317f 58%, #284eaa 100%);
+  box-shadow: 0 12px 28px rgba(76, 45, 111, .18);
+}
+
+#differentiators .b-diff-card.is-active h3 {
+  color: #fff;
+  font-size: clamp(19px, 1.55vw, 24px);
+  line-height: 1.25;
+  text-align: left;
+}
+
+#differentiators .b-diff-card.is-active ul { display: grid; gap: 9px; margin-top: 16px; }
+#differentiators .b-diff-card.is-active li { color: #fff; border-color: rgba(255, 255, 255, .3); }
+#differentiators .b-diff-card.is-active li::before { background: #fff; }
+
+#differentiators .b-diff-card.diff-small-1 { grid-area: small1; }
+#differentiators .b-diff-card.diff-small-2 { grid-area: small2; }
+#differentiators .b-diff-card.diff-small-3 { grid-area: small3; }
+#differentiators .b-diff-card.diff-small-4 { grid-area: small4; }
+#differentiators .b-diff-card.diff-small-5 { grid-area: small5; }
+
+#differentiators .b-diff-grid.layout-1 {
+  grid-template-areas:
+    "active active active active small1 small1 small2 small2 small3 small3 small3 small3"
+    "active active active active small4 small4 small4 small4 small5 small5 small5 small5";
+}
+#differentiators .b-diff-grid.layout-2 {
+  grid-template-areas:
+    "small1 small1 small1 small1 active active active active small2 small2 small2 small2"
+    "small3 small3 active active active active small4 small4 small4 small4 small5 small5";
+}
+#differentiators .b-diff-grid.layout-3 {
+  grid-template-areas:
+    "small1 small1 small1 small1 small2 small2 small3 small3 active active active active"
+    "small4 small4 small4 small4 small5 small5 small5 small5 active active active active";
+}
+#differentiators .b-diff-grid.layout-4 {
+  grid-template-areas:
+    "small1 small1 small1 small1 small2 small2 active active active active small3 small3"
+    "small4 small4 small4 small4 small5 small5 active active active active small3 small3";
+}
+#differentiators .b-diff-grid.layout-5 {
+  grid-template-areas:
+    "small1 small1 small2 small2 small3 small3 small4 small4 small5 small5 small5 small5"
+    "active active active active active active active active small5 small5 small5 small5";
+}
+#differentiators .b-diff-grid.layout-6 {
+  grid-template-areas:
+    "small1 small1 small2 small2 small3 small3 active active active active active active"
+    "small4 small4 small4 small4 small5 small5 active active active active active active";
+}
+
+#differentiators .b-diff-card:not(.is-active):hover {
+  transform: translateY(-2px);
+  border-color: rgba(184, 54, 95, .38);
+  box-shadow: 0 10px 24px rgba(43, 42, 46, .10);
+}
+#differentiators .b-diff-card:focus-visible {
+  outline: 3px solid rgba(91, 155, 213, .75);
+  outline-offset: 3px;
+}
+
+/* Tablet layout: selected feature remains prominent without narrow text columns. */
+@media (max-width: 1050px) and (min-width: 701px) {
+  #differentiators .b-diff-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(165px, auto));
+    grid-template-areas:
+      "active active active small1 small1 small1"
+      "active active active small2 small2 small2"
+      "small3 small3 small4 small4 small5 small5";
+    gap: 12px;
+  }
+  #differentiators .b-diff-card { padding: 16px 13px; }
+  #differentiators .b-diff-card.is-active { padding: 20px 18px; }
+}
+
+/* Mobile: all six cards stack; tap or keyboard focus reveals the selected details. */
+@media (max-width: 700px) {
+  #differentiators .b-diff-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas: none !important;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  #differentiators .b-diff-card,
+  #differentiators .b-diff-card.is-active,
+  #differentiators .b-diff-card.diff-small-1,
+  #differentiators .b-diff-card.diff-small-2,
+  #differentiators .b-diff-card.diff-small-3,
+  #differentiators .b-diff-card.diff-small-4,
+  #differentiators .b-diff-card.diff-small-5 {
+    grid-area: auto;
+    height: auto;
+    min-height: 0;
+    padding: 17px 18px;
+    border-radius: 14px;
+  }
+  #differentiators .b-diff-card h3,
+  #differentiators .b-diff-card.is-active h3 {
+    color: #30283a;
+    font-size: 16px;
+    text-align: left;
+  }
+  #differentiators .b-diff-card.is-active h3 { color: #fff; }
+  #differentiators .b-diff-card.is-active ul { margin-top: 12px; }
+  #differentiators .b-diff-card li { font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #differentiators .b-diff-card { transition: none; }
+}
