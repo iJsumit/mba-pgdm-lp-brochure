@@ -5241,3 +5241,104 @@ ul.jqphone-flags-list,
 @media (prefers-reduced-motion: reduce) {
   #differentiators .b-diff-card { transition: none; }
 }
+
+
+/* ===== Photo backgrounds and slower transitions for differentiator mosaic ===== */
+#differentiators .b-diff-card {
+  position: relative;
+  isolation: isolate;
+  background-size: cover;
+  background-position: center;
+  transition:
+    transform 950ms cubic-bezier(.2,.72,.18,1),
+    border-color 700ms ease,
+    box-shadow 700ms ease;
+}
+
+#differentiators .b-diff-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: linear-gradient(145deg, rgba(17, 19, 39, .54), rgba(21, 22, 48, .78));
+  transition: background 700ms ease, opacity 700ms ease;
+  pointer-events: none;
+}
+
+#differentiators .b-diff-card::before {
+  z-index: 2;
+}
+
+#differentiators .b-diff-card h3,
+#differentiators .b-diff-card ul {
+  position: relative;
+  z-index: 1;
+}
+
+#differentiators .b-diff-card h3 {
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0,0,0,.24);
+}
+
+#differentiators .b-diff-card.is-active {
+  background-size: cover;
+  background-position: center;
+  border-color: rgba(255,255,255,.25);
+}
+
+#differentiators .b-diff-card.is-active::after {
+  background: linear-gradient(125deg, rgba(175, 24, 91, .82), rgba(83, 35, 111, .78) 58%, rgba(25, 57, 127, .82));
+}
+
+#differentiators .b-diff-card.is-active ul {
+  animation: diffContentReveal 650ms ease both;
+}
+
+#differentiators .b-diff-card.is-active li {
+  text-shadow: 0 1px 5px rgba(0,0,0,.18);
+}
+
+@keyframes diffContentReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Individual, verified Unsplash photos. All are free to use under the Unsplash License. */
+#differentiators #usp-1 {
+  background-image: url("https://images.unsplash.com/photo-1779358296802-715fc9fbc152?auto=format&fit=crop&w=1400&q=82");
+}
+#differentiators #usp-2 {
+  background-image: url("https://images.unsplash.com/photo-1753613648120-d2c8d1d49002?auto=format&fit=crop&w=1400&q=82");
+}
+#differentiators #usp-3 {
+  background-image: url("https://images.unsplash.com/photo-1758270705317-3ef6142d306f?auto=format&fit=crop&w=1400&q=82");
+}
+#differentiators #usp-4 {
+  background-image: url("https://images.unsplash.com/photo-1622674777904-386b3ef30c4a?auto=format&fit=crop&w=1400&q=82");
+}
+#differentiators #usp-5 {
+  background-image: url("https://images.unsplash.com/photo-1662148931332-d5a014aa255a?auto=format&fit=crop&w=1400&q=82");
+}
+#differentiators #usp-6 {
+  background-image: url("https://images.unsplash.com/photo-1743356806915-99d6cf6edae5?auto=format&fit=crop&w=1400&q=82");
+}
+
+@media (max-width: 700px) {
+  #differentiators .b-diff-card::after {
+    background: linear-gradient(110deg, rgba(17,19,39,.62), rgba(21,22,48,.78));
+  }
+  #differentiators .b-diff-card.is-active::after {
+    background: linear-gradient(125deg, rgba(175,24,91,.82), rgba(83,35,111,.78) 58%, rgba(25,57,127,.82));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #differentiators .b-diff-card,
+  #differentiators .b-diff-card::after {
+    transition: none !important;
+  }
+  #differentiators .b-diff-card.is-active ul {
+    animation: none;
+  }
+}
