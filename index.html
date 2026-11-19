@@ -13,7 +13,7 @@
     rel="stylesheet" />
   <link rel="preload" as="image" href="images/v3/hero-desktop.webp" media="(min-width: 901px)" />
   <link rel="preload" as="image" href="images/v3/hero-mobile.webp" media="(max-width: 900px)" />
-  <link rel="stylesheet" href="brochure.css?ver=33" />
+  <link rel="stylesheet" href="brochure.css?ver=34" />
 
   <!-- Primary Meta -->
   <title>MBA & PGDM Admissions 2027, Jaipuria Institute of Management</title>
@@ -2365,21 +2365,24 @@ jQuery(document).ready(function($) {
   </script>
 
   <script>
-    // Six differentiators: six balanced mosaic layouts with a slower FLIP transition.
+    // Six differentiators: interruptible FLIP transitions and reliable hover selection.
     (function () {
       function initDifferentiatorCards() {
         var grid = document.querySelector("#differentiators .b-diff-grid");
         if (!grid) return;
         var cards = Array.prototype.slice.call(grid.querySelectorAll(".b-diff-card"));
         if (cards.length !== 6) return;
+
         var layouts = ["layout-1", "layout-2", "layout-3", "layout-4", "layout-5", "layout-6"];
-        var activeIndex = 0;
-        var animating = false;
+        var activeIndex = -1;
+        var duration = 900;
+        var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
         function applyLayout(nextIndex) {
           grid.classList.remove.apply(grid.classList, layouts);
           grid.classList.add("layout-" + (nextIndex + 1));
           var smallIndex = 1;
+
           cards.forEach(function (card, index) {
             var active = index === nextIndex;
             card.classList.toggle("is-active", active);
@@ -2394,46 +2397,44 @@ jQuery(document).ready(function($) {
         }
 
         function activate(nextIndex) {
-          if (nextIndex === activeIndex || animating) return;
-          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            applyLayout(nextIndex);
-            return;
-          }
+          if (nextIndex === activeIndex) return;
 
+          // Capture the currently visible positions, including any in-flight animation.
           var firstRects = cards.map(function (card) { return card.getBoundingClientRect(); });
+
+          // Cancel previous motion only after capturing its visible state. New hover is never blocked.
+          cards.forEach(function (card) {
+            card.getAnimations().forEach(function (animation) { animation.cancel(); });
+          });
+
           applyLayout(nextIndex);
+
+          if (reduceMotion.matches) return;
+
           var lastRects = cards.map(function (card) { return card.getBoundingClientRect(); });
 
           cards.forEach(function (card, index) {
             var first = firstRects[index];
             var last = lastRects[index];
             if (!first.width || !first.height || !last.width || !last.height) return;
+
             var dx = first.left - last.left;
             var dy = first.top - last.top;
             var sx = first.width / last.width;
             var sy = first.height / last.height;
-            if (Math.abs(dx) < 1 && Math.abs(dy) < 1 && Math.abs(sx - 1) < .01 && Math.abs(sy - 1) < .01) return;
 
-            card.style.transition = "none";
-            card.style.transformOrigin = "top left";
-            card.style.transform = "translate(" + dx + "px, " + dy + "px) scale(" + sx + ", " + sy + ")";
-          });
+            if (Math.abs(dx) < 1 && Math.abs(dy) < 1 &&
+                Math.abs(sx - 1) < .01 && Math.abs(sy - 1) < .01) return;
 
-          grid.offsetWidth;
-          animating = true;
-          cards.forEach(function (card) {
-            card.style.transition = "transform 950ms cubic-bezier(.2,.72,.18,1)";
-            card.style.transform = "";
-          });
-
-          window.setTimeout(function () {
-            cards.forEach(function (card) {
-              card.style.transition = "";
-              card.style.transform = "";
-              card.style.transformOrigin = "";
+            card.animate([
+              { transformOrigin: "top left", transform: "translate(" + dx + "px," + dy + "px) scale(" + sx + "," + sy + ")" },
+              { transformOrigin: "top left", transform: "translate(0,0) scale(1,1)" }
+            ], {
+              duration: duration,
+              easing: "cubic-bezier(.2,.72,.18,1)",
+              fill: "none"
             });
-            animating = false;
-          }, 1000);
+          });
         }
 
         cards.forEach(function (card, index) {
@@ -2444,6 +2445,7 @@ jQuery(document).ready(function($) {
             if (!list.id) list.id = "usp-points-" + (index + 1);
             card.setAttribute("aria-controls", list.id);
           }
+
           card.addEventListener("mouseenter", function () {
             if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) activate(index);
           });
@@ -2456,8 +2458,19 @@ jQuery(document).ready(function($) {
             }
           });
         });
+
+        // Re-check the card under the pointer as the mosaic rearranges around a stationary cursor.
+        grid.addEventListener("pointermove", function (event) {
+          if (event.pointerType !== "mouse") return;
+          var target = event.target.closest(".b-diff-card");
+          if (!target || !grid.contains(target)) return;
+          var index = cards.indexOf(target);
+          if (index !== -1 && index !== activeIndex) activate(index);
+        });
+
         applyLayout(0);
       }
+
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", initDifferentiatorCards);
       } else {
