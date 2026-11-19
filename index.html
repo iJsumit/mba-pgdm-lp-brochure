@@ -13,7 +13,7 @@
     rel="stylesheet" />
   <link rel="preload" as="image" href="images/v3/hero-desktop.webp" media="(min-width: 901px)" />
   <link rel="preload" as="image" href="images/v3/hero-mobile.webp" media="(max-width: 900px)" />
-  <link rel="stylesheet" href="brochure.css?ver=32" />
+  <link rel="stylesheet" href="brochure.css?ver=33" />
 
   <!-- Primary Meta -->
   <title>MBA & PGDM Admissions 2027, Jaipuria Institute of Management</title>
@@ -2365,7 +2365,7 @@ jQuery(document).ready(function($) {
   </script>
 
   <script>
-    // Six differentiators: six balanced mosaic layouts.
+    // Six differentiators: six balanced mosaic layouts with a slower FLIP transition.
     (function () {
       function initDifferentiatorCards() {
         var grid = document.querySelector("#differentiators .b-diff-grid");
@@ -2373,13 +2373,15 @@ jQuery(document).ready(function($) {
         var cards = Array.prototype.slice.call(grid.querySelectorAll(".b-diff-card"));
         if (cards.length !== 6) return;
         var layouts = ["layout-1", "layout-2", "layout-3", "layout-4", "layout-5", "layout-6"];
+        var activeIndex = 0;
+        var animating = false;
 
-        function activate(activeIndex) {
+        function applyLayout(nextIndex) {
           grid.classList.remove.apply(grid.classList, layouts);
-          grid.classList.add("layout-" + (activeIndex + 1));
+          grid.classList.add("layout-" + (nextIndex + 1));
           var smallIndex = 1;
           cards.forEach(function (card, index) {
-            var active = index === activeIndex;
+            var active = index === nextIndex;
             card.classList.toggle("is-active", active);
             card.classList.remove("diff-small-1", "diff-small-2", "diff-small-3", "diff-small-4", "diff-small-5");
             if (!active) {
@@ -2388,6 +2390,50 @@ jQuery(document).ready(function($) {
             }
             card.setAttribute("aria-expanded", active ? "true" : "false");
           });
+          activeIndex = nextIndex;
+        }
+
+        function activate(nextIndex) {
+          if (nextIndex === activeIndex || animating) return;
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            applyLayout(nextIndex);
+            return;
+          }
+
+          var firstRects = cards.map(function (card) { return card.getBoundingClientRect(); });
+          applyLayout(nextIndex);
+          var lastRects = cards.map(function (card) { return card.getBoundingClientRect(); });
+
+          cards.forEach(function (card, index) {
+            var first = firstRects[index];
+            var last = lastRects[index];
+            if (!first.width || !first.height || !last.width || !last.height) return;
+            var dx = first.left - last.left;
+            var dy = first.top - last.top;
+            var sx = first.width / last.width;
+            var sy = first.height / last.height;
+            if (Math.abs(dx) < 1 && Math.abs(dy) < 1 && Math.abs(sx - 1) < .01 && Math.abs(sy - 1) < .01) return;
+
+            card.style.transition = "none";
+            card.style.transformOrigin = "top left";
+            card.style.transform = "translate(" + dx + "px, " + dy + "px) scale(" + sx + ", " + sy + ")";
+          });
+
+          grid.offsetWidth;
+          animating = true;
+          cards.forEach(function (card) {
+            card.style.transition = "transform 950ms cubic-bezier(.2,.72,.18,1)";
+            card.style.transform = "";
+          });
+
+          window.setTimeout(function () {
+            cards.forEach(function (card) {
+              card.style.transition = "";
+              card.style.transform = "";
+              card.style.transformOrigin = "";
+            });
+            animating = false;
+          }, 1000);
         }
 
         cards.forEach(function (card, index) {
@@ -2410,7 +2456,7 @@ jQuery(document).ready(function($) {
             }
           });
         });
-        activate(0);
+        applyLayout(0);
       }
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", initDifferentiatorCards);
