@@ -233,7 +233,7 @@ h3.b-tag {
 }
 
 .b-brand img {
-  height: 36px;
+  height: 40px;
   width: auto;
 }
 
@@ -1303,12 +1303,12 @@ ul.jqphone-flags-list,
   font-size: 30px;
 }
 
-.b-note-line {
+/* .b-note-line {
   margin: 18px 0 0;
   padding-top: 14px;
   border-top: 2px dotted #d8ccc4;
   font-size: 14.5px;
-}
+} */
 
 .b-gallery {
   display: grid;
@@ -3084,7 +3084,7 @@ ul.jqphone-flags-list,
   color: #fff;
   text-align: center;
   text-decoration: none;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(16px, 1.35vw, 19px);
   letter-spacing: .2px;
   line-height: 1.2;
