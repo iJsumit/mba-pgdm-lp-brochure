@@ -4938,3 +4938,135 @@ ul.jqphone-flags-list,
   position: relative;
   z-index: 2 !important
 }
+
+/* ===== Six differentiators: horizontal expandable cards (Option A) ===== */
+#differentiators .b-diff-grid {
+  display: flex !important;
+  align-items: stretch;
+  gap: 14px;
+  width: 100%;
+  margin-top: 30px;
+}
+
+#differentiators .b-diff-card {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  min-height: 340px;
+  padding: 24px 18px;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    flex-grow .48s cubic-bezier(.22, .7, .2, 1),
+    background-color .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease,
+    transform .3s ease;
+}
+
+#differentiators .b-diff-card::before {
+  left: 7%;
+  right: 7%;
+  height: 6px;
+}
+
+#differentiators .b-diff-card__top {
+  display: none;
+}
+
+#differentiators .b-diff-card h3 {
+  margin: 0;
+  font-size: clamp(14px, 1.12vw, 18px);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-align: center;
+  transition: font-size .3s ease, text-align .3s ease;
+}
+
+#differentiators .b-diff-card ul {
+  display: none;
+  margin-top: 18px;
+}
+
+#differentiators .b-diff-card li {
+  font-size: clamp(13px, .94vw, 15px);
+  line-height: 1.5;
+}
+
+#differentiators .b-diff-card.is-active {
+  flex-grow: 3.25;
+  justify-content: flex-start;
+  padding: 28px 26px;
+  border-color: rgba(184, 54, 95, .48);
+  background: linear-gradient(135deg, #fff 0%, #fff8fb 58%, #f7f2fa 100%);
+  box-shadow: 0 14px 34px rgba(91, 57, 91, .13);
+  cursor: default;
+}
+
+#differentiators .b-diff-card.is-active h3 {
+  font-size: clamp(19px, 1.5vw, 23px);
+  text-align: left;
+}
+
+#differentiators .b-diff-card.is-active ul {
+  display: grid;
+}
+
+#differentiators .b-diff-card:not(.is-active):hover {
+  transform: translateY(-2px);
+  border-color: rgba(184, 54, 95, .32);
+  box-shadow: 0 12px 28px rgba(43, 42, 46, .08);
+}
+
+#differentiators .b-diff-card:focus-visible {
+  outline: 3px solid rgba(91, 155, 213, .7);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  #differentiators .b-diff-grid {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  #differentiators .b-diff-card,
+  #differentiators .b-diff-card.is-active {
+    min-height: 0;
+    padding: 18px 20px;
+  }
+
+  #differentiators .b-diff-card h3,
+  #differentiators .b-diff-card.is-active h3 {
+    text-align: left;
+    font-size: 17px;
+  }
+
+  #differentiators .b-diff-card.is-active ul {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  #differentiators .b-diff-grid {
+    margin-top: 22px;
+  }
+
+  #differentiators .b-diff-card,
+  #differentiators .b-diff-card.is-active {
+    padding: 17px 18px;
+    border-radius: 14px;
+  }
+
+  #differentiators .b-diff-card li {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #differentiators .b-diff-card {
+    transition: none;
+  }
+}
