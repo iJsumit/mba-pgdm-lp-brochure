@@ -60,10 +60,18 @@ sup {
   font-size: .6em;
 }
 
-.b-wrap {
+/* .b-wrap {
   max-width: var(--wrap);
   margin: 0 auto;
   padding: 0 22px;
+} */
+
+.b-wrap {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 22px;
+  box-sizing: border-box;
 }
 
 .b-sec {
@@ -233,7 +241,7 @@ h3.b-tag {
 }
 
 .b-brand img {
-  height: 36px;
+  height: 40px;
   width: auto;
 }
 
@@ -1303,12 +1311,12 @@ ul.jqphone-flags-list,
   font-size: 30px;
 }
 
-.b-note-line {
+/* .b-note-line {
   margin: 18px 0 0;
   padding-top: 14px;
   border-top: 2px dotted #d8ccc4;
   font-size: 14.5px;
-}
+} */
 
 .b-gallery {
   display: grid;
@@ -2767,7 +2775,7 @@ ul.jqphone-flags-list,
   }
 
   .b-hero-kicker {
-    font-size: 14.5px;
+    font-size: 14px;
   }
 
   .b-hero-facts strong {
@@ -3084,7 +3092,7 @@ ul.jqphone-flags-list,
   color: #fff;
   text-align: center;
   text-decoration: none;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(16px, 1.35vw, 19px);
   letter-spacing: .2px;
   line-height: 1.2;
@@ -4652,9 +4660,18 @@ ul.jqphone-flags-list,
 
 
 /* Alumni cards: compact name/batch row with centered details */
-#alumni .b-alum-carousel{position:relative;overflow:visible!important;padding:70px 0 28px}
+#alumni .b-alum-carousel {
+  position: relative;
+  overflow: visible !important;
+  padding: 20px 0 28px
+}
 
-#alumni .b-alum-viewport{width:100%;overflow-x:clip!important;overflow-y:visible!important;padding:0 4px 14px}
+#alumni .b-alum-viewport {
+  width: 100%;
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+  padding: 0 4px 14px
+}
 
 #alumni .b-alum-track {
   display: flex;
@@ -4687,7 +4704,20 @@ ul.jqphone-flags-list,
   isolation: isolate
 }
 
-#alumni .b-alum-photo{position:absolute;z-index:1;top:-26px;left:8px;width:calc(100% - 16px);height:190px;margin:0;overflow:visible;border:0;border-radius:8px 8px 0 0;background:transparent;pointer-events:none}
+#alumni .b-alum-photo {
+  position: absolute;
+  z-index: 1;
+  top: -26px;
+  left: 8px;
+  width: calc(100% - 16px);
+  height: 190px;
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  pointer-events: none
+}
 
 #alumni .b-alum-photo img {
   display: block;
@@ -4848,6 +4878,7 @@ ul.jqphone-flags-list,
     width: 100%;
     align-items: start;
   }
+
   .b-placement-split .b-bigstats li {
     min-width: 0;
     padding: 4px 5px 4px 0;
@@ -4855,9 +4886,11 @@ ul.jqphone-flags-list,
     line-height: 1.25;
     overflow-wrap: normal;
   }
-  .b-placement-split .b-bigstats li + li {
+
+  .b-placement-split .b-bigstats li+li {
     padding-left: 7px;
   }
+
   .b-placement-split .b-bigstats strong {
     display: block;
     white-space: nowrap;
@@ -4865,6 +4898,7 @@ ul.jqphone-flags-list,
     line-height: 1.05;
     letter-spacing: -.7px;
   }
+
   .b-placement-split .b-bigstats small {
     display: block;
     margin-top: 2px;
@@ -4873,18 +4907,22 @@ ul.jqphone-flags-list,
     letter-spacing: 0;
   }
 }
+
 @media (max-width: 380px) {
   .b-placement-split .b-bigstats li {
     padding-right: 3px;
     font-size: 9px;
   }
-  .b-placement-split .b-bigstats li + li {
+
+  .b-placement-split .b-bigstats li+li {
     padding-left: 5px;
   }
+
   .b-placement-split .b-bigstats strong {
     font-size: 17px;
     letter-spacing: -.8px;
   }
+
   .b-placement-split .b-bigstats small {
     font-size: 9px;
   }
@@ -4892,5 +4930,11 @@ ul.jqphone-flags-list,
 
 /* Portrait must stay behind the white information panel */
 #alumni .b-alum-photo,
-#alumni .b-alum-photo img{z-index:1!important}
-#alumni .b-alum-info{position:relative;z-index:2!important}
+#alumni .b-alum-photo img {
+  z-index: 1 !important
+}
+
+#alumni .b-alum-info {
+  position: relative;
+  z-index: 2 !important
+}
