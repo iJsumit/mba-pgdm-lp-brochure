@@ -13,7 +13,7 @@
     rel="stylesheet" />
   <link rel="preload" as="image" href="images/v3/hero-desktop.webp" media="(min-width: 901px)" />
   <link rel="preload" as="image" href="images/v3/hero-mobile.webp" media="(max-width: 900px)" />
-  <link rel="stylesheet" href="brochure.css?ver=31" />
+  <link rel="stylesheet" href="brochure.css?ver=32" />
 
   <!-- Primary Meta -->
   <title>MBA & PGDM Admissions 2027, Jaipuria Institute of Management</title>
@@ -2365,57 +2365,53 @@ jQuery(document).ready(function($) {
   </script>
 
   <script>
-    // Six differentiators: accessible expandable-card interaction.
+    // Six differentiators: six balanced mosaic layouts.
     (function () {
       function initDifferentiatorCards() {
         var grid = document.querySelector("#differentiators .b-diff-grid");
         if (!grid) return;
-
         var cards = Array.prototype.slice.call(grid.querySelectorAll(".b-diff-card"));
-        if (!cards.length) return;
+        if (cards.length !== 6) return;
+        var layouts = ["layout-1", "layout-2", "layout-3", "layout-4", "layout-5", "layout-6"];
 
-        function activate(card) {
-          cards.forEach(function (item) {
-            var active = item === card;
-            item.classList.toggle("is-active", active);
-            item.setAttribute("aria-expanded", active ? "true" : "false");
+        function activate(activeIndex) {
+          grid.classList.remove.apply(grid.classList, layouts);
+          grid.classList.add("layout-" + (activeIndex + 1));
+          var smallIndex = 1;
+          cards.forEach(function (card, index) {
+            var active = index === activeIndex;
+            card.classList.toggle("is-active", active);
+            card.classList.remove("diff-small-1", "diff-small-2", "diff-small-3", "diff-small-4", "diff-small-5");
+            if (!active) {
+              card.classList.add("diff-small-" + smallIndex);
+              smallIndex += 1;
+            }
+            card.setAttribute("aria-expanded", active ? "true" : "false");
           });
         }
 
         cards.forEach(function (card, index) {
           var list = card.querySelector("ul");
           card.setAttribute("tabindex", "0");
-          card.setAttribute("aria-expanded", index === 0 ? "true" : "false");
+          card.setAttribute("role", "button");
           if (list) {
             if (!list.id) list.id = "usp-points-" + (index + 1);
             card.setAttribute("aria-controls", list.id);
           }
-
           card.addEventListener("mouseenter", function () {
-            if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-              activate(card);
-            }
+            if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) activate(index);
           });
-
-          card.addEventListener("focusin", function () {
-            activate(card);
-          });
-
-          card.addEventListener("click", function () {
-            activate(card);
-          });
-
+          card.addEventListener("focusin", function () { activate(index); });
+          card.addEventListener("click", function () { activate(index); });
           card.addEventListener("keydown", function (event) {
             if (event.key === "Enter" || event.key === " ") {
               event.preventDefault();
-              activate(card);
+              activate(index);
             }
           });
         });
-
-        activate(cards[0]);
+        activate(0);
       }
-
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", initDifferentiatorCards);
       } else {
