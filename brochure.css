@@ -5695,3 +5695,146 @@ ul.jqphone-flags-list,
   #differentiators .b-usp-tab__arrow { transition: none; }
   #differentiators .b-usp-panel.is-active .b-usp-panel__content { animation: none; }
 }
+
+
+/* ===== USP section compact desktop fit: keep heading, all tabs and panel in view ===== */
+@media (min-width: 901px) {
+  #differentiators.b-sec {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  #differentiators > .b-wrap > .b-tag {
+    margin-bottom: 16px;
+    font-size: clamp(36px, 2.35vw, 42px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+
+  #differentiators .b-usp-layout {
+    margin-top: 18px;
+    gap: 20px;
+  }
+
+  #differentiators .b-usp-tabs {
+    gap: 8px;
+  }
+
+  #differentiators .b-usp-tab {
+    min-height: 64px;
+    padding: 8px 14px;
+    gap: 12px;
+    border-radius: 13px;
+  }
+
+  #differentiators .b-usp-tab__icon {
+    flex-basis: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+  }
+
+  #differentiators .b-usp-tab__icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  #differentiators .b-usp-tab__title {
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  #differentiators .b-usp-panel {
+    min-height: 420px;
+    height: 100%;
+    border-radius: 19px;
+  }
+
+  #differentiators .b-usp-panel__content {
+    padding: clamp(25px, 2.5vw, 38px);
+  }
+
+  #differentiators .b-usp-panel__eyebrow {
+    margin-bottom: 10px;
+  }
+
+  #differentiators .b-usp-panel h3 {
+    margin-bottom: 9px;
+    font-size: clamp(27px, 2.4vw, 36px);
+  }
+
+  #differentiators .b-usp-panel__intro {
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  #differentiators .b-usp-panel li {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  #differentiators .b-usp-panel li::before {
+    top: 18px;
+  }
+}
+
+/* Short laptop / small desktop viewports: compact enough to avoid tab clipping. */
+@media (min-width: 901px) and (max-height: 900px) {
+  #differentiators.b-sec {
+    padding-top: 20px;
+    padding-bottom: 22px;
+  }
+
+  #differentiators > .b-wrap > .b-tag {
+    margin-bottom: 12px;
+    font-size: clamp(34px, 2.15vw, 39px);
+    line-height: 1.04;
+  }
+
+  #differentiators .b-usp-layout {
+    margin-top: 14px;
+  }
+
+  #differentiators .b-usp-tab {
+    min-height: 59px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  #differentiators .b-usp-tab__icon {
+    flex-basis: 37px;
+    width: 37px;
+    height: 37px;
+  }
+
+  #differentiators .b-usp-panel {
+    min-height: 390px;
+  }
+
+  #differentiators .b-usp-panel__content {
+    padding: 25px 30px;
+  }
+
+  #differentiators .b-usp-panel li {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+}
+
+/* Keep the section compact on tablets as well, without clipping the tab list. */
+@media (min-width: 561px) and (max-width: 900px) {
+  #differentiators.b-sec {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  #differentiators > .b-wrap > .b-tag {
+    margin-bottom: 16px;
+    font-size: clamp(32px, 5vw, 42px);
+    line-height: 1.08;
+  }
+
+  #differentiators .b-usp-panel {
+    min-height: 390px;
+  }
+}
