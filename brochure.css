@@ -5342,3 +5342,78 @@ ul.jqphone-flags-list,
     animation: none;
   }
 }
+
+
+/* ===== Fix hover reliability, prevent transform conflicts, tighten expanded cards ===== */
+#differentiators .b-diff-card {
+  transition: border-color 650ms ease, box-shadow 650ms ease, background-color 650ms ease !important;
+  will-change: transform;
+}
+
+#differentiators .b-diff-card:not(.is-active):hover {
+  transform: none !important;
+}
+
+#differentiators .b-diff-grid {
+  grid-template-rows: repeat(2, minmax(185px, auto));
+}
+
+#differentiators .b-diff-card.is-active {
+  justify-content: center;
+  padding-top: 22px;
+  padding-bottom: 22px;
+}
+
+#differentiators .b-diff-card.is-active ul {
+  margin-top: 12px;
+  gap: 6px;
+}
+
+#differentiators .b-diff-card.is-active li {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+/* Tablet: use a compact two-row mosaic with enough width for every heading. */
+@media (max-width: 1050px) and (min-width: 851px) {
+  #differentiators .b-diff-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(185px, auto));
+    grid-template-areas:
+      "active active active active small1 small1 small2 small2"
+      "active active active active small3 small3 small4 small5";
+    gap: 12px;
+  }
+}
+
+/* Narrow tablet and mobile: stack cards to avoid cramped mosaic cells. */
+@media (max-width: 850px) {
+  #differentiators .b-diff-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas: none !important;
+    gap: 10px;
+  }
+
+  #differentiators .b-diff-card,
+  #differentiators .b-diff-card.is-active,
+  #differentiators .b-diff-card.diff-small-1,
+  #differentiators .b-diff-card.diff-small-2,
+  #differentiators .b-diff-card.diff-small-3,
+  #differentiators .b-diff-card.diff-small-4,
+  #differentiators .b-diff-card.diff-small-5 {
+    grid-area: auto;
+    min-height: 0;
+    height: auto;
+  }
+
+  #differentiators .b-diff-card.is-active {
+    justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #differentiators .b-diff-card {
+    will-change: auto;
+  }
+}
