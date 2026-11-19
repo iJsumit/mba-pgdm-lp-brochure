@@ -5153,7 +5153,7 @@ ul.jqphone-flags-list,
 #differentiators .b-diff-grid.layout-2 {
   grid-template-areas:
     "small1 small1 small1 small1 active active active active small2 small2 small2 small2"
-    "small3 small3 active active active active small4 small4 small4 small4 small5 small5";
+    "small3 small3 small4 small4 active active active active small5 small5 small5 small5";
 }
 #differentiators .b-diff-grid.layout-3 {
   grid-template-areas:
