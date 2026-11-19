@@ -60,10 +60,18 @@ sup {
   font-size: .6em;
 }
 
-.b-wrap {
+/* .b-wrap {
   max-width: var(--wrap);
   margin: 0 auto;
   padding: 0 22px;
+} */
+
+.b-wrap {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 22px;
+  box-sizing: border-box;
 }
 
 .b-sec {
