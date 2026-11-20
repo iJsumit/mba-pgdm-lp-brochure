@@ -2398,7 +2398,7 @@ jQuery(document).ready(function($) {
   </script>
 
   <script>
-    // Six differentiator tabs.
+    // Six differentiator tabs with synchronized 1.5s autoplay.
     (function () {
       function initUspTabs() {
         var root = document.getElementById("differentiators");
@@ -2407,23 +2407,53 @@ jQuery(document).ready(function($) {
         var panels = Array.prototype.slice.call(root.querySelectorAll("[data-usp-panel]"));
         if (!tabs.length || !panels.length) return;
 
+        var activeIndex = 0;
+        var autoplayTimer = null;
+        var sectionInView = false;
+        var delay = 1500;
+        var reducedMotion = window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
         function selectTab(index, moveFocus) {
+          activeIndex = (index + tabs.length) % tabs.length;
           tabs.forEach(function (tab, i) {
-            var selected = i === index;
+            var selected = i === activeIndex;
             tab.classList.toggle("is-active", selected);
             tab.setAttribute("aria-selected", selected ? "true" : "false");
             tab.setAttribute("tabindex", selected ? "0" : "-1");
           });
           panels.forEach(function (panel, i) {
-            var selected = i === index;
+            var selected = i === activeIndex;
             panel.hidden = !selected;
             panel.classList.toggle("is-active", selected);
           });
-          if (moveFocus) tabs[index].focus();
+          if (moveFocus) tabs[activeIndex].focus();
+        }
+
+        function stopAutoplay() {
+          if (autoplayTimer) {
+            window.clearInterval(autoplayTimer);
+            autoplayTimer = null;
+          }
+        }
+
+        function startAutoplay() {
+          if (reducedMotion || !sectionInView || document.hidden || autoplayTimer) return;
+          autoplayTimer = window.setInterval(function () {
+            selectTab(activeIndex + 1, false);
+          }, delay);
+        }
+
+        function restartAutoplay() {
+          stopAutoplay();
+          startAutoplay();
         }
 
         tabs.forEach(function (tab, index) {
-          tab.addEventListener("click", function () { selectTab(index, false); });
+          tab.addEventListener("click", function () {
+            selectTab(index, false);
+            restartAutoplay();
+          });
           tab.addEventListener("keydown", function (event) {
             var next = index;
             if (event.key === "ArrowDown" || event.key === "ArrowRight") next = (index + 1) % tabs.length;
@@ -2433,8 +2463,26 @@ jQuery(document).ready(function($) {
             else return;
             event.preventDefault();
             selectTab(next, true);
+            restartAutoplay();
           });
         });
+
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) stopAutoplay();
+          else startAutoplay();
+        });
+
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(function (entries) {
+            sectionInView = entries[0].isIntersecting;
+            if (sectionInView) startAutoplay();
+            else stopAutoplay();
+          }, { threshold: 0.2 });
+          observer.observe(root);
+        } else {
+          sectionInView = true;
+          startAutoplay();
+        }
 
         selectTab(0, false);
         if (window.lucide && typeof window.lucide.createIcons === "function") {
