@@ -1064,7 +1064,7 @@ ul.jqphone-flags-list,
 .b-alumni-banner {
   position: relative;
   color: #fff;
-  height: 280px;
+  height: auto;
   min-height: 280px;
   box-sizing: border-box;
   padding: 48px 0 32px;
