@@ -133,6 +133,7 @@
 
     var index = 0, timer = null, startX = 0, deltaX = 0, visible = 4, step = 0;
     var INTERVAL = 3600;
+    var cardsPerDot = 5;
 
     function visibleCount() {
       if (window.matchMedia('(max-width: 600px)').matches) return 1;
@@ -146,17 +147,25 @@
       var gap = parseFloat(window.getComputedStyle(track).columnGap || window.getComputedStyle(track).gap) || 18;
       step = first.getBoundingClientRect().width + gap;
     }
+    function updateControls() {
+      var pageIndex = Math.floor(index / cardsPerDot);
+      Array.from(pagination.querySelectorAll('.b-alum-dot')).forEach(function (dot, i) {
+        dot.classList.toggle('is-active', i === pageIndex);
+        if (i === pageIndex) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+    }
     function renderDots() {
       pagination.innerHTML = '';
-      var count = Math.max(1, cards.length);
+      var count = Math.ceil(cards.length / cardsPerDot);
       for (var i = 0; i < count; i++) {
         var dot = document.createElement('button');
         dot.type = 'button';
-        dot.className = 'b-alum-dot' + (i === index % count ? ' is-active' : '');
-        dot.setAttribute('aria-label', 'Show alumni card ' + (i + 1));
+        dot.className = 'b-alum-dot' + (i === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-label', 'Show alumni group ' + (i + 1));
         (function (target) {
           dot.addEventListener('click', function () {
-            index = target;
+            index = Math.min(target * cardsPerDot, cards.length - 1);
             move(true);
             restart();
           });
@@ -168,19 +177,15 @@
       measure();
       track.style.transition = animate === false ? 'none' : 'transform .65s cubic-bezier(.22,.61,.36,1)';
       track.style.transform = 'translate3d(' + (-index * step) + 'px,0,0)';
-      Array.from(pagination.children).forEach(function (dot, i) {
-        dot.classList.toggle('is-active', i === index % cards.length);
-      });
+      updateControls();
     }
     function next() {
-      index++;
+      index = index >= cards.length - 1 ? 0 : index + 1;
       move(true);
-      if (index >= cards.length) {
-        window.setTimeout(function () {
-          index = 0;
-          move(false);
-        }, 680);
-      }
+    }
+    function previous() {
+      index = index <= 0 ? cards.length - 1 : index - 1;
+      move(true);
     }
     function stop() {
       if (timer) window.clearInterval(timer);
@@ -205,6 +210,14 @@
     renderDots();
     move(false);
     start();
+
+    var controls = document.createElement('div');
+    controls.className = 'b-alum-arrows';
+    controls.innerHTML = '<button class="b-alum-arrow" type="button" aria-label="Previous alumni">←</button><button class="b-alum-arrow" type="button" aria-label="Next alumni">→</button>';
+    pagination.appendChild(controls);
+    var arrowButtons = controls.querySelectorAll('button');
+    arrowButtons[0].addEventListener('click', function () { previous(); restart(); });
+    arrowButtons[1].addEventListener('click', function () { next(); restart(); });
 
     viewport.addEventListener('touchstart', function (event) {
       stop();
@@ -239,6 +252,7 @@
         });
         index = 0;
         renderDots();
+        pagination.appendChild(controls);
         move(false);
         start();
       } else {
@@ -247,7 +261,28 @@
     });
   });
 
-  // ---- Global Exposure partner logo carousel ----
+  // ---- One Jaipuria image slider ----
+  document.querySelectorAll('[data-one-slider]').forEach(function (root) {
+    var slides = Array.from(root.querySelectorAll('.b-one-slide'));
+    var dots = Array.from(root.querySelectorAll('.b-one-dot'));
+    var previous = root.querySelector('[data-one-prev]');
+    var next = root.querySelector('[data-one-next]');
+    var index = 0;
+    function show(target) {
+      index = (target + slides.length) % slides.length;
+      slides.forEach(function (slide, i) { slide.classList.toggle('is-active', i === index); });
+      dots.forEach(function (dot, i) {
+        dot.classList.toggle('is-active', i === index);
+        if (i === index) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+    }
+    dots.forEach(function (dot, i) { dot.addEventListener('click', function () { show(i); }); });
+    if (previous) previous.addEventListener('click', function () { show(index - 1); });
+    if (next) next.addEventListener('click', function () { show(index + 1); });
+  });
+
+// ---- Global Exposure partner logo carousel ----
   var globalRoot = document.getElementById('global');
   if (globalRoot) {
     var globalViewport = globalRoot.querySelector('.b-global-viewport');
