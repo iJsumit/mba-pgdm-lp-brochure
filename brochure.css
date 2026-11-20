@@ -6051,3 +6051,43 @@ ul.jqphone-flags-list,
   font-size: 12.5px;
   margin-top: 12px;
 }
+
+
+/* Final carousel control overrides: keep alumni dots left and arrows right. */
+#alumni .b-alum-pagination {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 8px 10px 0;
+}
+#alumni .b-alum-pagination .b-alum-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  background: #aaa;
+  transform: none;
+}
+#alumni .b-alum-pagination .b-alum-dot.is-active {
+  width: 20px;
+  flex-basis: 20px;
+  height: 7px;
+  background: #333;
+}
+#alumni .b-alum-arrows {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+#alumni .b-alum-arrow {
+  background: transparent;
+  border: 0;
+  color: #555;
+  cursor: pointer;
+}
+.b-one-dot.is-active {
+  background: #333;
+  outline: none;
+}
