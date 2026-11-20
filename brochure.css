@@ -4057,9 +4057,8 @@ ul.jqphone-flags-list,
 .b-one-jaipuria {
   width: 100%;
   margin: 0;
-  padding: 0;
-  overflow: hidden;
   padding: 45px 0;
+  overflow: hidden;
 }
 
 .b-one-jaipuria-wrap {
@@ -4067,17 +4066,86 @@ ul.jqphone-flags-list,
   margin: 0 auto;
 }
 
-.b-one-jaipuria picture,
-.b-one-jaipuria img {
+.b-one-slider,
+.b-one-slides {
+  position: relative;
+  width: 100%;
+}
+
+.b-one-slide {
+  display: none;
+}
+
+.b-one-slide.is-active {
+  display: block;
+}
+
+.b-one-slide picture,
+.b-one-slide img {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 12px;
 }
 
+.b-one-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 10px 0;
+}
+
+.b-one-dots,
+.b-one-arrows {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.b-one-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #aaa;
+  cursor: pointer;
+}
+
+.b-one-dot.is-active {
+  width: 20px;
+  border-radius: 99px;
+  background: #fff;
+  outline: 1px solid #777;
+}
+
+.b-one-arrow,
+.b-alum-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #555;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.b-one-arrow:hover,
+.b-alum-arrow:hover {
+  color: #111;
+}
+
 @media (max-width: 768px) {
   .b-one-jaipuria-wrap {
     width: 100%;
+  }
+  .b-one-controls {
+    padding-inline: 16px;
   }
 }
 
@@ -4182,27 +4250,38 @@ ul.jqphone-flags-list,
 
 .b-alum-pagination {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 7px;
-  min-height: 10px;
-  padding-top: 8px;
+  gap: 12px;
+  min-height: 30px;
+  padding: 8px 10px 0;
 }
 
-.b-alum-dot {
-  width: 6px;
-  height: 6px;
+.b-alum-pagination .b-alum-dot {
+  width: 7px;
+  height: 7px;
   padding: 0;
   border: 0;
   border-radius: 99px;
-  background: #d7cbd6;
+  background: #aaa;
   cursor: pointer;
   transition: width .25s ease, background .25s ease;
 }
 
-.b-alum-dot.is-active {
-  width: 18px;
-  background: #e6a12e;
+.b-alum-pagination .b-alum-dot.is-active {
+  width: 20px;
+  background: #333;
+}
+
+.b-alum-arrows {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+.b-alum-arrow {
+  color: #555;
 }
 
 @media (max-width: 780px) {
