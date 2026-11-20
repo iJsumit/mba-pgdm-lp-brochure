@@ -5964,3 +5964,11 @@ ul.jqphone-flags-list,
     transition: none !important;
   }
 }
+
+
+/* Improve source-note contrast on the dark alumni banner. */
+.b-alumni-banner .b-note {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12.5px;
+  margin-top: 12px;
+}
