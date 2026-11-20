@@ -1465,8 +1465,8 @@
         </div>
 
         <div class="b-global-shell" aria-label="International university partners">
-          <button class="b-global-nav b-global-prev" type="button" aria-label="Previous partners">‹</button>
-          <div class="b-global-viewport">
+          
+          
             <div class="b-global-track">
               <article class="b-global-card">
                 <div class="b-global-logo"><img src="images/keele-university.webp" alt="Keele University logo"
@@ -1553,7 +1553,6 @@
               </article>
             </div>
           </div>
-          <button class="b-global-nav b-global-next" type="button" aria-label="Next partners">›</button>
         </div>
         <!-- <div class="b-global-foot"><span>15+ University Alliances</span><span>10+ Countries</span></div> -->
       </div>
@@ -2452,26 +2451,24 @@ jQuery(document).ready(function($) {
 
 
   <script>
-    /* Scroll-triggered section reveals. Content remains in the DOM; this is visual animation, not lazy loading. */
+    /* Lightweight scroll reveals with short transforms and one-way observation. */
     (function () {
       function initScrollReveals() {
-        if (!("IntersectionObserver" in window)) return;
+        if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         var sections = Array.prototype.slice.call(document.querySelectorAll("main section, body > section"));
         var targets = [];
-
-        sections.forEach(function (section, sectionIndex) {
+        sections.forEach(function (section) {
           if (section.id === "hero") return;
-          var wrap = section.querySelector(":scope > .b-wrap, :scope > .b-one-jaipuria-wrap");
-          if (!wrap) wrap = section;
+          var wrap = section.querySelector(":scope > .b-wrap, :scope > .b-one-jaipuria-wrap") || section;
           Array.prototype.slice.call(wrap.children).forEach(function (el, index) {
             if (el.matches("script, style, noscript")) return;
             el.classList.add("b-scroll-reveal");
-            el.setAttribute("data-reveal-direction", el.matches("h1, h2, h3, .b-tag") ? "up" : (sectionIndex % 2 ? "right" : "left"));
-            el.style.setProperty("--reveal-delay", Math.min(index * 90, 270) + "ms");
+            el.setAttribute("data-reveal-direction", "up");
+            el.style.setProperty("--reveal-delay", Math.min(index * 55, 110) + "ms");
             targets.push(el);
           });
         });
-
+        if (!targets.length) return;
         document.documentElement.classList.add("has-scroll-reveals");
         var observer = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
@@ -2479,11 +2476,10 @@ jQuery(document).ready(function($) {
             entry.target.classList.add("is-revealed");
             observer.unobserve(entry.target);
           });
-        }, { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+        }, { root: null, rootMargin: "0px 0px -5% 0px", threshold: 0.06 });
         targets.forEach(function (el) { observer.observe(el); });
       }
-
-      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initScrollReveals);
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initScrollReveals, { once: true });
       else initScrollReveals();
     })();
   </script>
