@@ -13,7 +13,7 @@
     rel="stylesheet" />
   <link rel="preload" as="image" href="images/v3/hero-desktop.webp" media="(min-width: 901px)" />
   <link rel="preload" as="image" href="images/v3/hero-mobile.webp" media="(max-width: 900px)" />
-  <link rel="stylesheet" href="brochure.css?ver=40" />
+  <link rel="stylesheet" href="brochure.css?ver=41" />
 
   <!-- Primary Meta -->
   <title>MBA & PGDM Admissions 2027, Jaipuria Institute of Management</title>
@@ -1559,15 +1559,32 @@
       </div>
     </section>
 
-    <!-- ===== One Jaipuria: One Experience banner (from previous LP) ===== -->
+    <!-- ===== One Jaipuria: One Experience banner carousel ===== -->
     <section class="b-one-jaipuria" aria-label="One Jaipuria, One Experience">
       <div class="b-one-jaipuria-wrap">
-        <picture>
-          <source media="(max-width: 768px)"
-            srcset="https://www.jaipuria.ac.in/admission/apply-mba-pgdm-admission/images/ONE-Jaipuria.-ONE-Experience-Banner-mobile.webp">
-          <img src="https://www.jaipuria.ac.in/admission/apply-mba-pgdm-admission/images/campuses.webp"
-            alt="One Jaipuria, One Experience. Jaipuria campuses" loading="lazy">
-        </picture>
+        <div class="b-one-slider" data-one-slider>
+          <div class="b-one-slides">
+            <div class="b-one-slide is-active">
+              <picture>
+                <source media="(max-width: 768px)" srcset="images/ONE-Jaipuria.-ONE-Experience-Banner-mobile.webp">
+                <img src="images/campuses.webp" alt="One Jaipuria, One Experience. Jaipuria campuses" loading="lazy">
+              </picture>
+            </div>
+            <div class="b-one-slide">
+              <img src="images/placement-banner.jpg" alt="Jaipuria placement banner" loading="lazy">
+            </div>
+          </div>
+          <div class="b-one-controls">
+            <div class="b-one-dots" aria-label="Banner slides">
+              <button class="b-one-dot is-active" type="button" aria-label="Show banner 1" aria-current="true"></button>
+              <button class="b-one-dot" type="button" aria-label="Show banner 2"></button>
+            </div>
+            <div class="b-one-arrows">
+              <button class="b-one-arrow" type="button" data-one-prev aria-label="Previous banner">←</button>
+              <button class="b-one-arrow" type="button" data-one-next aria-label="Next banner">→</button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
