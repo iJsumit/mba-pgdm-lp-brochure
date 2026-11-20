@@ -5932,3 +5932,35 @@ ul.jqphone-flags-list,
     font-size: 7px;
   }
 }
+
+
+/* ===== Scroll-triggered section entrance animations ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .has-scroll-reveals .b-scroll-reveal {
+    opacity: 0;
+    transition: opacity .85s ease var(--reveal-delay, 0ms),
+      transform .85s cubic-bezier(.2,.7,.2,1) var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  .has-scroll-reveals .b-scroll-reveal[data-reveal-direction="up"] {
+    transform: translate3d(0, 34px, 0);
+  }
+  .has-scroll-reveals .b-scroll-reveal[data-reveal-direction="left"] {
+    transform: translate3d(-42px, 0, 0);
+  }
+  .has-scroll-reveals .b-scroll-reveal[data-reveal-direction="right"] {
+    transform: translate3d(42px, 0, 0);
+  }
+  .has-scroll-reveals .b-scroll-reveal.is-revealed {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .b-scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
