@@ -189,12 +189,12 @@ h3.b-tag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 13px 28px;
+  padding: 8px;
   border-radius: 10px;
   border: 0;
   cursor: pointer;
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 15.5px;
   transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
 }
@@ -216,7 +216,7 @@ h3.b-tag {
   background: #fff;
   color: var(--plum);
   border: 2px solid var(--plum);
-  min-width: 200px;
+  min-width: 130px;
 }
 
 /* ---------- header ---------- */

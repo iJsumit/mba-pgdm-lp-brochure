@@ -1082,20 +1082,7 @@
         <h2 class="b-tag b-tag--center" style="--g1: #9c6c54; --g2: #4e5f7a">
           <span class="b-bar">Recruiters That Trust Us</span>
         </h2>
-        <div class="b-tabs" role="tablist" data-filter="rec">
-          <button type="button" class="b-tab is-active" aria-selected="true" data-cat="all">
-            All</button><button type="button" class="b-tab" aria-selected="false" data-cat="0">
-            BFSI &amp; Financial Services</button><button type="button" class="b-tab" aria-selected="false"
-            data-cat="1">
-            Consulting &amp; Professional Services</button><button type="button" class="b-tab" aria-selected="false"
-            data-cat="2">
-            FMCG / Consumer Durables</button><button type="button" class="b-tab" aria-selected="false" data-cat="3">
-            Manufacturing &amp; Engineering</button><button type="button" class="b-tab" aria-selected="false"
-            data-cat="4">
-            Retail, E-Commerce &amp; Lifestyle</button><button type="button" class="b-tab" aria-selected="false"
-            data-cat="5">
-            IT &amp; Technology</button>
-        </div>
+
         <div class="b-carousel b-carousel--logos" data-carousel data-autoplay="3200">
           <button class="b-car-btn b-car-prev" type="button" aria-label="Previous recruiters">
             ‹
@@ -1412,6 +1399,22 @@
             ›
           </button>
         </div>
+
+        <div class="b-tabs" role="tablist" data-filter="rec">
+          <button type="button" class="b-tab is-active" aria-selected="true" data-cat="all">
+            All</button><button type="button" class="b-tab" aria-selected="false" data-cat="0">
+            BFSI &amp; Financial Services</button><button type="button" class="b-tab" aria-selected="false"
+            data-cat="1">
+            Consulting &amp; Professional Services</button><button type="button" class="b-tab" aria-selected="false"
+            data-cat="2">
+            FMCG / Consumer Durables</button><button type="button" class="b-tab" aria-selected="false" data-cat="3">
+            Manufacturing &amp; Engineering</button><button type="button" class="b-tab" aria-selected="false"
+            data-cat="4">
+            Retail, E-Commerce &amp; Lifestyle</button><button type="button" class="b-tab" aria-selected="false"
+            data-cat="5">
+            IT &amp; Technology</button>
+        </div>
+
       </div>
     </section>
 
@@ -2431,42 +2434,42 @@ jQuery(document).ready(function($) {
   </script>
 
 
-<script>
-  /* Scroll-triggered section reveals. Content remains in the DOM; this is visual animation, not lazy loading. */
-  (function () {
-    function initScrollReveals() {
-      if (!("IntersectionObserver" in window)) return;
-      var sections = Array.prototype.slice.call(document.querySelectorAll("main section, body > section"));
-      var targets = [];
+  <script>
+    /* Scroll-triggered section reveals. Content remains in the DOM; this is visual animation, not lazy loading. */
+    (function () {
+      function initScrollReveals() {
+        if (!("IntersectionObserver" in window)) return;
+        var sections = Array.prototype.slice.call(document.querySelectorAll("main section, body > section"));
+        var targets = [];
 
-      sections.forEach(function (section, sectionIndex) {
-        if (section.id === "hero") return;
-        var wrap = section.querySelector(":scope > .b-wrap, :scope > .b-one-jaipuria-wrap");
-        if (!wrap) wrap = section;
-        Array.prototype.slice.call(wrap.children).forEach(function (el, index) {
-          if (el.matches("script, style, noscript")) return;
-          el.classList.add("b-scroll-reveal");
-          el.setAttribute("data-reveal-direction", el.matches("h1, h2, h3, .b-tag") ? "up" : (sectionIndex % 2 ? "right" : "left"));
-          el.style.setProperty("--reveal-delay", Math.min(index * 90, 270) + "ms");
-          targets.push(el);
+        sections.forEach(function (section, sectionIndex) {
+          if (section.id === "hero") return;
+          var wrap = section.querySelector(":scope > .b-wrap, :scope > .b-one-jaipuria-wrap");
+          if (!wrap) wrap = section;
+          Array.prototype.slice.call(wrap.children).forEach(function (el, index) {
+            if (el.matches("script, style, noscript")) return;
+            el.classList.add("b-scroll-reveal");
+            el.setAttribute("data-reveal-direction", el.matches("h1, h2, h3, .b-tag") ? "up" : (sectionIndex % 2 ? "right" : "left"));
+            el.style.setProperty("--reveal-delay", Math.min(index * 90, 270) + "ms");
+            targets.push(el);
+          });
         });
-      });
 
-      document.documentElement.classList.add("has-scroll-reveals");
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-revealed");
-          observer.unobserve(entry.target);
-        });
-      }, { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
-      targets.forEach(function (el) { observer.observe(el); });
-    }
+        document.documentElement.classList.add("has-scroll-reveals");
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          });
+        }, { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+        targets.forEach(function (el) { observer.observe(el); });
+      }
 
-    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initScrollReveals);
-    else initScrollReveals();
-  })();
-</script>
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initScrollReveals);
+      else initScrollReveals();
+    })();
+  </script>
 
 </body>
 
