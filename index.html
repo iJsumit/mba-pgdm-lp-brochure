@@ -2453,7 +2453,7 @@ jQuery(document).ready(function($) {
   </script>
 
   <script>
-    // Six differentiator tabs with synchronized 1.5s autoplay.
+    // Six differentiator tabs with 1.5s autoplay until the user interacts.
     (function () {
       function initUspTabs() {
         var root = document.getElementById("differentiators");
@@ -2465,6 +2465,7 @@ jQuery(document).ready(function($) {
         var activeIndex = 0;
         var autoplayTimer = null;
         var sectionInView = false;
+        var manualMode = false;
         var delay = 1500;
         var reducedMotion = window.matchMedia &&
           window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -2493,21 +2494,21 @@ jQuery(document).ready(function($) {
         }
 
         function startAutoplay() {
-          if (reducedMotion || !sectionInView || document.hidden || autoplayTimer) return;
+          if (manualMode || reducedMotion || !sectionInView || document.hidden || autoplayTimer) return;
           autoplayTimer = window.setInterval(function () {
             selectTab(activeIndex + 1, false);
           }, delay);
         }
 
-        function restartAutoplay() {
+        function switchToManualMode() {
+          manualMode = true;
           stopAutoplay();
-          startAutoplay();
         }
 
         tabs.forEach(function (tab, index) {
           tab.addEventListener("click", function () {
+            switchToManualMode();
             selectTab(index, false);
-            restartAutoplay();
           });
           tab.addEventListener("keydown", function (event) {
             var next = index;
@@ -2517,8 +2518,8 @@ jQuery(document).ready(function($) {
             else if (event.key === "End") next = tabs.length - 1;
             else return;
             event.preventDefault();
+            switchToManualMode();
             selectTab(next, true);
-            restartAutoplay();
           });
         });
 
