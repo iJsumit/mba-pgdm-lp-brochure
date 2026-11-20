@@ -5686,3 +5686,249 @@ ul.jqphone-flags-list,
   #differentiators .b-usp-tab__arrow { transition: none; }
   #differentiators .b-usp-panel.is-active .b-usp-panel__content { animation: none; }
 }
+
+
+/* ===== Rankings: one compact aligned row for AACSB and NIRF ===== */
+#rankings {
+  padding: 28px 0;
+}
+
+#rankings .b-tag {
+  margin-bottom: 12px;
+}
+
+.b-ranks--compact {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.b-ranks--compact .b-rankc {
+  min-height: 124px;
+  padding: 14px 18px;
+  gap: 16px;
+}
+
+.b-rankc--aacsb .b-rank-logo {
+  width: 112px;
+  height: 58px;
+  max-height: 58px;
+  flex: 0 0 112px;
+  object-fit: contain;
+}
+
+.b-aacsb-stats {
+  gap: 10px;
+  align-items: center;
+}
+
+.b-aacsb-stats strong {
+  font-size: clamp(30px, 2.7vw, 40px);
+}
+
+.b-aacsb-stats span {
+  margin-top: 5px;
+  font-size: 10.5px;
+  line-height: 1.25;
+}
+
+.b-ranks--compact .b-rankc--nirf {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  min-height: 124px;
+}
+
+.b-rankc--compact .b-nirf-top {
+  flex: 0 0 112px;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 8px;
+  background: #fff;
+}
+
+.b-rankc--compact .b-nirf-top img {
+  display: block;
+  width: 100%;
+  max-width: 100px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.b-rankc--compact .b-nirf-year {
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .5px;
+}
+
+.b-rankc--compact .b-nirf-grid {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-content: center;
+  align-items: center;
+  padding: 12px 12px;
+  background: linear-gradient(120deg, #c39a55, #3aa0d6);
+}
+
+.b-rankc--compact .b-nirf-grid>div,
+.b-rankc--compact .b-nirf-grid>div:nth-child(odd),
+.b-rankc--compact .b-nirf-grid>div:nth-child(even),
+.b-rankc--compact .b-nirf-grid>div:nth-child(-n+2) {
+  min-width: 0;
+  min-height: 0;
+  padding: 6px 8px;
+  border: 0;
+  border-left: 1px solid rgba(255,255,255,.55);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.b-rankc--compact .b-nirf-grid>div:first-child {
+  border-left: 0;
+}
+
+.b-rankc--compact .b-nirf-grid strong {
+  font-size: clamp(21px, 2vw, 29px);
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.b-rankc--compact .b-nirf-grid sup {
+  font-size: .45em;
+}
+
+.b-rankc--compact .b-nirf-grid span {
+  margin-top: 5px;
+  font-size: 9px;
+  line-height: 1.25;
+  font-weight: 700;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  #rankings {
+    padding: 26px 0;
+  }
+
+  .b-ranks--compact {
+    grid-template-columns: 1fr;
+  }
+
+  .b-ranks--compact .b-rankc {
+    min-height: 116px;
+  }
+}
+
+@media (max-width: 640px) {
+  #rankings {
+    padding: 22px 0;
+  }
+
+  .b-ranks--compact .b-rankc {
+    min-height: 108px;
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .b-rankc--aacsb .b-rank-logo {
+    width: 88px;
+    height: 52px;
+    max-height: 52px;
+    flex-basis: 88px;
+  }
+
+  .b-aacsb-stats {
+    gap: 7px;
+  }
+
+  .b-aacsb-stats>div+div {
+    padding-left: 8px;
+  }
+
+  .b-aacsb-stats strong {
+    font-size: 30px;
+  }
+
+  .b-aacsb-stats span {
+    font-size: 9px;
+  }
+
+  .b-ranks--compact .b-rankc--nirf {
+    min-height: 108px;
+  }
+
+  .b-rankc--compact .b-nirf-top {
+    flex-basis: 82px;
+    padding: 8px 5px;
+  }
+
+  .b-rankc--compact .b-nirf-top img {
+    height: 48px;
+  }
+
+  .b-rankc--compact .b-nirf-year {
+    font-size: 10px;
+  }
+
+  .b-rankc--compact .b-nirf-grid {
+    padding: 8px 5px;
+  }
+
+  .b-rankc--compact .b-nirf-grid>div,
+  .b-rankc--compact .b-nirf-grid>div:nth-child(odd),
+  .b-rankc--compact .b-nirf-grid>div:nth-child(even),
+  .b-rankc--compact .b-nirf-grid>div:nth-child(-n+2) {
+    padding: 5px 3px;
+  }
+
+  .b-rankc--compact .b-nirf-grid strong {
+    font-size: clamp(17px, 5vw, 22px);
+  }
+
+  .b-rankc--compact .b-nirf-grid span {
+    font-size: 8px;
+    line-height: 1.15;
+  }
+}
+
+@media (max-width: 360px) {
+  .b-rankc--aacsb .b-rank-logo {
+    width: 76px;
+    flex-basis: 76px;
+  }
+
+  .b-aacsb-stats strong {
+    font-size: 27px;
+  }
+
+  .b-aacsb-stats span {
+    font-size: 8px;
+  }
+
+  .b-rankc--compact .b-nirf-top {
+    flex-basis: 72px;
+  }
+
+  .b-rankc--compact .b-nirf-grid strong {
+    font-size: 16px;
+  }
+
+  .b-rankc--compact .b-nirf-grid span {
+    font-size: 7px;
+  }
+}
