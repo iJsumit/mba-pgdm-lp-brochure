@@ -4881,7 +4881,7 @@ ul.jqphone-flags-list,
   margin: 9px 0 0;
   padding: 0;
   background: transparent;
-  text-align: center
+  text-align: center;
 }
 
 #alumni .b-alum-logo {
@@ -4891,36 +4891,36 @@ ul.jqphone-flags-list,
   width: auto;
   height: auto;
   margin: 0 auto;
-  object-fit: contain
+  object-fit: contain;
 }
 
 #alumni .b-alum-pagination {
-  justify-content: center
+  justify-content: center;
 }
 
 @media(max-width:900px) {
   #alumni .b-alum-card {
     flex-basis: calc((100% - 14px)/2);
-    min-height: 270px
+    min-height: 270px;
   }
 
   #alumni .b-alum-photo {
-    height: 175px
+    height: 175px;
   }
 
   #alumni .b-alum-info {
-    margin-top: 135px
+    margin-top: 135px;
   }
 }
 
 @media(max-width:600px) {
   #alumni .b-alum-card {
     flex-basis: 100%;
-    min-height: 270px
+    min-height: 270px;
   }
 
   #alumni .b-alum-photo {
-    height: 190px
+    height: 190px;
   }
 
   #alumni .b-alum-info {
