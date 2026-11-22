@@ -1724,31 +1724,25 @@ ul.jqphone-flags-list,
   margin-top: 34px;
 }
 
-/* Recruiter logos: intrinsic logo sizing with natural row wrapping */
-.b-recruiter-logos {
-  width: 100%;
-}
-
-.b-recruiter-logos .b-logos {
+/* Recruiter logo carousel: one horizontal row, natural logo widths */
+.b-carousel--logos .b-car-track {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 14px;
-  width: 100%;
-  padding: 6px 2px 14px;
-  overflow: visible;
-  scroll-snap-type: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
 }
 
-.b-recruiter-logos .b-logo {
+.b-carousel--logos .b-car-track > .b-logo {
   box-sizing: border-box;
   display: flex;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   width: fit-content;
-  max-width: calc(100% - 24px);
+  max-width: none;
   height: auto;
   padding: 10px 12px;
   background: #fff;
@@ -1756,12 +1750,11 @@ ul.jqphone-flags-list,
   border-radius: 12px;
 }
 
-.b-recruiter-logos .b-logo img {
+.b-carousel--logos .b-logo img {
   display: block;
   width: auto;
-  height: auto;
-  max-width: 220px;
-  max-height: 60px;
+  height: 30px;
+  max-width: none;
   object-fit: contain;
 }
 
