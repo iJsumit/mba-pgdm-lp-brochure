@@ -1727,8 +1727,8 @@ ul.jqphone-flags-list,
 .b-carousel--logos .b-car-track {
   display: grid;
   grid-auto-flow: column;
-  grid-template-rows: repeat(2, auto);
-  grid-auto-columns: calc((100% - 5 * 14px) / 6);
+  grid-template-rows: repeat(3, minmax(0, auto));
+  grid-auto-columns: calc((100% - 3 * 14px) / 4);
   gap: 14px;
 }
 
@@ -2647,7 +2647,7 @@ ul.jqphone-flags-list,
   }
 
   .b-carousel--logos .b-car-track {
-    grid-auto-columns: calc((100% - 3 * 14px) / 4);
+    grid-auto-columns: calc((100% - 2 * 14px) / 3);
   }
 }
 
