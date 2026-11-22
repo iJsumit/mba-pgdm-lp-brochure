@@ -31,32 +31,77 @@
     });
   });
 
-  // ---- recruiter category filter + keep the next tabs discoverable ----
+  // ---- recruiter category filter + three-row horizontal logo carousel ----
   var logoTrack = document.getElementById('bLogos');
   var recruiterTabs = document.querySelector('[data-filter="rec"]');
-  document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
-    btn.addEventListener('click', function () {
-      all.forEach(function (b) { b.classList.toggle('is-active', b === btn); b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
-      var c = btn.getAttribute('data-cat');
-      logoTrack.querySelectorAll('.b-logo').forEach(function (l) { l.hidden = !(c === 'all' || l.getAttribute('data-cat') === c); });
+
+  if (logoTrack) {
+    // Keep the original PDF order in this array, then redistribute visible
+    // logos into up to three horizontal rows whenever the category changes.
+    var allRecruiterLogos = Array.prototype.slice.call(logoTrack.querySelectorAll('.b-logo'));
+    var recruiterLogoRows = [];
+
+    allRecruiterLogos.forEach(function (logo) { logo.remove(); });
+    for (var rowIndex = 0; rowIndex < 3; rowIndex++) {
+      var row = document.createElement('div');
+      row.className = 'b-logo-row';
+      logoTrack.appendChild(row);
+      recruiterLogoRows.push(row);
+    }
+
+    function layoutRecruiterLogos(category) {
+      var visibleLogos = allRecruiterLogos.filter(function (logo) {
+        return category === 'all' || logo.getAttribute('data-cat') === category;
+      });
+
+      var rowCount = visibleLogos.length <= 3 ? 1 : 3;
+      recruiterLogoRows.forEach(function (row, index) {
+        while (row.firstChild) row.removeChild(row.firstChild);
+        row.hidden = index >= rowCount;
+      });
+
+      var offset = 0;
+      for (var i = 0; i < rowCount; i++) {
+        var remainingRows = rowCount - i;
+        var take = Math.ceil((visibleLogos.length - offset) / remainingRows);
+        visibleLogos.slice(offset, offset + take).forEach(function (logo) {
+          logo.hidden = false;
+          recruiterLogoRows[i].appendChild(logo);
+        });
+        offset += take;
+      }
+
       logoTrack.scrollLeft = 0;
       window.dispatchEvent(new Event('resize'));
+    }
 
-      // If the selected tab is the last one currently visible, slide the row
-      // just enough to bring the next category into view.
-      var nextTab = all[index + 1];
-      if (nextTab && recruiterTabs) {
-        var rowRect = recruiterTabs.getBoundingClientRect();
-        var nextRect = nextTab.getBoundingClientRect();
-        if (nextRect.right > rowRect.right - 8) {
-          recruiterTabs.scrollTo({
-            left: recruiterTabs.scrollLeft + (nextRect.right - rowRect.right) + 20,
-            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
-          });
+    layoutRecruiterLogos('all');
+
+    document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
+      btn.addEventListener('click', function () {
+        all.forEach(function (b) {
+          var active = b === btn;
+          b.classList.toggle('is-active', active);
+          b.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        layoutRecruiterLogos(btn.getAttribute('data-cat'));
+
+        // Keep the next category tab discoverable in the horizontally scrolling tab bar.
+        var nextTab = all[index + 1];
+        if (nextTab && recruiterTabs) {
+          var rowRect = recruiterTabs.getBoundingClientRect();
+          var nextRect = nextTab.getBoundingClientRect();
+          if (nextRect.right > rowRect.right - 8) {
+            recruiterTabs.scrollTo({
+              left: recruiterTabs.scrollLeft + (nextRect.right - rowRect.right) + 20,
+              behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+            });
+          }
         }
-      }
+      });
     });
-  });
+  }
 
   // ---- "Know more" toggles ----
   document.querySelectorAll('[data-toggle]').forEach(function (btn) {
