@@ -1,0 +1,19 @@
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Recruiter logo research tool (local only)
+recruiter-logos/
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Build and temporary files
+dist/
+build/
+.next/
+.DS_Store
+Thumbs.db
