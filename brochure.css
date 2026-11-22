@@ -1724,18 +1724,37 @@ ul.jqphone-flags-list,
   margin-top: 34px;
 }
 
-/* Recruiter logo carousel: one horizontal row, natural logo widths */
+/* Recruiter logo carousel: three horizontal rows, natural logo widths */
 .b-carousel--logos .b-car-track {
   display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
 }
 
-.b-carousel--logos .b-car-track > .b-logo {
+.b-carousel--logos .b-logo-row {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 14px;
+  width: max-content;
+  min-width: 100%;
+  scroll-snap-align: start;
+}
+
+.b-carousel--logos .b-logo-row[hidden] {
+  display: none;
+}
+
+.b-carousel--logos .b-logo-row > .b-logo {
   box-sizing: border-box;
   display: flex;
   flex: 0 0 auto;
