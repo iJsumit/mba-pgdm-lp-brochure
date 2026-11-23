@@ -6650,3 +6650,58 @@ ul.jqphone-flags-list,
     font-size: 18px;
   }
 }
+
+
+/* Alumni card alignment polish: left heading, truly centered logo and designation */
+#alumni .b-alum-info {
+  text-align: left !important;
+}
+
+#alumni .b-alum-name,
+#alumni .b-alum-batch {
+  width: 100%;
+  text-align: left !important;
+}
+
+#alumni .b-alum-company {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  align-self: stretch;
+  width: 100%;
+  min-height: 82px;
+  margin: 16px 0 0 !important;
+  padding: 12px 0 0 !important;
+  border: 0 !important;
+  border-top: 1px solid #e8e0e9 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+#alumni .b-alum-logo {
+  display: block !important;
+  flex: 0 0 auto;
+  max-width: 175px;
+  max-height: 54px;
+  width: auto;
+  height: auto;
+  margin: 0 auto !important;
+  object-fit: contain;
+  object-position: center center !important;
+}
+
+#alumni .b-alum-now {
+  display: block;
+  width: 100%;
+  margin: 5px auto 0 !important;
+  padding: 0 !important;
+  text-align: center !important;
+}
+
+#alumni .b-alum-role {
+  width: 100%;
+  margin: 0 auto !important;
+  text-align: center !important;
+}
