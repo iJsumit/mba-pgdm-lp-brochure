@@ -6524,3 +6524,86 @@ ul.jqphone-flags-list,
     transition: none !important;
   }
 }
+
+/* ===== Alumni cards: match Student Result card typography and alignment ===== */
+#alumni .b-alum-card {
+  background: #f2efea;
+}
+
+#alumni .b-alum-info {
+  padding: 24px 26px 22px;
+  text-align: left;
+}
+
+#alumni .b-alum-name {
+  display: block;
+  width: 100%;
+  margin: 0;
+  color: #50365f;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+}
+
+#alumni .b-alum-batch {
+  display: block;
+  margin: 8px 0 0;
+  color: #756b7b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1.3;
+  text-align: left;
+  white-space: normal;
+}
+
+#alumni .b-alum-now {
+  margin: 20px 0 0;
+  padding: 16px 0 0;
+  border-top: 1px solid #e8e0e9;
+  text-align: left;
+}
+
+#alumni .b-alum-role {
+  margin: 0;
+  color: #655a6c;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+}
+
+#alumni .b-alum-company {
+  justify-content: flex-start;
+  min-height: 48px;
+  margin: 14px 0 0;
+  padding: 0;
+  text-align: left;
+}
+
+#alumni .b-alum-logo {
+  max-width: 170px;
+  max-height: 48px;
+  margin: 0;
+  object-position: left center;
+}
+
+@media (max-width: 600px) {
+  #alumni .b-alum-info {
+    padding: 20px 20px 18px;
+  }
+
+  #alumni .b-alum-name {
+    font-size: 18px;
+  }
+
+  #alumni .b-alum-batch {
+    font-size: 11px;
+    letter-spacing: 1.6px;
+  }
+
+  #alumni .b-alum-role {
+    font-size: 15px;
+  }
+}
