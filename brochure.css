@@ -2471,11 +2471,11 @@ ul.jqphone-flags-list,
 }
 
 .b-progs span {
-  padding: 12px 22px;
+  padding: 7px;
   border-radius: 10px;
   background: #fff;
-  font-weight: 800;
-  font-size: clamp(16px, 1.7vw, 20px);
+  font-weight: 700;
+  font-size: clamp(16px, 1.7vw, 18px);
   color: var(--ink);
   border-bottom: 4px solid transparent;
   border-image: linear-gradient(90deg, #b25c8e, #5b9bd5) 1;
