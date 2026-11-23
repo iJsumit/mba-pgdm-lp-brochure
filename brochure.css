@@ -130,6 +130,7 @@ sup {
   margin: .08em 0 .1em -.06em;
   color: #fff;
   background: linear-gradient(90deg, var(--g1), var(--g2));
+  border-bottom-right-radius: 15px;
 }
 
 .b-after {
