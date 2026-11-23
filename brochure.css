@@ -1736,7 +1736,7 @@ ul.jqphone-flags-list,
   box-sizing: border-box;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: none;
 }
 
 .b-carousel--logos .b-logo-row {
@@ -1748,7 +1748,6 @@ ul.jqphone-flags-list,
   gap: 14px;
   width: 100%;
   min-width: 100%;
-  scroll-snap-align: start;
 }
 
 .b-carousel--logos .b-logo-row[hidden] {
