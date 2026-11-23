@@ -4790,7 +4790,7 @@ ul.jqphone-flags-list,
 #alumni .b-alum-card {
   position: relative;
   display: flex;
-  flex: 0 0 calc((100% - 60px) / 4);
+  flex: 0 0 calc((100% - 42px)/4);
   flex-direction: column;
   min-width: 0;
   width: auto;
@@ -4803,7 +4803,7 @@ ul.jqphone-flags-list,
   background: #f2efea;
   box-shadow: 0 8px 20px rgba(20, 34, 48, .11);
   text-align: center;
-  isolation: isolate;
+  isolation: isolate
 }
 
 #alumni .b-alum-photo {
@@ -4818,7 +4818,7 @@ ul.jqphone-flags-list,
   border: 0;
   border-radius: 8px 8px 0 0;
   background: transparent;
-  pointer-events: none;
+  pointer-events: none
 }
 
 #alumni .b-alum-photo img {
@@ -4832,121 +4832,102 @@ ul.jqphone-flags-list,
   filter: none !important;
   transform: scale(1);
   transition: transform .55s cubic-bezier(.2, .75, .25, 1);
-  transform-origin: center bottom;
+  transform-origin: center bottom
 }
 
 #alumni .b-alum-card:hover .b-alum-photo img,
 #alumni .b-alum-card:focus-within .b-alum-photo img {
-  transform: scale(1.07);
+  transform: scale(1.07)
 }
 
-/* Single source of truth for Alumni card content layout */
 #alumni .b-alum-info {
   position: relative;
   z-index: 2;
-  display: flex;
+  display: block;
   flex: 1;
-  flex-direction: column;
-  align-items: stretch;
   min-height: 155px;
   margin-top: 145px;
-  padding: 24px 28px 22px;
+  padding: 14px 12px 12px;
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 6px 16px rgba(42, 31, 48, .07);
-  text-align: left;
+  text-align: center
 }
 
 #alumni .b-alum-name {
-  order: 1;
-  display: block;
-  width: 100%;
+  display: inline-block;
+  width: auto;
   margin: 0;
   padding: 0;
   color: #50365f;
-  font-size: 19px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 750;
   line-height: 1.25;
-  text-align: left;
+  text-align: center;
+  vertical-align: middle
 }
 
 #alumni .b-alum-batch {
-  order: 2;
-  display: block;
-  width: 100%;
-  margin: 7px 0 0;
+  display: inline-block;
+  margin: 0 0 0 7px;
   padding: 0;
   color: #756b7b;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1.8px;
-  line-height: 1.35;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .7px;
   text-transform: uppercase;
-  text-align: left;
-  white-space: normal;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap
+}
+
+#alumni .b-alum-now {
+  width: 100%;
+  margin: 10px 0 0;
+  padding: 9px 0 0;
+  border-top: 1px solid #eee8ef;
+  text-align: center
+}
+
+#alumni .b-alum-role {
+  margin: 0;
+  padding: 0;
+  color: #655a6c;
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 600;
+  text-align: center
 }
 
 #alumni .b-alum-company {
-  order: 3;
   display: flex;
   width: 100%;
-  min-height: 82px;
+  min-height: 30px;
   align-items: center;
   justify-content: center;
-  margin: 16px 0 0;
-  padding: 12px 0 0;
-  border: 0;
-  border-top: 1px solid #e8e0e9;
-  border-radius: 0;
+  margin: 9px 0 0;
+  padding: 0;
   background: transparent;
-  box-shadow: none;
   text-align: center;
 }
 
 #alumni .b-alum-logo {
   display: block;
-  flex: 0 0 auto;
-  max-width: 175px;
-  max-height: 54px;
+  max-width: 170px;
+  max-height: 70px;
   width: auto;
   height: auto;
   margin: 0 auto;
   object-fit: contain;
-  object-position: center;
-}
-
-#alumni .b-alum-now {
-  order: 4;
-  display: block;
-  width: 100%;
-  margin: 5px 0 0;
-  padding: 0;
-  border: 0;
-  text-align: center;
-}
-
-#alumni .b-alum-now-label {
-  display: none;
-}
-
-#alumni .b-alum-role {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  color: #655a6c;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.4;
-  text-align: center;
 }
 
 #alumni .b-alum-pagination {
   justify-content: center;
 }
 
-@media (max-width: 900px) {
+@media(max-width:900px) {
   #alumni .b-alum-card {
-    flex-basis: calc((100% - 14px) / 2);
+    flex-basis: calc((100% - 14px)/2);
     min-height: 270px;
   }
 
@@ -4955,12 +4936,11 @@ ul.jqphone-flags-list,
   }
 
   #alumni .b-alum-info {
-    min-height: 155px;
     margin-top: 135px;
   }
 }
 
-@media (max-width: 600px) {
+@media(max-width:600px) {
   #alumni .b-alum-card {
     flex-basis: 100%;
     min-height: 270px;
@@ -4973,21 +4953,21 @@ ul.jqphone-flags-list,
   #alumni .b-alum-info {
     min-height: 155px;
     margin-top: 145px;
-    padding: 20px;
+    padding: 14px
   }
 
   #alumni .b-alum-name {
-    font-size: 18px;
+    font-size: 15px
   }
 
   #alumni .b-alum-batch {
-    font-size: 11px;
+    font-size: 9px
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media(prefers-reduced-motion:reduce) {
   #alumni .b-alum-photo img {
-    transition: none;
+    transition: none
   }
 }
 
@@ -6565,4 +6545,163 @@ ul.jqphone-flags-list,
   #differentiators .b-usp-tab {
     transition: none !important;
   }
+}
+
+/* ===== Alumni cards: content order and proportions for USP branch ===== */
+#alumni .b-alum-track {
+  gap: 20px;
+}
+
+#alumni .b-alum-card {
+  flex-basis: calc((100% - 60px) / 4);
+}
+
+#alumni .b-alum-info {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 22px 24px 20px;
+  text-align: left;
+}
+
+#alumni .b-alum-name {
+  order: 1;
+  margin: 0;
+  color: #50365f;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: left;
+}
+
+#alumni .b-alum-batch {
+  order: 2;
+  margin: 7px 0 0;
+  color: #756b7b;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  line-height: 1.35;
+  text-align: left;
+}
+
+#alumni .b-alum-company {
+  order: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 76px;
+  margin: 15px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid #e8e0e9;
+  background: transparent;
+}
+
+#alumni .b-alum-logo {
+  display: block;
+  max-width: 175px;
+  max-height: 54px;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+#alumni .b-alum-now {
+  order: 4;
+  width: 100%;
+  margin: 5px 0 0;
+  padding: 0;
+  border: 0;
+  text-align: center;
+}
+
+#alumni .b-alum-role {
+  margin: 0;
+  color: #655a6c;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  #alumni .b-alum-track {
+    gap: 14px;
+  }
+
+  #alumni .b-alum-card {
+    flex-basis: calc((100% - 14px) / 2);
+  }
+}
+
+@media (max-width: 600px) {
+  #alumni .b-alum-card {
+    flex-basis: 100%;
+  }
+
+  #alumni .b-alum-info {
+    padding: 20px 20px 18px;
+  }
+
+  #alumni .b-alum-name {
+    font-size: 18px;
+  }
+}
+
+
+/* Alumni card alignment polish: left heading, truly centered logo and designation */
+#alumni .b-alum-info {
+  text-align: left !important;
+}
+
+#alumni .b-alum-name,
+#alumni .b-alum-batch {
+  width: 100%;
+  text-align: left !important;
+}
+
+#alumni .b-alum-company {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  align-self: stretch;
+  width: 100%;
+  min-height: 82px;
+  margin: 16px 0 0 !important;
+  padding: 12px 0 0 !important;
+  border: 0 !important;
+  border-top: 1px solid #e8e0e9 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: center !important;
+}
+
+#alumni .b-alum-logo {
+  display: block !important;
+  flex: 0 0 auto;
+  max-width: 175px;
+  max-height: 54px;
+  width: auto;
+  height: auto;
+  margin: 0 auto !important;
+  object-fit: contain;
+  object-position: center center !important;
+}
+
+#alumni .b-alum-now {
+  display: block;
+  width: 100%;
+  margin: 5px auto 0 !important;
+  padding: 0 !important;
+  text-align: center !important;
+}
+
+#alumni .b-alum-role {
+  width: 100%;
+  margin: 0 auto !important;
+  text-align: center !important;
 }
