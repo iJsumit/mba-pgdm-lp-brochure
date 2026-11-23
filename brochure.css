@@ -1763,7 +1763,7 @@ ul.jqphone-flags-list,
   width: fit-content;
   max-width: none;
   height: auto;
-  padding: 10px 12px;
+  padding: 10px;
   background: #fff;
   border: 1.5px solid var(--line);
   border-radius: 12px;
@@ -1772,7 +1772,7 @@ ul.jqphone-flags-list,
 .b-carousel--logos .b-logo img {
   display: block;
   width: auto;
-  height: 30px;
+  height: 45px;
   max-width: none;
   object-fit: contain;
 }
