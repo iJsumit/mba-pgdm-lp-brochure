@@ -5918,9 +5918,10 @@ ul.jqphone-flags-list,
 }
 
 .b-ranks--compact .b-rankc {
-  min-height: 124px;
-  padding: 14px 18px;
-  gap: 16px;
+  min-height: 0;
+  padding: 10px;
+  gap: 10px;
+  box-sizing: border-box;
 }
 
 .b-rankc--aacsb .b-rank-logo {
@@ -5952,7 +5953,7 @@ ul.jqphone-flags-list,
   align-items: center;
   gap: 0;
   padding: 10px;
-  min-height: 124px;
+  min-height: 0;
 }
 
 .b-rankc--compact .b-nirf-top {
@@ -5991,7 +5992,7 @@ ul.jqphone-flags-list,
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-content: center;
   align-items: center;
-  padding: 12px 12px;
+  padding: 10px;
   background: linear-gradient(120deg, #c39a55, #3aa0d6);
   border-radius: 0 10px 10px 0;
 }
@@ -6045,7 +6046,7 @@ ul.jqphone-flags-list,
   }
 
   .b-ranks--compact .b-rankc {
-    min-height: 116px;
+    min-height: 0;
   }
 }
 
@@ -6055,8 +6056,8 @@ ul.jqphone-flags-list,
   }
 
   .b-ranks--compact .b-rankc {
-    min-height: 108px;
-    padding: 12px 14px;
+    min-height: 0;
+    padding: 10px;
     gap: 10px;
   }
 
