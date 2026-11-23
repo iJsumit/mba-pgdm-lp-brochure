@@ -140,7 +140,11 @@
     var track = car.querySelector('.b-car-track');
     var prev = car.querySelector('.b-car-prev');
     var next = car.querySelector('.b-car-next');
-    function step() { return Math.max(track.clientWidth * 0.9, 200); }
+    function step() {
+      return car.classList.contains('b-carousel--logos')
+        ? track.clientWidth
+        : Math.max(track.clientWidth * 0.9, 200);
+    }
     function sync() {
       prev.disabled = track.scrollLeft <= 2;
       next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
