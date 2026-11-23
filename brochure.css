@@ -6707,3 +6707,23 @@ ul.jqphone-flags-list,
   margin: 0 auto !important;
   text-align: center !important;
 }
+
+/* Mobile typography: scale brochure section headings down consistently */
+@media (max-width: 600px) {
+  .b-tag,
+  h3.b-tag {
+    font-size: clamp(25px, 7vw, 30px);
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .b-tag--sm {
+    font-size: clamp(20px, 5.5vw, 24px);
+    line-height: 1.2;
+  }
+
+  .b-bar {
+    border-bottom-right-radius: 10px;
+  }
+}
