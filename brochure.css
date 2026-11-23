@@ -104,6 +104,20 @@ sup {
   color: #fff;
 }
 
+/* .zoominout {
+  display: inline-block;
+  animation: textZoom 2s ease-in-out infinite;
+}
+
+@keyframes textZoom {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.12);
+    }
+} */
+
 /* ---------- brochure heading: dark line + white words on gradient bar ---------- */
 .b-tag {
   margin: 0 0 22px;
@@ -1755,7 +1769,7 @@ ul.jqphone-flags-list,
   display: none;
 }
 
-.b-carousel--logos .b-logo-row > .b-logo {
+.b-carousel--logos .b-logo-row>.b-logo {
   box-sizing: border-box;
   display: flex;
   flex: 0 0 180px;
@@ -2131,14 +2145,14 @@ ul.jqphone-flags-list,
 }
 
 .b-footer-text {
-  padding-top: 24px;
+  padding-top: 10px;
   text-align: center;
 }
 
 .b-footer-text p {
-  max-width: 900px;
+  /* max-width: 900px; */
   margin: 0 auto 10px;
-  font-size: 13.5px;
+  font-size: 12px;
   opacity: .85;
 }
 
@@ -2948,8 +2962,8 @@ ul.jqphone-flags-list,
     padding: 14px;
     color: #fff;
     text-decoration: none;
-    font-weight: 800;
-    font-size: 17px;
+    font-weight: 600;
+    font-size: 16px;
     background: linear-gradient(90deg, #b8365f, #6b4a8c);
   }
 }
@@ -3103,18 +3117,18 @@ ul.jqphone-flags-list,
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 54px;
+  min-height: 50px;
   margin: 0;
-  padding: 8px 16px;
+  padding: 8px 0;
   border: 0;
   border-radius: 0;
   color: #fff;
   text-align: center;
   text-decoration: none;
   font-weight: 700;
-  font-size: clamp(16px, 1.35vw, 19px);
-  letter-spacing: .2px;
-  line-height: 1.2;
+  font-size: clamp(16px, 1.35vw, 18px);
+  letter-spacing: .5px;
+  line-height: 1;
   background: linear-gradient(90deg, #b8365f, #6b4a8c);
   transition: filter .2s ease;
 }
@@ -6560,7 +6574,7 @@ ul.jqphone-flags-list,
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 22px 24px 20px;
+  padding: 10px;
   text-align: left;
 }
 
@@ -6571,7 +6585,7 @@ ul.jqphone-flags-list,
   font-size: 19px;
   font-weight: 500;
   line-height: 1.25;
-  text-align: left;
+  text-align: center;
 }
 
 #alumni .b-alum-batch {
@@ -6582,7 +6596,7 @@ ul.jqphone-flags-list,
   font-weight: 600;
   letter-spacing: 1.8px;
   line-height: 1.35;
-  text-align: left;
+  text-align: center;
 }
 
 #alumni .b-alum-company {
@@ -6593,7 +6607,7 @@ ul.jqphone-flags-list,
   width: 100%;
   min-height: 76px;
   margin: 15px 0 0;
-  padding: 12px 0 0;
+  padding: 10px 0 0;
   border-top: 1px solid #e8e0e9;
   background: transparent;
 }
@@ -6651,18 +6665,6 @@ ul.jqphone-flags-list,
   }
 }
 
-
-/* Alumni card alignment polish: left heading, truly centered logo and designation */
-#alumni .b-alum-info {
-  text-align: left !important;
-}
-
-#alumni .b-alum-name,
-#alumni .b-alum-batch {
-  width: 100%;
-  text-align: left !important;
-}
-
 #alumni .b-alum-company {
   display: flex !important;
   justify-content: center !important;
@@ -6671,7 +6673,7 @@ ul.jqphone-flags-list,
   width: 100%;
   min-height: 82px;
   margin: 16px 0 0 !important;
-  padding: 12px 0 0 !important;
+  padding: 10px 0 0 !important;
   border: 0 !important;
   border-top: 1px solid #e8e0e9 !important;
   border-radius: 0 !important;
