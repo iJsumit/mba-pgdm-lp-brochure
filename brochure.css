@@ -1736,7 +1736,7 @@ ul.jqphone-flags-list,
   box-sizing: border-box;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: none;
+  scroll-snap-type: x mandatory;
 }
 
 .b-carousel--logos .b-logo-row {
@@ -1746,8 +1746,9 @@ ul.jqphone-flags-list,
   flex-wrap: nowrap;
   align-items: center;
   gap: 14px;
-  width: 100%;
+  width: max-content;
   min-width: 100%;
+  scroll-snap-align: start;
 }
 
 .b-carousel--logos .b-logo-row[hidden] {
@@ -1757,12 +1758,12 @@ ul.jqphone-flags-list,
 .b-carousel--logos .b-logo-row > .b-logo {
   box-sizing: border-box;
   display: flex;
-  flex: 0 0 calc((100% - 56px) / 5);
+  flex: 0 0 180px;
   align-items: center;
   justify-content: center;
-  width: calc((100% - 56px) / 5);
-  min-width: calc((100% - 56px) / 5);
-  max-width: calc((100% - 56px) / 5);
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
   height: 60px;
   min-height: 60px;
   padding: 6px 10px;
@@ -3316,10 +3317,10 @@ ul.jqphone-flags-list,
   flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;
+  gap: 5px;
   width: 100%;
   margin: 0 0 28px;
-  padding: 10px 4px 14px;
+  padding: 4px;
   overflow-x: auto;
   overflow-y: hidden;
   border: 0;
@@ -3360,7 +3361,7 @@ ul.jqphone-flags-list,
   background: #fff;
   color: #49404d;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: .05px;
@@ -5926,7 +5927,7 @@ ul.jqphone-flags-list,
 
 /* ===== Rankings: one compact aligned row for AACSB and NIRF ===== */
 #rankings {
-  padding: 28px 0;
+  padding: 0;
 }
 
 #rankings .b-tag {
