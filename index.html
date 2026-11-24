@@ -2410,7 +2410,9 @@ jQuery(document).ready(function($) {
           if (reducedMotion) {
             tabsContainer.scrollLeft = targetLeft;
           } else {
-            animateTabScroll(tabsContainer, targetLeft, 800);
+            // Native smooth scrolling cooperates with browser layout and
+            // avoids the snap/jump caused by a competing RAF scroll animation.
+            tabsContainer.scrollTo({ left: targetLeft, behavior: "smooth" });
           }
         }
 
@@ -2439,10 +2441,7 @@ jQuery(document).ready(function($) {
         }
 
         function startAutoplay() {
-          // On mobile, keep the tab strip stationary. Auto-advancing also
-          // scrolls the horizontal tab rail and creates a visible jump.
           if (
-            mobileTabs.matches ||
             manualMode ||
             reducedMotion ||
             !sectionInView ||
