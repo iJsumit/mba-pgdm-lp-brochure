@@ -1761,6 +1761,7 @@ ul.jqphone-flags-list,
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  justify-content: center;
   gap: 14px;
   width: max-content;
   min-width: 100%;
