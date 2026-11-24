@@ -1219,12 +1219,14 @@
     flex-direction: row;
     overflow-x: auto;
     padding: 2px 2px 10px;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: none;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
   }
 
   #differentiators .b-usp-tab {
     flex: 0 0 220px;
-    scroll-snap-align: start;
+    scroll-snap-align: none;
   }
 
   #differentiators .b-usp-panel {
