@@ -2439,7 +2439,10 @@ jQuery(document).ready(function($) {
         }
 
         function startAutoplay() {
+          // On mobile, keep the tab strip stationary. Auto-advancing also
+          // scrolls the horizontal tab rail and creates a visible jump.
           if (
+            mobileTabs.matches ||
             manualMode ||
             reducedMotion ||
             !sectionInView ||
@@ -2479,6 +2482,11 @@ jQuery(document).ready(function($) {
 
         document.addEventListener("visibilitychange", function () {
           if (document.hidden) stopAutoplay();
+          else startAutoplay();
+        });
+
+        window.addEventListener("resize", function () {
+          if (mobileTabs.matches) stopAutoplay();
           else startAutoplay();
         });
 
