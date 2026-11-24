@@ -824,10 +824,6 @@
   .b-one-jaipuria-wrap {
     width: 100%;
   }
-
-  .b-one-controls {
-    padding-inline: 16px;
-  }
 }
 
 @media (max-width: 780px) {
