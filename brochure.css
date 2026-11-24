@@ -143,7 +143,7 @@ sup {
   padding: .06em .32em .02em;
   margin: .08em 0 .1em -.06em;
   color: #fff;
-  background: linear-gradient(90deg, var(--g1), var(--g2));
+  background: linear-gradient(90deg, #9c6c54, #4e5f7a);
   border-bottom-right-radius: 15px;
 }
 
