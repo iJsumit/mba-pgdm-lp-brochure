@@ -80,7 +80,10 @@
 
       recruiterLogoRows.forEach(function (row) {
         var rowWidth = row.scrollWidth;
-        row.style.paddingRight = Math.max(0, fullTrackWidth - rowWidth) + 'px';
+        if (rowWidth > availableWidth + 2) {
+          row.style.justifyContent = 'flex-start';
+          row.style.paddingRight = Math.max(0, fullTrackWidth - rowWidth) + 'px';
+        }
       });
 
       logoTrack.scrollLeft = 0;
