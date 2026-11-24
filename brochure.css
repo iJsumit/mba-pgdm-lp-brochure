@@ -397,7 +397,7 @@ h3.b-tag {
   margin: 0 0 26px;
   font-size: clamp(28px, 3.6vw, 45px);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: -.5px;
 }
@@ -408,6 +408,7 @@ h3.b-tag {
   background: linear-gradient(90deg, #b8365f, #7a3f7e);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+  /* border-radius: 5px; */
 }
 
 .b-hero-facts {
