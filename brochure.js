@@ -53,24 +53,18 @@
 
     function fitRecruiterTrack() {
       var isMobile = window.matchMedia('(max-width: 640px)').matches;
-      if (isMobile) {
-        var availableWidth = logoTrack.clientWidth;
-        var gap = 14;
-        var cardWidth = Math.max(1, (availableWidth - gap) / 2);
-        allRecruiterLogos.forEach(function (logo) {
-          logo.style.flexBasis = cardWidth + 'px';
-          logo.style.width = cardWidth + 'px';
-          logo.style.minWidth = cardWidth + 'px';
-          logo.style.maxWidth = cardWidth + 'px';
-        });
-      } else {
-        allRecruiterLogos.forEach(function (logo) {
-          logo.style.flexBasis = '180px';
-          logo.style.width = '180px';
-          logo.style.minWidth = '180px';
-          logo.style.maxWidth = '180px';
-        });
-      }
+      var visibleCards = isMobile ? 2 : 5;
+      var gap = 14;
+      var availableWidth = logoTrack.clientWidth;
+      var cardWidth = Math.max(1, (availableWidth - gap * (visibleCards - 1)) / visibleCards);
+
+      allRecruiterLogos.forEach(function (logo) {
+        logo.style.flexBasis = cardWidth + 'px';
+        logo.style.width = cardWidth + 'px';
+        logo.style.minWidth = cardWidth + 'px';
+        logo.style.maxWidth = cardWidth + 'px';
+      });
+
       logoTrack.scrollLeft = 0;
       syncRecruiterArrows();
     }
@@ -83,8 +77,9 @@
     }
 
     function scrollRecruiterLogos(direction) {
+      // Move exactly one viewport: five cards on desktop, two on mobile.
       logoTrack.scrollBy({
-        left: direction * Math.max(logoTrack.clientWidth * 0.8, 200),
+        left: direction * logoTrack.clientWidth,
         behavior: 'smooth'
       });
     }
