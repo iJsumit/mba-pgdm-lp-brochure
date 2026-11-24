@@ -2186,6 +2186,11 @@ ul.jqphone-flags-list,
   box-shadow: 0 8px 22px rgba(0, 0, 0, .18);
 }
 
+/* .b-float span {
+  display: inline-block;
+  transform: rotate(180deg);
+} */
+
 .b-float.is-visible {
   transform: translate(0, -50%);
 }
