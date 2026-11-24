@@ -5227,3 +5227,28 @@ ul.jqphone-flags-list,
 
 /* Mobile typography: scale brochure section headings down consistently */
 
+
+
+/* Recruiter logos: slow, seamless continuous marquee for overflowing rows */
+.b-carousel--logos .b-logo-row.is-marquee {
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.b-carousel--logos .b-logo-marquee {
+  display: flex;
+  flex: 0 0 auto;
+  width: max-content;
+  will-change: transform;
+}
+
+.b-carousel--logos .b-logo-marquee-group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 14px;
+  padding-right: 14px;
+}
