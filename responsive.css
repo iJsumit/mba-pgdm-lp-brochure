@@ -1624,3 +1624,30 @@
     color: #111;
   }
 }
+
+
+/* Alumni carousel controls: single next arrow, aligned right on all screens. */
+#alumni .b-alum-pagination {
+  justify-content: flex-end !important;
+}
+
+#alumni .b-alum-pagination .b-alum-dot {
+  display: none !important;
+}
+
+#alumni .b-alum-arrows {
+  justify-content: flex-end;
+  width: 100%;
+  margin-left: 0;
+}
+
+@media (max-width: 600px) {
+  #alumni .b-alum-pagination {
+    padding-inline: 8px;
+  }
+
+  #alumni .b-alum-arrow {
+    min-width: 36px;
+    min-height: 36px;
+  }
+}
