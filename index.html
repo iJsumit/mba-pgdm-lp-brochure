@@ -2444,6 +2444,24 @@ jQuery(document).ready(function($) {
         var reducedMotion =
           window.matchMedia &&
           window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var tabsContainer = root.querySelector(".b-usp-tabs");
+        var mobileTabs = window.matchMedia("(max-width: 560px)");
+
+        function keepSelectedTabVisible(tab) {
+          if (!tabsContainer || !mobileTabs.matches) return;
+
+          var containerRect = tabsContainer.getBoundingClientRect();
+          var tabRect = tab.getBoundingClientRect();
+          var tabLeft = tabsContainer.scrollLeft + tabRect.left - containerRect.left;
+          var targetLeft = tabLeft - (tabsContainer.clientWidth - tabRect.width) / 2;
+          var maxLeft = tabsContainer.scrollWidth - tabsContainer.clientWidth;
+          targetLeft = Math.max(0, Math.min(targetLeft, maxLeft));
+
+          tabsContainer.scrollTo({
+            left: targetLeft,
+            behavior: reducedMotion ? "auto" : "smooth",
+          });
+        }
 
         function selectTab(index, moveFocus) {
           activeIndex = (index + tabs.length) % tabs.length;
@@ -2458,6 +2476,7 @@ jQuery(document).ready(function($) {
             panel.hidden = !selected;
             panel.classList.toggle("is-active", selected);
           });
+          keepSelectedTabVisible(tabs[activeIndex]);
           if (moveFocus) tabs[activeIndex].focus();
         }
 
