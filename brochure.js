@@ -31,132 +31,16 @@
     });
   });
 
-  // ---- recruiter category filter + three-row horizontal logo carousel ----
+  // ---- recruiter category filter + centered static logo cards ----
   var logoTrack = document.getElementById('bLogos');
   var recruiterTabs = document.querySelector('[data-filter="rec"]');
 
   if (logoTrack) {
-    // Keep the original PDF order in this array, then redistribute visible
-    // logos into up to three horizontal rows whenever the category changes.
     var allRecruiterLogos = Array.prototype.slice.call(logoTrack.querySelectorAll('.b-logo'));
     var recruiterLogoRows = [];
-    var recruiterMarquees = [];
-    var recruiterMarqueeFrame = null;
-    var recruiterMarqueeLastTime = 0;
-    var recruiterMarqueePaused = false;
-    var recruiterReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var recruiterCarousel = logoTrack.closest('.b-carousel');
-    var recruiterPrev = recruiterCarousel && recruiterCarousel.querySelector('.b-car-prev');
-    var recruiterNext = recruiterCarousel && recruiterCarousel.querySelector('.b-car-next');
-
-    function stopRecruiterMarquees() {
-      if (recruiterMarqueeFrame) window.cancelAnimationFrame(recruiterMarqueeFrame);
-      recruiterMarqueeFrame = null;
-      recruiterMarqueeLastTime = 0;
-      recruiterMarquees = [];
-    }
-
-    function animateRecruiterMarquees(now) {
-      if (!recruiterMarqueeLastTime) recruiterMarqueeLastTime = now;
-      var elapsed = Math.min(now - recruiterMarqueeLastTime, 50);
-      recruiterMarqueeLastTime = now;
-
-      if (!recruiterMarqueePaused && !document.hidden) {
-        recruiterMarquees.forEach(function (marquee) {
-          marquee.offset = (marquee.offset + elapsed * 0.022) % marquee.cycleWidth;
-          marquee.track.style.transform = 'translate3d(' + (-marquee.offset) + 'px, 0, 0)';
-        });
-      }
-
-      recruiterMarqueeFrame = window.requestAnimationFrame(animateRecruiterMarquees);
-    }
-
-    function setupRecruiterMarquees() {
-      stopRecruiterMarquees();
-
-      recruiterLogoRows.forEach(function (row) {
-        // Restore original logo nodes before recalculating widths on resize/filter.
-        var oldMarquee = row.querySelector('.b-logo-marquee');
-        if (oldMarquee) {
-          var originalGroup = oldMarquee.querySelector('.b-logo-marquee-group');
-          if (originalGroup) {
-            Array.prototype.slice.call(originalGroup.children).forEach(function (logo) {
-              row.appendChild(logo);
-            });
-          }
-          oldMarquee.remove();
-        }
-        row.classList.remove('is-marquee');
-        row.style.width = '';
-        row.style.minWidth = '';
-        row.style.maxWidth = '';
-        row.style.overflow = '';
-
-        if (row.hidden || recruiterReducedMotion) return;
-        var logos = Array.prototype.slice.call(row.querySelectorAll(':scope > .b-logo'));
-        if (logos.length < 2) return;
-
-        var rowStyle = window.getComputedStyle(row);
-        var gap = parseFloat(rowStyle.columnGap || rowStyle.gap) || 14;
-        var cycleWidth = logos.reduce(function (total, logo) {
-          return total + logo.getBoundingClientRect().width;
-        }, 0) + gap * (logos.length - 1);
-
-        if (cycleWidth <= logoTrack.clientWidth + 2) return;
-
-        var marquee = document.createElement('div');
-        marquee.className = 'b-logo-marquee';
-        var firstGroup = document.createElement('div');
-        firstGroup.className = 'b-logo-marquee-group';
-        var secondGroup = document.createElement('div');
-        secondGroup.className = 'b-logo-marquee-group';
-        logos.forEach(function (logo) {
-          firstGroup.appendChild(logo);
-          var clone = logo.cloneNode(true);
-          clone.setAttribute('aria-hidden', 'true');
-          clone.querySelectorAll('img').forEach(function (img) { img.alt = ''; });
-          secondGroup.appendChild(clone);
-        });
-        marquee.appendChild(firstGroup);
-        marquee.appendChild(secondGroup);
-        row.appendChild(marquee);
-        row.classList.add('is-marquee');
-        row.style.width = '100%';
-        row.style.minWidth = '100%';
-        row.style.maxWidth = '100%';
-        row.style.overflow = 'hidden';
-
-        recruiterMarquees.push({ track: marquee, cycleWidth: cycleWidth, offset: 0 });
-      });
-
-      if (recruiterMarquees.length && !recruiterReducedMotion) {
-        recruiterMarqueeFrame = window.requestAnimationFrame(animateRecruiterMarquees);
-      }
-    }
-
-    function shiftRecruiterMarquees(direction) {
-      if (!recruiterMarquees.length) {
-        logoTrack.scrollBy({ left: direction * logoTrack.clientWidth * 0.8, behavior: 'smooth' });
-        return;
-      }
-      recruiterMarquees.forEach(function (marquee) {
-        marquee.offset = (marquee.offset + direction * logoTrack.clientWidth * 0.8 + marquee.cycleWidth) % marquee.cycleWidth;
-        marquee.track.style.transform = 'translate3d(' + (-marquee.offset) + 'px, 0, 0)';
-      });
-    }
-
-    if (recruiterCarousel) {
-      recruiterCarousel.addEventListener('mouseenter', function () { recruiterMarqueePaused = true; });
-      recruiterCarousel.addEventListener('mouseleave', function () { recruiterMarqueePaused = false; });
-      recruiterCarousel.addEventListener('focusin', function () { recruiterMarqueePaused = true; });
-      recruiterCarousel.addEventListener('focusout', function () { recruiterMarqueePaused = false; });
-      recruiterCarousel.addEventListener('touchstart', function () { recruiterMarqueePaused = true; }, { passive: true });
-      recruiterCarousel.addEventListener('touchend', function () { recruiterMarqueePaused = false; }, { passive: true });
-    }
-    if (recruiterPrev) recruiterPrev.addEventListener('click', function () { shiftRecruiterMarquees(-1); });
-    if (recruiterNext) recruiterNext.addEventListener('click', function () { shiftRecruiterMarquees(1); });
 
     allRecruiterLogos.forEach(function (logo) { logo.remove(); });
+
     for (var rowIndex = 0; rowIndex < 3; rowIndex++) {
       var row = document.createElement('div');
       row.className = 'b-logo-row';
@@ -164,12 +48,47 @@
       recruiterLogoRows.push(row);
     }
 
+    function fitRecruiterTrack() {
+      var carousel = logoTrack.parentElement;
+      var carouselStyle = window.getComputedStyle(carousel);
+      var availableWidth = carousel.clientWidth
+        - parseFloat(carouselStyle.paddingLeft || 0)
+        - parseFloat(carouselStyle.paddingRight || 0);
+      var isMobile = window.matchMedia('(max-width: 640px)').matches;
+      var row = recruiterLogoRows.find(function (item) { return !item.hidden; });
+      var rowStyle = row ? window.getComputedStyle(row) : null;
+      var gap = rowStyle ? (parseFloat(rowStyle.columnGap || rowStyle.gap) || 14) : 14;
+
+      logoTrack.style.width = '100%';
+      logoTrack.style.maxWidth = '100%';
+      logoTrack.style.marginInline = 'auto';
+      logoTrack.style.overflow = 'visible';
+      logoTrack.scrollLeft = 0;
+
+      if (isMobile) {
+        var cardWidth = Math.max(1, (availableWidth - gap) / 2);
+        allRecruiterLogos.forEach(function (logo) {
+          logo.style.flexBasis = cardWidth + 'px';
+          logo.style.width = cardWidth + 'px';
+          logo.style.minWidth = cardWidth + 'px';
+          logo.style.maxWidth = cardWidth + 'px';
+        });
+      } else {
+        allRecruiterLogos.forEach(function (logo) {
+          logo.style.flexBasis = '180px';
+          logo.style.width = '180px';
+          logo.style.minWidth = '180px';
+          logo.style.maxWidth = '180px';
+        });
+      }
+    }
+
     function layoutRecruiterLogos(category) {
       var visibleLogos = allRecruiterLogos.filter(function (logo) {
         return category === 'all' || logo.getAttribute('data-cat') === category;
       });
-
       var rowCount = visibleLogos.length <= 3 ? 1 : 3;
+
       recruiterLogoRows.forEach(function (row, index) {
         while (row.firstChild) row.removeChild(row.firstChild);
         row.hidden = index >= rowCount;
@@ -186,79 +105,24 @@
         offset += take;
       }
 
-      logoTrack.scrollLeft = 0;
       fitRecruiterTrack();
-      setupRecruiterMarquees();
-      window.dispatchEvent(new Event('resize'));
-    }
-
-    // Size the viewport to an exact number of complete logo cards.
-    // This prevents a partial card from appearing at either horizontal edge.
-    function fitRecruiterTrack() {
-      var visibleRow = recruiterLogoRows.find(function (row) { return !row.hidden; });
-      var firstLogo = visibleRow && visibleRow.querySelector('.b-logo');
-      if (!firstLogo) return;
-
-      var carousel = logoTrack.parentElement;
-      var carouselStyle = window.getComputedStyle(carousel);
-      var availableWidth = carousel.clientWidth
-        - parseFloat(carouselStyle.paddingLeft || 0)
-        - parseFloat(carouselStyle.paddingRight || 0);
-      var rowStyle = window.getComputedStyle(visibleRow);
-      var gap = parseFloat(rowStyle.columnGap || rowStyle.gap) || 14;
-      var isMobile = window.matchMedia('(max-width: 640px)').matches;
-      var cardWidth;
-
-      if (isMobile) {
-        // Two complete recruiter cards per row on mobile, with no clipped edges.
-        cardWidth = Math.max(1, (availableWidth - gap) / 2);
-        allRecruiterLogos.forEach(function (logo) {
-          logo.style.flexBasis = cardWidth + 'px';
-          logo.style.width = cardWidth + 'px';
-          logo.style.minWidth = cardWidth + 'px';
-          logo.style.maxWidth = cardWidth + 'px';
-        });
-      } else {
-        // Restore the original desktop card sizing without changing desktop layout.
-        allRecruiterLogos.forEach(function (logo) {
-          logo.style.flexBasis = '';
-          logo.style.width = '';
-          logo.style.minWidth = '';
-          logo.style.maxWidth = '';
-        });
-        cardWidth = firstLogo.getBoundingClientRect().width;
-      }
-
-      var visibleCount = isMobile
-        ? 2
-        : Math.max(1, Math.floor((availableWidth + gap) / (cardWidth + gap)));
-      var exactWidth = visibleCount * cardWidth + (visibleCount - 1) * gap;
-
-      logoTrack.style.width = exactWidth + 'px';
-      logoTrack.style.maxWidth = '100%';
-      logoTrack.style.marginInline = 'auto';
-      logoTrack.scrollLeft = 0;
     }
 
     layoutRecruiterLogos('all');
     window.addEventListener('resize', function () {
-      window.requestAnimationFrame(function () {
-        fitRecruiterTrack();
-        setupRecruiterMarquees();
-      });
+      window.requestAnimationFrame(fitRecruiterTrack);
     });
 
     document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
       btn.addEventListener('click', function () {
-        all.forEach(function (b) {
-          var active = b === btn;
-          b.classList.toggle('is-active', active);
-          b.setAttribute('aria-selected', active ? 'true' : 'false');
+        all.forEach(function (item) {
+          var active = item === btn;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', active ? 'true' : 'false');
         });
 
         layoutRecruiterLogos(btn.getAttribute('data-cat'));
 
-        // Keep the next category tab discoverable in the horizontally scrolling tab bar.
         var nextTab = all[index + 1];
         if (nextTab && recruiterTabs) {
           var rowRect = recruiterTabs.getBoundingClientRect();
