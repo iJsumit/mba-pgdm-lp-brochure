@@ -5343,18 +5343,23 @@ ul.jqphone-flags-list,
 
 .b-carousel--logos .b-logo-page {
   box-sizing: border-box;
-  display: grid;
+  display: flex;
   flex: 0 0 100%;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: flex-start;
   width: 100%;
   min-width: 100%;
   max-width: 100%;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-template-rows: repeat(3, 60px);
-  align-content: start;
   gap: 12px 14px;
   padding: 0;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+.b-carousel--logos .b-logo-page>.b-logo {
+  flex: 0 0 calc((100% - 70px) / 6);
 }
 
 .b-carousel--logos .b-logo-page>.b-logo {
@@ -5381,8 +5386,10 @@ ul.jqphone-flags-list,
 
 @media (max-width: 640px) {
   .b-carousel--logos .b-logo-page {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(3, 60px);
     gap: 12px 10px;
+  }
+
+  .b-carousel--logos .b-logo-page>.b-logo {
+    flex-basis: calc((100% - 10px) / 2);
   }
 }
