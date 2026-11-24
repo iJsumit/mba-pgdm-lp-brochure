@@ -65,6 +65,12 @@
         logo.style.maxWidth = cardWidth + 'px';
       });
 
+      // Center short rows; keep full rows left-aligned so their first card
+      // never starts outside the scroll viewport.
+      recruiterLogoRows.forEach(function (row) {
+        row.style.justifyContent = row.scrollWidth <= availableWidth + 2 ? 'center' : 'flex-start';
+      });
+
       logoTrack.scrollLeft = 0;
       syncRecruiterArrows();
     }
