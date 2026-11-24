@@ -368,28 +368,7 @@
     });
   });
 
-  // ---- One Jaipuria image slider ----
-  document.querySelectorAll('[data-one-slider]').forEach(function (root) {
-    var slides = Array.from(root.querySelectorAll('.b-one-slide'));
-    var dots = Array.from(root.querySelectorAll('.b-one-dot'));
-    var previous = root.querySelector('[data-one-prev]');
-    var next = root.querySelector('[data-one-next]');
-    var index = 0;
-    function show(target) {
-      index = (target + slides.length) % slides.length;
-      slides.forEach(function (slide, i) { slide.classList.toggle('is-active', i === index); });
-      dots.forEach(function (dot, i) {
-        dot.classList.toggle('is-active', i === index);
-        if (i === index) dot.setAttribute('aria-current', 'true');
-        else dot.removeAttribute('aria-current');
-      });
-    }
-    dots.forEach(function (dot, i) { dot.addEventListener('click', function () { show(i); }); });
-    if (previous) previous.addEventListener('click', function () { show(index - 1); });
-    if (next) next.addEventListener('click', function () { show(index + 1); });
-  });
-
-// ---- Global Exposure partner logo carousel ----
+  // ---- Global Exposure partner logo carousel ----
   var globalRoot = document.getElementById('global');
   if (globalRoot) {
     var globalViewport = globalRoot.querySelector('.b-global-viewport');
