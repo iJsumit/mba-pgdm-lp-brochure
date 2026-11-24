@@ -1740,7 +1740,7 @@ ul.jqphone-flags-list,
   margin-top: 34px;
 }
 
-/* Recruiter logos: static white cards, centered in balanced rows */
+/* Recruiter logos: three centered rows of static white cards with manual horizontal scrolling */
 .b-carousel--logos .b-car-track {
   display: flex;
   flex-direction: column;
@@ -1749,25 +1749,27 @@ ul.jqphone-flags-list,
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  overflow: visible;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
   margin-inline: auto;
 }
+.b-carousel--logos .b-car-track::-webkit-scrollbar { display: none; }
 
 .b-carousel--logos .b-logo-row {
   display: flex;
   flex: 0 0 auto;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
   gap: 14px;
-  width: 100%;
-  min-width: 0;
+  width: max-content;
+  min-width: 100%;
 }
 
-.b-carousel--logos .b-logo-row[hidden] {
-  display: none;
-}
+.b-carousel--logos .b-logo-row[hidden] { display: none; }
 
 .b-carousel--logos .b-logo-row>.b-logo {
   box-sizing: border-box;
