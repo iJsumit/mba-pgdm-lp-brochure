@@ -65,10 +65,22 @@
         logo.style.maxWidth = cardWidth + 'px';
       });
 
-      // Center short rows; keep full rows left-aligned so their first card
-      // never starts outside the scroll viewport.
+      // Make every row end on the same full-page boundary. Without this,
+      // the final scroll step clamps to a partial page and clips edge logos.
       recruiterLogoRows.forEach(function (row) {
+        row.style.paddingRight = '0px';
         row.style.justifyContent = row.scrollWidth <= availableWidth + 2 ? 'center' : 'flex-start';
+      });
+
+      var widestRow = recruiterLogoRows.reduce(function (widest, row) {
+        return Math.max(widest, row.scrollWidth);
+      }, availableWidth);
+      var pageCount = Math.max(1, Math.ceil(widestRow / availableWidth));
+      var fullTrackWidth = pageCount * availableWidth;
+
+      recruiterLogoRows.forEach(function (row) {
+        var rowWidth = row.scrollWidth;
+        row.style.paddingRight = Math.max(0, fullTrackWidth - rowWidth) + 'px';
       });
 
       logoTrack.scrollLeft = 0;
