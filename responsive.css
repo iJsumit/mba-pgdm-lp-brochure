@@ -1453,6 +1453,12 @@
     line-height: 1.2;
     letter-spacing: .25px;
   }
+
+  /* Center the final two cards as a pair in the last grid row. */
+  #global .b-global-card:nth-last-child(-n + 2) {
+    position: relative;
+    left: calc((100% + 9px) / 2);
+  }
 }
 @media (hover: none) {
   #global .b-global-card:hover {
