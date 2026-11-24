@@ -5237,3 +5237,64 @@ ul.jqphone-flags-list,
 
 
 /* Recruiter marquee styles removed: logos remain static and centered. */
+
+
+/* Global Exposure: show every partner logo in a compact 3-column grid on mobile.
+   Desktop layout remains unchanged. */
+@media (max-width: 640px) {
+  #global {
+    padding: 38px 0 34px;
+  }
+
+  #global .b-global-heading {
+    margin-bottom: 20px;
+  }
+
+  #global .b-global-heading .b-tag {
+    font-size: clamp(21px, 6vw, 27px);
+    line-height: 1.2;
+  }
+
+  #global .b-global-track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  #global .b-global-card {
+    min-height: 108px;
+    padding: 8px 5px 7px;
+    gap: 5px;
+    border-radius: 11px;
+  }
+
+  #global .b-global-logo {
+    height: 57px;
+    padding: 3px;
+  }
+
+  #global .b-global-logo img {
+    max-width: 100%;
+    max-height: 48px;
+  }
+
+  #global .b-global-card .b-global-country {
+    font-size: 8px;
+    line-height: 1.2;
+    letter-spacing: .25px;
+  }
+}
+
+@media (max-width: 360px) {
+  #global .b-global-track {
+    gap: 7px;
+  }
+
+  #global .b-global-card {
+    min-height: 102px;
+    padding-inline: 4px;
+  }
+
+  #global .b-global-card .b-global-country {
+    font-size: 7.5px;
+  }
+}
