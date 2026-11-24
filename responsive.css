@@ -475,7 +475,7 @@
 
 @media (max-width:640px) {
   .b-belimitless-logo {
-    width: min(195px, 75%);
+    width: min(180px, 75%);
     margin: 12px 0 14px;
   }
 }
