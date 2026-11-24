@@ -1657,3 +1657,75 @@
     min-height: 36px;
   }
 }
+
+/* Mobile NIRF layout: give all four rankings equal two-column space.
+   Desktop layout remains unchanged. */
+@media (max-width: 640px) {
+  .b-ranks--compact .b-rankc--nirf {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    min-height: 0;
+    padding: 10px 12px;
+  }
+
+  .b-rankc--compact .b-nirf-top {
+    flex: initial;
+    width: 100%;
+    min-height: 0;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+    padding: 2px 8px 8px;
+  }
+
+  .b-rankc--compact .b-nirf-top img {
+    width: 66px;
+    height: 42px;
+    max-width: 66px;
+  }
+
+  .b-rankc--compact .b-nirf-year {
+    font-size: 11px;
+  }
+
+  .b-rankc--compact .b-nirf-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    width: 100%;
+    padding: 7px 2px 2px;
+    border-top: 1px solid rgba(17, 17, 17, .16);
+    border-radius: 0;
+  }
+
+  .b-rankc--compact .b-nirf-grid>div,
+  .b-rankc--compact .b-nirf-grid>div:nth-child(odd),
+  .b-rankc--compact .b-nirf-grid>div:nth-child(even),
+  .b-rankc--compact .b-nirf-grid>div:nth-child(-n+2) {
+    min-width: 0;
+    padding: 7px 4px;
+    border: 0;
+    border-left: 1px solid rgba(17, 17, 17, .16);
+  }
+
+  .b-rankc--compact .b-nirf-grid>div:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .b-rankc--compact .b-nirf-grid>div:nth-child(n+3) {
+    border-top: 1px solid rgba(17, 17, 17, .16);
+  }
+
+  .b-rankc--compact .b-nirf-grid strong {
+    font-size: clamp(18px, 4.8vw, 21px);
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .b-rankc--compact .b-nirf-grid span {
+    font-size: 8px;
+    line-height: 1.2;
+    overflow-wrap: normal;
+  }
+}
