@@ -3343,60 +3343,14 @@ ul.jqphone-flags-list,
   margin: 0 auto;
 }
 
-.b-one-slider,
-.b-one-slides {
-  position: relative;
-  width: 100%;
-}
-
-.b-one-slide {
-  display: none;
-}
-
-.b-one-slide.is-active {
-  display: block;
-}
-
-.b-one-slide picture,
-.b-one-slide img {
+.b-one-image,
+.b-one-image img {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 12px;
 }
 
-.b-one-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 10px 0;
-}
-
-.b-one-dots,
-.b-one-arrows {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.b-one-dot {
-  width: 7px;
-  height: 7px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: #aaa;
-  cursor: pointer;
-}
-
-.b-one-dot.is-active {
-  width: 20px;
-  border-radius: 99px;
-  background: #fff;
-  outline: 1px solid #777;
-}
-
-.b-one-arrow,
 .b-alum-arrow {
   display: inline-flex;
   align-items: center;
@@ -3412,7 +3366,6 @@ ul.jqphone-flags-list,
   cursor: pointer;
 }
 
-.b-one-arrow:hover,
 .b-alum-arrow:hover {
   color: #111;
 }
