@@ -276,7 +276,7 @@
   }
 
   .b-hero-kicker {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .b-hero-facts strong {
@@ -284,7 +284,8 @@
   }
 
   .b-hero-facts span {
-    font-size: 21px;
+    font-size: 15px;
+    line-height: 1.2;
   }
 
   .b-usps {
