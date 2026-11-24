@@ -120,6 +120,20 @@
       startRecruiterAutoScroll();
     });
 
+    var recruiterScrollFrame = null;
+    logoTrack.addEventListener('scroll', function () {
+      if (recruiterScrollFrame) window.cancelAnimationFrame(recruiterScrollFrame);
+      recruiterScrollFrame = window.requestAnimationFrame(function () {
+        if (logoTrack.clientWidth > 0) {
+          recruiterPageIndex = Math.max(0, Math.min(
+            Math.round(logoTrack.scrollLeft / logoTrack.clientWidth),
+            recruiterPages.length - 1
+          ));
+          syncRecruiterArrows();
+        }
+      });
+    }, { passive: true });
+
     if (recruiterCarousel) {
       recruiterCarousel.addEventListener('mouseenter', function () { recruiterAutoScrollPaused = true; });
       recruiterCarousel.addEventListener('mouseleave', function () { recruiterAutoScrollPaused = false; });
