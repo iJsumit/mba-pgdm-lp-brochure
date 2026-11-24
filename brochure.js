@@ -53,7 +53,7 @@
 
     function fitRecruiterTrack() {
       var isMobile = window.matchMedia('(max-width: 640px)').matches;
-      var visibleCards = isMobile ? 2 : 5;
+      var visibleCards = isMobile ? 2 : 6;
       var gap = 14;
       var availableWidth = logoTrack.clientWidth;
       var cardWidth = Math.max(1, (availableWidth - gap * (visibleCards - 1)) / visibleCards);
