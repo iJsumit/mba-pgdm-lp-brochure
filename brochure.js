@@ -280,7 +280,6 @@
 
     var index = 0, timer = null, startX = 0, deltaX = 0, visible = 4, step = 0;
     var INTERVAL = 3600;
-    var cardsPerDot = 5;
 
     function visibleCount() {
       if (window.matchMedia('(max-width: 600px)').matches) return 1;
@@ -294,37 +293,10 @@
       var gap = parseFloat(window.getComputedStyle(track).columnGap || window.getComputedStyle(track).gap) || 18;
       step = first.getBoundingClientRect().width + gap;
     }
-    function updateControls() {
-      var pageIndex = Math.floor(index / cardsPerDot);
-      Array.from(pagination.querySelectorAll('.b-alum-dot')).forEach(function (dot, i) {
-        dot.classList.toggle('is-active', i === pageIndex);
-        if (i === pageIndex) dot.setAttribute('aria-current', 'true');
-        else dot.removeAttribute('aria-current');
-      });
-    }
-    function renderDots() {
-      pagination.innerHTML = '';
-      var count = Math.ceil(cards.length / cardsPerDot);
-      for (var i = 0; i < count; i++) {
-        var dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'b-alum-dot' + (i === 0 ? ' is-active' : '');
-        dot.setAttribute('aria-label', 'Show alumni group ' + (i + 1));
-        (function (target) {
-          dot.addEventListener('click', function () {
-            index = Math.min(target * cardsPerDot, cards.length - 1);
-            move(true);
-            restart();
-          });
-        })(i);
-        pagination.appendChild(dot);
-      }
-    }
     function move(animate) {
       measure();
       track.style.transition = animate === false ? 'none' : 'transform .65s cubic-bezier(.22,.61,.36,1)';
       track.style.transform = 'translate3d(' + (-index * step) + 'px,0,0)';
-      updateControls();
     }
     function next() {
       index = index >= cards.length - 1 ? 0 : index + 1;
@@ -354,17 +326,16 @@
       clone.setAttribute('aria-hidden', 'true');
       track.appendChild(clone);
     });
-    renderDots();
+    pagination.innerHTML = '';
     move(false);
     start();
 
     var controls = document.createElement('div');
     controls.className = 'b-alum-arrows';
-    controls.innerHTML = '<button class="b-alum-arrow" type="button" aria-label="Previous alumni">←</button><button class="b-alum-arrow" type="button" aria-label="Next alumni">→</button>';
+    controls.innerHTML = '<button class="b-alum-arrow" type="button" aria-label="Next alumni">→</button>';
     pagination.appendChild(controls);
-    var arrowButtons = controls.querySelectorAll('button');
-    arrowButtons[0].addEventListener('click', function () { previous(); restart(); });
-    arrowButtons[1].addEventListener('click', function () { next(); restart(); });
+    var arrowButton = controls.querySelector('button');
+    arrowButton.addEventListener('click', function () { next(); restart(); });
 
     viewport.addEventListener('touchstart', function (event) {
       stop();
@@ -398,7 +369,6 @@
           track.appendChild(clone);
         });
         index = 0;
-        renderDots();
         pagination.appendChild(controls);
         move(false);
         start();
