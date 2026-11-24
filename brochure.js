@@ -72,10 +72,38 @@
       }
 
       logoTrack.scrollLeft = 0;
+      fitRecruiterTrack();
       window.dispatchEvent(new Event('resize'));
     }
 
+    // Size the viewport to an exact number of complete logo cards.
+    // This prevents a partial card from appearing at either horizontal edge.
+    function fitRecruiterTrack() {
+      var visibleRow = recruiterLogoRows.find(function (row) { return !row.hidden; });
+      var firstLogo = visibleRow && visibleRow.querySelector('.b-logo');
+      if (!firstLogo) return;
+
+      var carousel = logoTrack.parentElement;
+      var carouselStyle = window.getComputedStyle(carousel);
+      var availableWidth = carousel.clientWidth
+        - parseFloat(carouselStyle.paddingLeft || 0)
+        - parseFloat(carouselStyle.paddingRight || 0);
+      var cardWidth = firstLogo.getBoundingClientRect().width;
+      var rowStyle = window.getComputedStyle(visibleRow);
+      var gap = parseFloat(rowStyle.columnGap || rowStyle.gap) || 14;
+      var visibleCount = Math.max(1, Math.floor((availableWidth + gap) / (cardWidth + gap)));
+      var exactWidth = visibleCount * cardWidth + (visibleCount - 1) * gap;
+
+      logoTrack.style.width = exactWidth + 'px';
+      logoTrack.style.maxWidth = '100%';
+      logoTrack.style.marginInline = 'auto';
+      logoTrack.scrollLeft = 0;
+    }
+
     layoutRecruiterLogos('all');
+    window.addEventListener('resize', function () {
+      window.requestAnimationFrame(fitRecruiterTrack);
+    });
 
     document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
       btn.addEventListener('click', function () {
@@ -141,9 +169,15 @@
     var prev = car.querySelector('.b-car-prev');
     var next = car.querySelector('.b-car-next');
     function step() {
-      return car.classList.contains('b-carousel--logos')
-        ? track.clientWidth
-        : Math.max(track.clientWidth * 0.9, 200);
+      if (car.classList.contains('b-carousel--logos')) {
+        var row = track.querySelector('.b-logo-row:not([hidden])');
+        var firstLogo = row && row.querySelector('.b-logo');
+        var gap = row ? (parseFloat(window.getComputedStyle(row).columnGap) || 14) : 14;
+        // Viewport is fitted to N full cards, so add the trailing gap to
+        // move by exactly N card pitches instead of stopping mid-logo.
+        return firstLogo ? track.clientWidth + gap : track.clientWidth;
+      }
+      return Math.max(track.clientWidth * 0.9, 200);
     }
     function sync() {
       prev.disabled = track.scrollLeft <= 2;
