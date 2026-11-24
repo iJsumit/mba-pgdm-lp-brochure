@@ -1572,7 +1572,7 @@
 @media (max-width: 600px) {
   .b-tag,
   h3.b-tag {
-    font-size: clamp(25px, 7vw, 30px);
+    font-size: clamp(25px, 7vw, 28px);
     line-height: 1.15;
     letter-spacing: -1px;
     margin-bottom: 16px;
