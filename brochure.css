@@ -1800,6 +1800,41 @@ ul.jqphone-flags-list,
   object-fit: contain;
 }
 
+/* Recruiter carousel: reserve clear gutters for navigation so edge logos
+   are never hidden beneath the arrow controls. */
+.b-carousel--logos {
+  box-sizing: border-box;
+  padding-left: 54px;
+  padding-right: 54px;
+}
+
+.b-carousel--logos .b-car-track {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  scroll-padding-inline: 0;
+}
+
+.b-carousel--logos .b-car-prev {
+  left: 4px;
+}
+
+.b-carousel--logos .b-car-next {
+  right: 4px;
+}
+
+.b-carousel--logos .b-logo-row {
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+@media (max-width: 760px) {
+  .b-carousel--logos {
+    padding-left: 42px;
+    padding-right: 42px;
+  }
+}
+
 /* ---------- admissions ---------- */
 .b-adm {
   display: grid;
