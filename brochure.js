@@ -88,10 +88,34 @@
       var availableWidth = carousel.clientWidth
         - parseFloat(carouselStyle.paddingLeft || 0)
         - parseFloat(carouselStyle.paddingRight || 0);
-      var cardWidth = firstLogo.getBoundingClientRect().width;
       var rowStyle = window.getComputedStyle(visibleRow);
       var gap = parseFloat(rowStyle.columnGap || rowStyle.gap) || 14;
-      var visibleCount = Math.max(1, Math.floor((availableWidth + gap) / (cardWidth + gap)));
+      var isMobile = window.matchMedia('(max-width: 640px)').matches;
+      var cardWidth;
+
+      if (isMobile) {
+        // Two complete recruiter cards per row on mobile, with no clipped edges.
+        cardWidth = Math.max(1, (availableWidth - gap) / 2);
+        allRecruiterLogos.forEach(function (logo) {
+          logo.style.flexBasis = cardWidth + 'px';
+          logo.style.width = cardWidth + 'px';
+          logo.style.minWidth = cardWidth + 'px';
+          logo.style.maxWidth = cardWidth + 'px';
+        });
+      } else {
+        // Restore the original desktop card sizing without changing desktop layout.
+        allRecruiterLogos.forEach(function (logo) {
+          logo.style.flexBasis = '';
+          logo.style.width = '';
+          logo.style.minWidth = '';
+          logo.style.maxWidth = '';
+        });
+        cardWidth = firstLogo.getBoundingClientRect().width;
+      }
+
+      var visibleCount = isMobile
+        ? 2
+        : Math.max(1, Math.floor((availableWidth + gap) / (cardWidth + gap)));
       var exactWidth = visibleCount * cardWidth + (visibleCount - 1) * gap;
 
       logoTrack.style.width = exactWidth + 'px';
