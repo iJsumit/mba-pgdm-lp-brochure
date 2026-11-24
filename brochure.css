@@ -219,12 +219,15 @@ h3.b-tag {
 }
 
 .b-btn--plum {
-  background: linear-gradient(90deg, #b8365f, #6b4a8c);
-  color: #fff;
+  color: #000;
+  border: 2px solid var(--plum);
 }
 
 .b-btn--plum:hover {
   box-shadow: 0 10px 24px rgba(142, 59, 106, .35);
+  background: linear-gradient(90deg, #b8365f, #6b4a8c);
+  color: #fff;
+  border: none;
 }
 
 .b-btn--outline {
