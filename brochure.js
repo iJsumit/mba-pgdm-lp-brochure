@@ -332,10 +332,11 @@
 
     var controls = document.createElement('div');
     controls.className = 'b-alum-arrows';
-    controls.innerHTML = '<button class="b-alum-arrow" type="button" aria-label="Next alumni">→</button>';
+    controls.innerHTML = '<button class="b-alum-arrow" type="button" aria-label="Previous alumni">←</button><button class="b-alum-arrow" type="button" aria-label="Next alumni">→</button>';
     pagination.appendChild(controls);
-    var arrowButton = controls.querySelector('button');
-    arrowButton.addEventListener('click', function () { next(); restart(); });
+    var arrowButtons = controls.querySelectorAll('button');
+    arrowButtons[0].addEventListener('click', function () { previous(); restart(); });
+    arrowButtons[1].addEventListener('click', function () { next(); restart(); });
 
     viewport.addEventListener('touchstart', function (event) {
       stop();
