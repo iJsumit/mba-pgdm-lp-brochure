@@ -276,7 +276,7 @@
   }
 
   .b-hero-kicker {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .b-hero-facts strong {
@@ -474,7 +474,7 @@
 
 @media (max-width:640px) {
   .b-belimitless-logo {
-    width: min(240px, 75%);
+    width: min(195px, 75%);
     margin: 12px 0 14px;
   }
 }
@@ -1578,7 +1578,7 @@
 @media (max-width: 600px) {
   .b-tag,
   h3.b-tag {
-    font-size: clamp(25px, 7vw, 28px);
+    font-size: clamp(25px, 6vw, 28px);
     line-height: 1.15;
     letter-spacing: -1px;
     margin-bottom: 16px;

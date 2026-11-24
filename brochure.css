@@ -1080,7 +1080,7 @@ ul.jqphone-flags-list,
 
 /* ---------- alumni ---------- */
 #alumni {
-  padding-top: 0;
+  padding: 0;
 }
 
 .b-alumni-banner {
@@ -3952,7 +3952,7 @@ ul.jqphone-flags-list,
 #alumni .b-alum-carousel {
   position: relative;
   overflow: visible !important;
-  padding: 20px 0 28px
+  /* padding: 20px 0 28px */
 }
 
 #alumni .b-alum-viewport {
