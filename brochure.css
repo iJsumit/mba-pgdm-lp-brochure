@@ -2667,7 +2667,7 @@ ul.jqphone-flags-list,
 /* ===== Official "Be You. Be Limitless." logo (hero) – 28 Oct ===== */
 .b-belimitless-logo {
   display: block;
-  width: min(268px, 80%);
+  width: min(260px, 80%);
   height: auto;
   margin: 16px 0;
 }
