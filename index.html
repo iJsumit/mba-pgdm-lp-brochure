@@ -2440,12 +2440,35 @@ jQuery(document).ready(function($) {
         var autoplayTimer = null;
         var sectionInView = false;
         var manualMode = false;
-        var delay = 1500;
+        var delay = 2500;
         var reducedMotion =
           window.matchMedia &&
           window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         var tabsContainer = root.querySelector(".b-usp-tabs");
         var mobileTabs = window.matchMedia("(max-width: 560px)");
+
+        function animateTabScroll(container, target, duration) {
+          var start = container.scrollLeft;
+          var distance = target - start;
+          var startTime = performance.now();
+
+          function step(now) {
+            var progress = Math.min((now - startTime) / duration, 1);
+
+            // Smooth ease-in-out
+            var eased = progress < 0.5
+              ? 4 * progress * progress * progress
+              : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+            container.scrollLeft = start + distance * eased;
+
+            if (progress < 1) {
+              requestAnimationFrame(step);
+            }
+          }
+
+          requestAnimationFrame(step);
+        }
 
         function keepSelectedTabVisible(tab) {
           if (!tabsContainer || !mobileTabs.matches) return;
@@ -2457,10 +2480,11 @@ jQuery(document).ready(function($) {
           var maxLeft = tabsContainer.scrollWidth - tabsContainer.clientWidth;
           targetLeft = Math.max(0, Math.min(targetLeft, maxLeft));
 
-          tabsContainer.scrollTo({
-            left: targetLeft,
-            behavior: reducedMotion ? "auto" : "smooth",
-          });
+          if (reducedMotion) {
+            tabsContainer.scrollLeft = targetLeft;
+          } else {
+            animateTabScroll(tabsContainer, targetLeft, 800);
+          }
         }
 
         function selectTab(index, moveFocus) {
