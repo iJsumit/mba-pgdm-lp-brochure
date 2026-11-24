@@ -40,6 +40,121 @@
     // logos into up to three horizontal rows whenever the category changes.
     var allRecruiterLogos = Array.prototype.slice.call(logoTrack.querySelectorAll('.b-logo'));
     var recruiterLogoRows = [];
+    var recruiterMarquees = [];
+    var recruiterMarqueeFrame = null;
+    var recruiterMarqueeLastTime = 0;
+    var recruiterMarqueePaused = false;
+    var recruiterReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var recruiterCarousel = logoTrack.closest('.b-carousel');
+    var recruiterPrev = recruiterCarousel && recruiterCarousel.querySelector('.b-car-prev');
+    var recruiterNext = recruiterCarousel && recruiterCarousel.querySelector('.b-car-next');
+
+    function stopRecruiterMarquees() {
+      if (recruiterMarqueeFrame) window.cancelAnimationFrame(recruiterMarqueeFrame);
+      recruiterMarqueeFrame = null;
+      recruiterMarqueeLastTime = 0;
+      recruiterMarquees = [];
+    }
+
+    function animateRecruiterMarquees(now) {
+      if (!recruiterMarqueeLastTime) recruiterMarqueeLastTime = now;
+      var elapsed = Math.min(now - recruiterMarqueeLastTime, 50);
+      recruiterMarqueeLastTime = now;
+
+      if (!recruiterMarqueePaused && !document.hidden) {
+        recruiterMarquees.forEach(function (marquee) {
+          marquee.offset = (marquee.offset + elapsed * 0.022) % marquee.cycleWidth;
+          marquee.track.style.transform = 'translate3d(' + (-marquee.offset) + 'px, 0, 0)';
+        });
+      }
+
+      recruiterMarqueeFrame = window.requestAnimationFrame(animateRecruiterMarquees);
+    }
+
+    function setupRecruiterMarquees() {
+      stopRecruiterMarquees();
+
+      recruiterLogoRows.forEach(function (row) {
+        // Restore original logo nodes before recalculating widths on resize/filter.
+        var oldMarquee = row.querySelector('.b-logo-marquee');
+        if (oldMarquee) {
+          var originalGroup = oldMarquee.querySelector('.b-logo-marquee-group');
+          if (originalGroup) {
+            Array.prototype.slice.call(originalGroup.children).forEach(function (logo) {
+              row.appendChild(logo);
+            });
+          }
+          oldMarquee.remove();
+        }
+        row.classList.remove('is-marquee');
+        row.style.width = '';
+        row.style.minWidth = '';
+        row.style.maxWidth = '';
+        row.style.overflow = '';
+
+        if (row.hidden || recruiterReducedMotion) return;
+        var logos = Array.prototype.slice.call(row.querySelectorAll(':scope > .b-logo'));
+        if (logos.length < 2) return;
+
+        var rowStyle = window.getComputedStyle(row);
+        var gap = parseFloat(rowStyle.columnGap || rowStyle.gap) || 14;
+        var cycleWidth = logos.reduce(function (total, logo) {
+          return total + logo.getBoundingClientRect().width;
+        }, 0) + gap * (logos.length - 1);
+
+        if (cycleWidth <= logoTrack.clientWidth + 2) return;
+
+        var marquee = document.createElement('div');
+        marquee.className = 'b-logo-marquee';
+        var firstGroup = document.createElement('div');
+        firstGroup.className = 'b-logo-marquee-group';
+        var secondGroup = document.createElement('div');
+        secondGroup.className = 'b-logo-marquee-group';
+        logos.forEach(function (logo) {
+          firstGroup.appendChild(logo);
+          var clone = logo.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.querySelectorAll('img').forEach(function (img) { img.alt = ''; });
+          secondGroup.appendChild(clone);
+        });
+        marquee.appendChild(firstGroup);
+        marquee.appendChild(secondGroup);
+        row.appendChild(marquee);
+        row.classList.add('is-marquee');
+        row.style.width = '100%';
+        row.style.minWidth = '100%';
+        row.style.maxWidth = '100%';
+        row.style.overflow = 'hidden';
+
+        recruiterMarquees.push({ track: marquee, cycleWidth: cycleWidth, offset: 0 });
+      });
+
+      if (recruiterMarquees.length && !recruiterReducedMotion) {
+        recruiterMarqueeFrame = window.requestAnimationFrame(animateRecruiterMarquees);
+      }
+    }
+
+    function shiftRecruiterMarquees(direction) {
+      if (!recruiterMarquees.length) {
+        logoTrack.scrollBy({ left: direction * logoTrack.clientWidth * 0.8, behavior: 'smooth' });
+        return;
+      }
+      recruiterMarquees.forEach(function (marquee) {
+        marquee.offset = (marquee.offset + direction * logoTrack.clientWidth * 0.8 + marquee.cycleWidth) % marquee.cycleWidth;
+        marquee.track.style.transform = 'translate3d(' + (-marquee.offset) + 'px, 0, 0)';
+      });
+    }
+
+    if (recruiterCarousel) {
+      recruiterCarousel.addEventListener('mouseenter', function () { recruiterMarqueePaused = true; });
+      recruiterCarousel.addEventListener('mouseleave', function () { recruiterMarqueePaused = false; });
+      recruiterCarousel.addEventListener('focusin', function () { recruiterMarqueePaused = true; });
+      recruiterCarousel.addEventListener('focusout', function () { recruiterMarqueePaused = false; });
+      recruiterCarousel.addEventListener('touchstart', function () { recruiterMarqueePaused = true; }, { passive: true });
+      recruiterCarousel.addEventListener('touchend', function () { recruiterMarqueePaused = false; }, { passive: true });
+    }
+    if (recruiterPrev) recruiterPrev.addEventListener('click', function () { shiftRecruiterMarquees(-1); });
+    if (recruiterNext) recruiterNext.addEventListener('click', function () { shiftRecruiterMarquees(1); });
 
     allRecruiterLogos.forEach(function (logo) { logo.remove(); });
     for (var rowIndex = 0; rowIndex < 3; rowIndex++) {
@@ -73,6 +188,7 @@
 
       logoTrack.scrollLeft = 0;
       fitRecruiterTrack();
+      setupRecruiterMarquees();
       window.dispatchEvent(new Event('resize'));
     }
 
@@ -126,7 +242,10 @@
 
     layoutRecruiterLogos('all');
     window.addEventListener('resize', function () {
-      window.requestAnimationFrame(fitRecruiterTrack);
+      window.requestAnimationFrame(function () {
+        fitRecruiterTrack();
+        setupRecruiterMarquees();
+      });
     });
 
     document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
@@ -189,6 +308,8 @@
 
   // ---- carousels (native scroll-snap + arrows + optional autoplay) ----
   document.querySelectorAll('[data-carousel]').forEach(function (car) {
+    // Recruiter logos use their own continuous marquee instead of page-step autoplay.
+    if (car.classList.contains('b-carousel--logos')) return;
     var track = car.querySelector('.b-car-track');
     var prev = car.querySelector('.b-car-prev');
     var next = car.querySelector('.b-car-next');
