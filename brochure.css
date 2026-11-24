@@ -5360,13 +5360,19 @@ ul.jqphone-flags-list,
 .b-carousel--logos .b-logo-page>.b-logo {
   box-sizing: border-box;
   display: flex;
+  flex: initial;
+  align-items: center;
+  justify-content: center;
   width: auto;
   min-width: 0;
   max-width: none;
-  flex: initial;
   height: 60px;
   min-height: 60px;
   margin: 0;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
 }
 
 .b-carousel--logos .b-logo-page>.b-logo[hidden] {
