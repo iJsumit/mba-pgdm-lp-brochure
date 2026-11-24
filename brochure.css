@@ -1747,11 +1747,13 @@ ul.jqphone-flags-list,
   align-items: stretch;
   gap: 12px;
   width: 100%;
+  min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
   scrollbar-width: none;
   margin-inline: auto;
 }
@@ -1767,6 +1769,7 @@ ul.jqphone-flags-list,
   gap: 14px;
   width: max-content;
   min-width: 100%;
+  scroll-snap-align: start;
 }
 
 .b-carousel--logos .b-logo-row[hidden] { display: none; }
