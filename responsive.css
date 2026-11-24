@@ -260,7 +260,7 @@
   }
 
   .b-sec {
-    padding: 52px 0;
+    padding: 25px 0;
   }
 
   .b-hero-copy {
@@ -482,7 +482,7 @@
 @media (max-width: 640px) {
   .b-sticky a {
     min-height: 50px;
-    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    /* padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); */
     font-size: 16px;
   }
 }
@@ -593,7 +593,7 @@
 
 @media (max-width: 767px) {
   #placements {
-    padding: 44px 0;
+    padding: 25px 0;
   }
 
   .b-placement-split {
@@ -957,6 +957,7 @@
     font-size: 10px;
     line-height: 1.25;
     overflow-wrap: normal;
+    text-align: center;
   }
 
   .b-placement-split .b-bigstats li+li {
