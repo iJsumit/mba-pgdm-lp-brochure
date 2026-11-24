@@ -31,85 +31,65 @@
     });
   });
 
-  // ---- recruiter category filter + three-row manually scrollable logo carousel ----
+  // ---- recruiter category filter + fixed-page logo carousel ----
   var logoTrack = document.getElementById('bLogos');
   var recruiterTabs = document.querySelector('[data-filter="rec"]');
 
   if (logoTrack) {
     var allRecruiterLogos = Array.prototype.slice.call(logoTrack.querySelectorAll('.b-logo'));
-    var recruiterLogoRows = [];
     var recruiterCarousel = logoTrack.closest('.b-carousel');
     var recruiterPrev = recruiterCarousel && recruiterCarousel.querySelector('.b-car-prev');
     var recruiterNext = recruiterCarousel && recruiterCarousel.querySelector('.b-car-next');
+    var recruiterPages = [];
+    var recruiterCategory = 'all';
+    var recruiterPageIndex = 0;
+    var recruiterAutoScrollTimer = null;
+    var recruiterAutoScrollPaused = false;
 
-    allRecruiterLogos.forEach(function (logo) { logo.remove(); });
-
-    for (var rowIndex = 0; rowIndex < 3; rowIndex++) {
-      var row = document.createElement('div');
-      row.className = 'b-logo-row';
-      logoTrack.appendChild(row);
-      recruiterLogoRows.push(row);
-    }
-
-    function fitRecruiterTrack() {
-      var isMobile = window.matchMedia('(max-width: 640px)').matches;
-      var visibleCards = isMobile ? 2 : 6;
-      var gap = 14;
-      var availableWidth = logoTrack.clientWidth;
-      var cardWidth = Math.max(1, (availableWidth - gap * (visibleCards - 1)) / visibleCards);
-
-      allRecruiterLogos.forEach(function (logo) {
-        logo.style.flexBasis = cardWidth + 'px';
-        logo.style.width = cardWidth + 'px';
-        logo.style.minWidth = cardWidth + 'px';
-        logo.style.maxWidth = cardWidth + 'px';
-      });
-
-      // Make every row end on the same full-page boundary. Without this,
-      // the final scroll step clamps to a partial page and clips edge logos.
-      recruiterLogoRows.forEach(function (row) {
-        row.style.paddingRight = '0px';
-        row.style.justifyContent = row.scrollWidth <= availableWidth + 2 ? 'center' : 'flex-start';
-      });
-
-      var widestRow = recruiterLogoRows.reduce(function (widest, row) {
-        return Math.max(widest, row.scrollWidth);
-      }, availableWidth);
-      var pageCount = Math.max(1, Math.ceil(widestRow / availableWidth));
-      var fullTrackWidth = pageCount * availableWidth;
-
-      recruiterLogoRows.forEach(function (row) {
-        var rowWidth = row.scrollWidth;
-        if (rowWidth > availableWidth + 2) {
-          row.style.justifyContent = 'flex-start';
-          row.style.paddingRight = Math.max(0, fullTrackWidth - rowWidth) + 'px';
-        }
-      });
-
-      logoTrack.scrollLeft = 0;
-      syncRecruiterArrows();
+    function recruiterColumns() {
+      return window.matchMedia('(max-width: 640px)').matches ? 2 : 6;
     }
 
     function syncRecruiterArrows() {
-      if (!recruiterPrev || !recruiterNext) return;
-      var maxScroll = logoTrack.scrollWidth - logoTrack.clientWidth;
-      recruiterPrev.disabled = logoTrack.scrollLeft <= 2;
-      recruiterNext.disabled = maxScroll <= 2 || logoTrack.scrollLeft >= maxScroll - 2;
+      var hasPages = recruiterPages.length > 1;
+      if (recruiterPrev) recruiterPrev.disabled = !hasPages || recruiterPageIndex === 0;
+      if (recruiterNext) recruiterNext.disabled = !hasPages || recruiterPageIndex >= recruiterPages.length - 1;
     }
 
-    function scrollRecruiterLogos(direction) {
-      var maxScroll = logoTrack.scrollWidth - logoTrack.clientWidth;
-      var nextLeft = logoTrack.scrollLeft + direction * logoTrack.clientWidth;
-      if (direction > 0 && nextLeft >= maxScroll - 2) nextLeft = 0;
-      if (direction < 0 && logoTrack.scrollLeft <= 2) nextLeft = maxScroll;
+    function goToRecruiterPage(index, smooth) {
+      if (!recruiterPages.length) return;
+      recruiterPageIndex = Math.max(0, Math.min(index, recruiterPages.length - 1));
       logoTrack.scrollTo({
-        left: Math.max(0, nextLeft),
-        behavior: 'smooth'
+        left: recruiterPageIndex * logoTrack.clientWidth,
+        behavior: smooth ? 'smooth' : 'auto'
       });
+      syncRecruiterArrows();
     }
 
-    var recruiterAutoScrollTimer = null;
-    var recruiterAutoScrollPaused = false;
+    function buildRecruiterPages() {
+      var visibleLogos = allRecruiterLogos.filter(function (logo) {
+        return recruiterCategory === 'all' || logo.getAttribute('data-cat') === recruiterCategory;
+      });
+      var cardsPerPage = recruiterColumns() * 3;
+
+      recruiterPages.forEach(function (page) { page.remove(); });
+      recruiterPages = [];
+
+      for (var offset = 0; offset < visibleLogos.length; offset += cardsPerPage) {
+        var page = document.createElement('div');
+        page.className = 'b-logo-page';
+        visibleLogos.slice(offset, offset + cardsPerPage).forEach(function (logo) {
+          logo.hidden = false;
+          page.appendChild(logo);
+        });
+        logoTrack.appendChild(page);
+        recruiterPages.push(page);
+      }
+
+      recruiterPageIndex = 0;
+      logoTrack.scrollLeft = 0;
+      syncRecruiterArrows();
+    }
 
     function stopRecruiterAutoScroll() {
       if (recruiterAutoScrollTimer) window.clearInterval(recruiterAutoScrollTimer);
@@ -120,25 +100,26 @@
       stopRecruiterAutoScroll();
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       recruiterAutoScrollTimer = window.setInterval(function () {
-        if (recruiterAutoScrollPaused || document.hidden) return;
-        var maxScroll = logoTrack.scrollWidth - logoTrack.clientWidth;
-        if (maxScroll <= 2) return;
-        if (logoTrack.scrollLeft >= maxScroll - 4) {
-          logoTrack.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          logoTrack.scrollBy({ left: logoTrack.clientWidth, behavior: 'smooth' });
-        }
+        if (recruiterAutoScrollPaused || document.hidden || recruiterPages.length < 2) return;
+        goToRecruiterPage(recruiterPageIndex >= recruiterPages.length - 1 ? 0 : recruiterPageIndex + 1, true);
       }, 3800);
     }
 
+    function layoutRecruiterLogos(category) {
+      recruiterCategory = category;
+      buildRecruiterPages();
+      startRecruiterAutoScroll();
+    }
+
     if (recruiterPrev) recruiterPrev.addEventListener('click', function () {
-      scrollRecruiterLogos(-1);
+      goToRecruiterPage(recruiterPageIndex - 1, true);
       startRecruiterAutoScroll();
     });
     if (recruiterNext) recruiterNext.addEventListener('click', function () {
-      scrollRecruiterLogos(1);
+      goToRecruiterPage(recruiterPageIndex + 1, true);
       startRecruiterAutoScroll();
     });
+
     if (recruiterCarousel) {
       recruiterCarousel.addEventListener('mouseenter', function () { recruiterAutoScrollPaused = true; });
       recruiterCarousel.addEventListener('mouseleave', function () { recruiterAutoScrollPaused = false; });
@@ -147,41 +128,17 @@
       recruiterCarousel.addEventListener('touchstart', function () { recruiterAutoScrollPaused = true; }, { passive: true });
       recruiterCarousel.addEventListener('touchend', function () { recruiterAutoScrollPaused = false; }, { passive: true });
     }
-    logoTrack.addEventListener('scroll', function () { window.requestAnimationFrame(syncRecruiterArrows); }, { passive: true });
 
-    function layoutRecruiterLogos(category) {
-      var visibleLogos = allRecruiterLogos.filter(function (logo) {
-        return category === 'all' || logo.getAttribute('data-cat') === category;
-      });
-      var rowCount = visibleLogos.length <= 3 ? 1 : 3;
-
-      recruiterLogoRows.forEach(function (row, index) {
-        while (row.firstChild) row.removeChild(row.firstChild);
-        row.hidden = index >= rowCount;
-      });
-
-      var offset = 0;
-      for (var i = 0; i < rowCount; i++) {
-        var remainingRows = rowCount - i;
-        var take = Math.ceil((visibleLogos.length - offset) / remainingRows);
-        visibleLogos.slice(offset, offset + take).forEach(function (logo) {
-          logo.hidden = false;
-          recruiterLogoRows[i].appendChild(logo);
-        });
-        offset += take;
-      }
-
-      fitRecruiterTrack();
-    }
+    var recruiterResizeTimer = null;
+    window.addEventListener('resize', function () {
+      window.clearTimeout(recruiterResizeTimer);
+      recruiterResizeTimer = window.setTimeout(function () {
+        buildRecruiterPages();
+        startRecruiterAutoScroll();
+      }, 120);
+    });
 
     layoutRecruiterLogos('all');
-    startRecruiterAutoScroll();
-    window.addEventListener('resize', function () {
-      window.requestAnimationFrame(function () {
-        fitRecruiterTrack();
-        startRecruiterAutoScroll();
-      });
-    });
 
     document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
       btn.addEventListener('click', function () {
