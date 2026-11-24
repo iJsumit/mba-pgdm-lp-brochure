@@ -77,15 +77,55 @@
     }
 
     function scrollRecruiterLogos(direction) {
-      // Move exactly one viewport: five cards on desktop, two on mobile.
-      logoTrack.scrollBy({
-        left: direction * logoTrack.clientWidth,
+      var maxScroll = logoTrack.scrollWidth - logoTrack.clientWidth;
+      var nextLeft = logoTrack.scrollLeft + direction * logoTrack.clientWidth;
+      if (direction > 0 && nextLeft >= maxScroll - 2) nextLeft = 0;
+      if (direction < 0 && logoTrack.scrollLeft <= 2) nextLeft = maxScroll;
+      logoTrack.scrollTo({
+        left: Math.max(0, nextLeft),
         behavior: 'smooth'
       });
     }
 
-    if (recruiterPrev) recruiterPrev.addEventListener('click', function () { scrollRecruiterLogos(-1); });
-    if (recruiterNext) recruiterNext.addEventListener('click', function () { scrollRecruiterLogos(1); });
+    var recruiterAutoScrollTimer = null;
+    var recruiterAutoScrollPaused = false;
+
+    function stopRecruiterAutoScroll() {
+      if (recruiterAutoScrollTimer) window.clearInterval(recruiterAutoScrollTimer);
+      recruiterAutoScrollTimer = null;
+    }
+
+    function startRecruiterAutoScroll() {
+      stopRecruiterAutoScroll();
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      recruiterAutoScrollTimer = window.setInterval(function () {
+        if (recruiterAutoScrollPaused || document.hidden) return;
+        var maxScroll = logoTrack.scrollWidth - logoTrack.clientWidth;
+        if (maxScroll <= 2) return;
+        if (logoTrack.scrollLeft >= maxScroll - 4) {
+          logoTrack.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          logoTrack.scrollBy({ left: logoTrack.clientWidth, behavior: 'smooth' });
+        }
+      }, 3800);
+    }
+
+    if (recruiterPrev) recruiterPrev.addEventListener('click', function () {
+      scrollRecruiterLogos(-1);
+      startRecruiterAutoScroll();
+    });
+    if (recruiterNext) recruiterNext.addEventListener('click', function () {
+      scrollRecruiterLogos(1);
+      startRecruiterAutoScroll();
+    });
+    if (recruiterCarousel) {
+      recruiterCarousel.addEventListener('mouseenter', function () { recruiterAutoScrollPaused = true; });
+      recruiterCarousel.addEventListener('mouseleave', function () { recruiterAutoScrollPaused = false; });
+      recruiterCarousel.addEventListener('focusin', function () { recruiterAutoScrollPaused = true; });
+      recruiterCarousel.addEventListener('focusout', function () { recruiterAutoScrollPaused = false; });
+      recruiterCarousel.addEventListener('touchstart', function () { recruiterAutoScrollPaused = true; }, { passive: true });
+      recruiterCarousel.addEventListener('touchend', function () { recruiterAutoScrollPaused = false; }, { passive: true });
+    }
     logoTrack.addEventListener('scroll', function () { window.requestAnimationFrame(syncRecruiterArrows); }, { passive: true });
 
     function layoutRecruiterLogos(category) {
@@ -114,8 +154,12 @@
     }
 
     layoutRecruiterLogos('all');
+    startRecruiterAutoScroll();
     window.addEventListener('resize', function () {
-      window.requestAnimationFrame(fitRecruiterTrack);
+      window.requestAnimationFrame(function () {
+        fitRecruiterTrack();
+        startRecruiterAutoScroll();
+      });
     });
 
     document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
