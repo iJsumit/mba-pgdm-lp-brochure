@@ -1760,7 +1760,10 @@ ul.jqphone-flags-list,
   scrollbar-width: none;
   margin-inline: auto;
 }
-.b-carousel--logos .b-car-track::-webkit-scrollbar { display: none; }
+
+.b-carousel--logos .b-car-track::-webkit-scrollbar {
+  display: none;
+}
 
 .b-carousel--logos .b-logo-row {
   display: flex;
@@ -1775,7 +1778,9 @@ ul.jqphone-flags-list,
   scroll-snap-align: start;
 }
 
-.b-carousel--logos .b-logo-row[hidden] { display: none; }
+.b-carousel--logos .b-logo-row[hidden] {
+  display: none;
+}
 
 .b-carousel--logos .b-logo-row>.b-logo {
   box-sizing: border-box;
@@ -2978,7 +2983,8 @@ ul.jqphone-flags-list,
 }
 
 .b-placement-split .b-bigstats {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* grid-template-columns: repeat(3, minmax(0, 1fr)); */
+  grid-template-columns: max-content max-content max-content;
   gap: 0;
   margin: 2px 0 22px;
   align-items: start;
