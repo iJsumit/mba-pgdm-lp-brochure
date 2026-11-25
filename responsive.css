@@ -476,7 +476,7 @@
 
 @media (max-width:640px) {
   .b-belimitless-logo {
-    width: min(180px, 75%);
+    width: min(170px, 75%);
     margin: 12px 0 14px;
   }
 }
@@ -616,7 +616,7 @@
 
   .b-placement-split .b-tag {
     margin-bottom: 16px;
-    font-size: clamp(27px, 7vw, 34px);
+    font-size: clamp(24px, 6vw, 34px);
   }
 
   .b-placement-split .b-bigstats {
@@ -819,6 +819,9 @@
 @media (max-width: 640px) {
   .b-global-logo {
     padding: 4px;
+  }
+  .b-one-jaipuria {
+    padding: 10px;
   }
 }
 
@@ -1292,7 +1295,7 @@
   .b-ranks--compact .b-rankc {
     min-height: 108px;
     padding: 12px 14px;
-    gap: 10px;
+    gap: 5px;
   }
 
   .b-rankc--aacsb .b-rank-logo {
@@ -1303,11 +1306,11 @@
   }
 
   .b-aacsb-stats {
-    gap: 7px;
+    gap: 1px;
   }
 
   .b-aacsb-stats>div+div {
-    padding-left: 8px;
+    padding-left: 2px;
   }
 
   .b-aacsb-stats strong {
@@ -1584,7 +1587,7 @@
 
   .b-tag,
   h3.b-tag {
-    font-size: clamp(25px, 6vw, 28px);
+    font-size: clamp(24px, 6vw, 28px);
     line-height: 1.15;
     letter-spacing: -1px;
     margin-bottom: 16px;
