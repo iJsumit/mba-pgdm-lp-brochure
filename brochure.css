@@ -5557,6 +5557,7 @@ ul.jqphone-flags-list,
 
 #recruiters .b-carousel--logos .b-car-track,
 #recruiters #bLogos {
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -5564,7 +5565,7 @@ ul.jqphone-flags-list,
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  padding: 2px;
+  padding: 0;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -5578,6 +5579,7 @@ ul.jqphone-flags-list,
   box-sizing: border-box;
   display: grid;
   flex: 0 0 100%;
+  width: 100%;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(142px, auto));
   align-content: start;
