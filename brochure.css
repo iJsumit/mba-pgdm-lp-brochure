@@ -5445,7 +5445,7 @@ ul.jqphone-flags-list,
   #recruiters .b-logo-page > .b-logo img {
     max-height: 48px;
   }
-}
+
 
 @media (prefers-reduced-motion: reduce) {
   #recruiters #bLogos { scroll-behavior: auto; }
