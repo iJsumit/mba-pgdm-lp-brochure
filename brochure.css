@@ -5538,7 +5538,7 @@ ul.jqphone-flags-list,
 }
 
 
-/* ===== Recruiters: match Global Exposure cards, 7 columns x 7 rows ===== */
+/* ===== Recruiters: match Global Exposure cards, 7 columns x 2 rows ===== */
 #recruiters .b-carousel--logos {
   position: relative;
   width: 100%;
@@ -5579,7 +5579,7 @@ ul.jqphone-flags-list,
   display: grid;
   flex: 0 0 100%;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  grid-template-rows: repeat(7, minmax(142px, auto));
+  grid-template-rows: repeat(2, minmax(142px, auto));
   align-content: start;
   gap: 14px;
   width: 100%;
@@ -5636,8 +5636,8 @@ ul.jqphone-flags-list,
   }
 
   #recruiters .b-logo-page {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(7, minmax(108px, auto));
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(108px, auto));
     gap: 9px;
   }
 
