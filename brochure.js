@@ -47,12 +47,8 @@
     var recruiterPaused = false;
     var recruiterResizeTimer = null;
 
-    function recruiterColumns() {
-      return window.matchMedia('(max-width: 640px)').matches ? 3 : 7;
-    }
-
     function recruiterPageSize() {
-      return recruiterColumns() * 7;
+      return 14;
     }
 
     function syncRecruiterArrows() {
