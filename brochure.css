@@ -204,13 +204,13 @@ h3.b-tag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
+  padding: 8px 5px;
   border-radius: 10px;
   border: 0;
   cursor: pointer;
   text-decoration: none;
   font-weight: 600;
-  font-size: 15.5px;
+  font-size: 13.5px;
   transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
 }
 
@@ -233,8 +233,15 @@ h3.b-tag {
 .b-btn--outline {
   background: #fff;
   color: var(--plum);
-  border: 2px solid var(--plum);
+  border-bottom: 1px solid var(--plum);
   min-width: 130px;
+}
+
+.b-btn--outline:hover {
+  box-shadow: 0 10px 24px rgba(142, 59, 106, .35);
+  background: linear-gradient(90deg, #b8365f, #6b4a8c);
+  color: #fff;
+  border: none;
 }
 
 /* ---------- header ---------- */
@@ -2098,7 +2105,8 @@ ul.jqphone-flags-list,
 }
 
 .b-faq {
-  background: var(--cream);
+  /* background: var(--cream); */
+  background: #fff;
   border-radius: 14px;
   border: 1.5px solid transparent;
 }
@@ -2387,10 +2395,10 @@ ul.jqphone-flags-list,
 }
 
 .b-rankc {
-  background: #fff;
+  background: transparent;
   border-radius: 18px;
   padding: 28px;
-  box-shadow: 0 12px 28px rgba(43, 42, 46, .06);
+  /* box-shadow: 0 12px 28px rgba(43, 42, 46, .06); */
 }
 
 .b-rankc>img {
@@ -2466,7 +2474,7 @@ ul.jqphone-flags-list,
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background: #fff;
+  background: transparent;
   color: #111;
   padding: 10px 28px;
 }
@@ -2544,7 +2552,7 @@ ul.jqphone-flags-list,
   font-weight: 700;
   font-size: clamp(16px, 1.7vw, 18px);
   color: var(--ink);
-  border-bottom: 4px solid transparent;
+  border-bottom: 1px solid transparent;
   border-image: linear-gradient(90deg, #b25c8e, #5b9bd5) 1;
 }
 
@@ -3112,7 +3120,7 @@ ul.jqphone-flags-list,
   flex-direction: column;
   justify-content: center;
   gap: 10px;
-  background: #fff;
+  background: transparent;
 }
 
 .b-rankc--compact .b-nirf-top img {
@@ -3163,9 +3171,13 @@ ul.jqphone-flags-list,
 
 /* ===== Global Exposure: logo-first partner carousel ===== */
 .b-global {
-  padding: 66px 0 58px;
+  padding: 30px 0;
   background: linear-gradient(135deg, #fbf7f5 0%, #f5f3fa 52%, #f8f7fb 100%);
   overflow: hidden;
+}
+
+.bg-theme {
+  background: linear-gradient(135deg, #fbf7f5 0%, #f5f3fa 52%, #f8f7fb 100%);
 }
 
 .b-global-heading {
@@ -3386,7 +3398,7 @@ ul.jqphone-flags-list,
 .b-one-jaipuria {
   width: 100%;
   margin: 0;
-  padding: 20px 0;
+  padding: 35px 0;
   overflow: hidden;
 }
 
@@ -3993,7 +4005,9 @@ ul.jqphone-flags-list,
   overflow: visible;
   border: 0;
   border-radius: 12px;
-  background: #f2efea;
+  /* background: #f2efea; */
+  /* background: f8f7fb; */
+  background: linear-gradient(135deg, #fbf7f5 0%, #f5f3fa 52%, #f8f7fb 100%);
   box-shadow: 0 8px 20px rgba(20, 34, 48, .11);
   text-align: center;
   isolation: isolate
@@ -4794,7 +4808,7 @@ ul.jqphone-flags-list,
 
 /* ===== Rankings: one compact aligned row for AACSB and NIRF ===== */
 #rankings {
-  padding: 0;
+  padding: 30px 0;
 }
 
 #rankings .b-tag {
@@ -4855,7 +4869,7 @@ ul.jqphone-flags-list,
   justify-content: center;
   gap: 5px;
   padding: 10px 8px;
-  background: #fff;
+  background: transparent;
 }
 
 .b-rankc--compact .b-nirf-top img {

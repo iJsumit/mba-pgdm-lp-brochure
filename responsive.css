@@ -1618,7 +1618,7 @@
 }
 
 .b-rankc--compact .b-nirf-grid {
-  background: #fff;
+  background: transparent;
 }
 
 .b-rankc--compact .b-nirf-grid>div,
@@ -1630,7 +1630,7 @@
 
 @media (max-width: 640px) {
   .b-rankc--compact .b-nirf-grid {
-    background: #fff;
+    background: transparent;
   }
 
   .b-rankc--compact .b-nirf-grid strong,
