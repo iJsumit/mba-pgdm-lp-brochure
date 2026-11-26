@@ -31,7 +31,7 @@
     });
   });
 
-  // ---- recruiter category filter + fixed-page logo carousel ----
+  // ---- Recruiter logos: 7-column x 7-row paginated carousel + category filters ----
   var logoTrack = document.getElementById('bLogos');
   var recruiterTabs = document.querySelector('[data-filter="rec"]');
 
@@ -40,45 +40,65 @@
     var recruiterCarousel = logoTrack.closest('.b-carousel');
     var recruiterPrev = recruiterCarousel && recruiterCarousel.querySelector('.b-car-prev');
     var recruiterNext = recruiterCarousel && recruiterCarousel.querySelector('.b-car-next');
-    var recruiterPages = [];
     var recruiterCategory = 'all';
+    var recruiterPages = [];
     var recruiterPageIndex = 0;
-    var recruiterAutoScrollTimer = null;
-    var recruiterAutoScrollPaused = false;
+    var recruiterTimer = null;
+    var recruiterPaused = false;
+    var recruiterResizeTimer = null;
 
-    function recruiterColumns() {
-      return window.matchMedia('(max-width: 640px)').matches ? 2 : 6;
+    function recruiterPageSize() {
+      return 14;
     }
 
     function syncRecruiterArrows() {
-      var hasPages = recruiterPages.length > 1;
-      if (recruiterPrev) recruiterPrev.disabled = !hasPages || recruiterPageIndex === 0;
-      if (recruiterNext) recruiterNext.disabled = !hasPages || recruiterPageIndex >= recruiterPages.length - 1;
+      var hasMultiple = recruiterPages.length > 1;
+      if (recruiterPrev) recruiterPrev.disabled = !hasMultiple || recruiterPageIndex <= 0;
+      if (recruiterNext) recruiterNext.disabled = !hasMultiple || recruiterPageIndex >= recruiterPages.length - 1;
     }
 
     function goToRecruiterPage(index, smooth) {
       if (!recruiterPages.length) return;
       recruiterPageIndex = Math.max(0, Math.min(index, recruiterPages.length - 1));
+      var targetPage = recruiterPages[recruiterPageIndex];
       logoTrack.scrollTo({
-        left: recruiterPageIndex * logoTrack.clientWidth,
+        left: targetPage ? targetPage.offsetLeft - logoTrack.offsetLeft : recruiterPageIndex * logoTrack.clientWidth,
         behavior: smooth ? 'smooth' : 'auto'
       });
       syncRecruiterArrows();
+    }
+
+    function stopRecruiterAutoplay() {
+      if (recruiterTimer) window.clearInterval(recruiterTimer);
+      recruiterTimer = null;
+    }
+
+    function startRecruiterAutoplay() {
+      stopRecruiterAutoplay();
+      if (recruiterPages.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      recruiterTimer = window.setInterval(function () {
+        if (recruiterPaused || document.hidden) return;
+        if (recruiterPageIndex >= recruiterPages.length - 1) {
+          stopRecruiterAutoplay();
+          return;
+        }
+        goToRecruiterPage(recruiterPageIndex + 1, true);
+      }, 3800);
     }
 
     function buildRecruiterPages() {
       var visibleLogos = allRecruiterLogos.filter(function (logo) {
         return recruiterCategory === 'all' || logo.getAttribute('data-cat') === recruiterCategory;
       });
-      var cardsPerPage = recruiterColumns() * 3;
+      var perPage = recruiterPageSize();
 
       recruiterPages.forEach(function (page) { page.remove(); });
       recruiterPages = [];
 
-      for (var offset = 0; offset < visibleLogos.length; offset += cardsPerPage) {
+      for (var offset = 0; offset < visibleLogos.length; offset += perPage) {
         var page = document.createElement('div');
         page.className = 'b-logo-page';
-        visibleLogos.slice(offset, offset + cardsPerPage).forEach(function (logo) {
+        visibleLogos.slice(offset, offset + perPage).forEach(function (logo) {
           logo.hidden = false;
           page.appendChild(logo);
         });
@@ -89,70 +109,42 @@
       recruiterPageIndex = 0;
       logoTrack.scrollLeft = 0;
       syncRecruiterArrows();
-    }
-
-    function stopRecruiterAutoScroll() {
-      if (recruiterAutoScrollTimer) window.clearInterval(recruiterAutoScrollTimer);
-      recruiterAutoScrollTimer = null;
-    }
-
-    function startRecruiterAutoScroll() {
-      stopRecruiterAutoScroll();
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      recruiterAutoScrollTimer = window.setInterval(function () {
-        if (recruiterAutoScrollPaused || document.hidden || recruiterPages.length < 2) return;
-        goToRecruiterPage(recruiterPageIndex >= recruiterPages.length - 1 ? 0 : recruiterPageIndex + 1, true);
-      }, 3800);
-    }
-
-    function layoutRecruiterLogos(category) {
-      recruiterCategory = category;
-      buildRecruiterPages();
-      startRecruiterAutoScroll();
+      startRecruiterAutoplay();
     }
 
     if (recruiterPrev) recruiterPrev.addEventListener('click', function () {
       goToRecruiterPage(recruiterPageIndex - 1, true);
-      startRecruiterAutoScroll();
+      startRecruiterAutoplay();
     });
     if (recruiterNext) recruiterNext.addEventListener('click', function () {
       goToRecruiterPage(recruiterPageIndex + 1, true);
-      startRecruiterAutoScroll();
+      startRecruiterAutoplay();
     });
 
-    var recruiterScrollFrame = null;
     logoTrack.addEventListener('scroll', function () {
-      if (recruiterScrollFrame) window.cancelAnimationFrame(recruiterScrollFrame);
-      recruiterScrollFrame = window.requestAnimationFrame(function () {
-        if (logoTrack.clientWidth > 0) {
-          recruiterPageIndex = Math.max(0, Math.min(
-            Math.round(logoTrack.scrollLeft / logoTrack.clientWidth),
-            recruiterPages.length - 1
-          ));
-          syncRecruiterArrows();
-        }
+      window.requestAnimationFrame(function () {
+        if (!logoTrack.clientWidth) return;
+        recruiterPageIndex = Math.max(0, Math.min(
+          Math.round(logoTrack.scrollLeft / logoTrack.clientWidth),
+          recruiterPages.length - 1
+        ));
+        syncRecruiterArrows();
       });
     }, { passive: true });
 
     if (recruiterCarousel) {
-      recruiterCarousel.addEventListener('mouseenter', function () { recruiterAutoScrollPaused = true; });
-      recruiterCarousel.addEventListener('mouseleave', function () { recruiterAutoScrollPaused = false; });
-      recruiterCarousel.addEventListener('focusin', function () { recruiterAutoScrollPaused = true; });
-      recruiterCarousel.addEventListener('focusout', function () { recruiterAutoScrollPaused = false; });
-      recruiterCarousel.addEventListener('touchstart', function () { recruiterAutoScrollPaused = true; }, { passive: true });
-      recruiterCarousel.addEventListener('touchend', function () { recruiterAutoScrollPaused = false; }, { passive: true });
+      recruiterCarousel.addEventListener('mouseenter', function () { recruiterPaused = true; });
+      recruiterCarousel.addEventListener('mouseleave', function () { recruiterPaused = false; });
+      recruiterCarousel.addEventListener('focusin', function () { recruiterPaused = true; });
+      recruiterCarousel.addEventListener('focusout', function () { recruiterPaused = false; });
+      recruiterCarousel.addEventListener('touchstart', function () { recruiterPaused = true; }, { passive: true });
+      recruiterCarousel.addEventListener('touchend', function () { recruiterPaused = false; }, { passive: true });
     }
 
-    var recruiterResizeTimer = null;
     window.addEventListener('resize', function () {
       window.clearTimeout(recruiterResizeTimer);
-      recruiterResizeTimer = window.setTimeout(function () {
-        buildRecruiterPages();
-        startRecruiterAutoScroll();
-      }, 120);
+      recruiterResizeTimer = window.setTimeout(buildRecruiterPages, 150);
     });
-
-    layoutRecruiterLogos('all');
 
     document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
       btn.addEventListener('click', function () {
@@ -161,8 +153,8 @@
           item.classList.toggle('is-active', active);
           item.setAttribute('aria-selected', active ? 'true' : 'false');
         });
-
-        layoutRecruiterLogos(btn.getAttribute('data-cat'));
+        recruiterCategory = btn.getAttribute('data-cat');
+        buildRecruiterPages();
 
         var nextTab = all[index + 1];
         if (nextTab && recruiterTabs) {
@@ -177,6 +169,8 @@
         }
       });
     });
+
+    buildRecruiterPages();
   }
 
   // ---- "Know more" toggles ----
