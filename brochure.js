@@ -77,7 +77,11 @@
       if (recruiterPages.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       recruiterTimer = window.setInterval(function () {
         if (recruiterPaused || document.hidden) return;
-        goToRecruiterPage(recruiterPageIndex >= recruiterPages.length - 1 ? 0 : recruiterPageIndex + 1, true);
+        if (recruiterPageIndex >= recruiterPages.length - 1) {
+          stopRecruiterAutoplay();
+          return;
+        }
+        goToRecruiterPage(recruiterPageIndex + 1, true);
       }, 3800);
     }
 
