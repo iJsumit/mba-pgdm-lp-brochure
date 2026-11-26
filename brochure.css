@@ -5409,3 +5409,130 @@ ul.jqphone-flags-list,
     flex-basis: calc((100% - 10px) / 2);
   }
 }
+
+/* ===== Recruiters: three seamless marquee rows ===== */
+#recruiters .b-carousel--logos {
+  width: 100%;
+  padding: 0;
+}
+
+#recruiters .b-carousel--logos .b-car-btn {
+  display: none !important;
+}
+
+#recruiters .b-carousel--logos .b-car-track,
+#recruiters #bLogos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  scroll-snap-type: none;
+}
+
+#recruiters .b-logo-row {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#recruiters .b-logo-marquee-track {
+  display: flex;
+  flex-flow: row nowrap;
+  width: max-content;
+  will-change: transform;
+  animation: recruiterMarqueeRTL 46s linear infinite;
+}
+
+#recruiters .b-logo-marquee-track.is-left-to-right {
+  animation-name: recruiterMarqueeLTR;
+  animation-duration: 50s;
+}
+
+#recruiters .b-logo-marquee-group {
+  display: flex;
+  flex: 0 0 auto;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 14px;
+  padding-right: 14px;
+  box-sizing: content-box;
+}
+
+#recruiters .b-logo-marquee-group .b-logo {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 96px;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  min-width: 96px;
+  max-width: 96px;
+  height: 96px;
+  min-height: 96px;
+  margin: 0;
+  padding: 10px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+#recruiters .b-logo-marquee-group .b-logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+#recruiters #bLogos.is-paused .b-logo-marquee-track,
+#recruiters #bLogos:hover .b-logo-marquee-track,
+#recruiters #bLogos:focus-within .b-logo-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes recruiterMarqueeRTL {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.333333%); }
+}
+
+@keyframes recruiterMarqueeLTR {
+  from { transform: translateX(-33.333333%); }
+  to { transform: translateX(0); }
+}
+
+@media (max-width: 640px) {
+  #recruiters .b-logo-marquee-group {
+    gap: 10px;
+    padding-right: 10px;
+  }
+
+  #recruiters .b-logo-marquee-group .b-logo {
+    flex-basis: 82px;
+    width: 82px;
+    min-width: 82px;
+    max-width: 82px;
+    height: 82px;
+    min-height: 82px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #recruiters .b-logo-marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  #recruiters .b-logo-row {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+}
