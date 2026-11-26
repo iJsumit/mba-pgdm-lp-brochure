@@ -31,128 +31,95 @@
     });
   });
 
-  // ---- recruiter category filter + fixed-page logo carousel ----
+  // ---- Recruiter logos: three continuous marquee rows + category filters ----
   var logoTrack = document.getElementById('bLogos');
   var recruiterTabs = document.querySelector('[data-filter="rec"]');
 
   if (logoTrack) {
     var allRecruiterLogos = Array.prototype.slice.call(logoTrack.querySelectorAll('.b-logo'));
-    var recruiterCarousel = logoTrack.closest('.b-carousel');
-    var recruiterPrev = recruiterCarousel && recruiterCarousel.querySelector('.b-car-prev');
-    var recruiterNext = recruiterCarousel && recruiterCarousel.querySelector('.b-car-next');
-    var recruiterPages = [];
     var recruiterCategory = 'all';
-    var recruiterPageIndex = 0;
-    var recruiterAutoScrollTimer = null;
-    var recruiterAutoScrollPaused = false;
+    var recruiterPaused = false;
 
-    function recruiterColumns() {
-      return window.matchMedia('(max-width: 640px)').matches ? 2 : 6;
-    }
-
-    function syncRecruiterArrows() {
-      var hasPages = recruiterPages.length > 1;
-      if (recruiterPrev) recruiterPrev.disabled = !hasPages || recruiterPageIndex === 0;
-      if (recruiterNext) recruiterNext.disabled = !hasPages || recruiterPageIndex >= recruiterPages.length - 1;
-    }
-
-    function goToRecruiterPage(index, smooth) {
-      if (!recruiterPages.length) return;
-      recruiterPageIndex = Math.max(0, Math.min(index, recruiterPages.length - 1));
-      logoTrack.scrollTo({
-        left: recruiterPageIndex * logoTrack.clientWidth,
-        behavior: smooth ? 'smooth' : 'auto'
+    function makeRecruiterGroup(logos) {
+      var group = document.createElement('div');
+      group.className = 'b-logo-marquee-group';
+      logos.forEach(function (logo) {
+        var card = logo.cloneNode(true);
+        card.hidden = false;
+        group.appendChild(card);
       });
-      syncRecruiterArrows();
+      return group;
     }
 
-    function buildRecruiterPages() {
-      var visibleLogos = allRecruiterLogos.filter(function (logo) {
-        return recruiterCategory === 'all' || logo.getAttribute('data-cat') === recruiterCategory;
-      });
-      var cardsPerPage = recruiterColumns() * 3;
-
-      recruiterPages.forEach(function (page) { page.remove(); });
-      recruiterPages = [];
-
-      for (var offset = 0; offset < visibleLogos.length; offset += cardsPerPage) {
-        var page = document.createElement('div');
-        page.className = 'b-logo-page';
-        visibleLogos.slice(offset, offset + cardsPerPage).forEach(function (logo) {
-          logo.hidden = false;
-          page.appendChild(logo);
-        });
-        logoTrack.appendChild(page);
-        recruiterPages.push(page);
-      }
-
-      recruiterPageIndex = 0;
-      logoTrack.scrollLeft = 0;
-      syncRecruiterArrows();
-    }
-
-    function stopRecruiterAutoScroll() {
-      if (recruiterAutoScrollTimer) window.clearInterval(recruiterAutoScrollTimer);
-      recruiterAutoScrollTimer = null;
-    }
-
-    function startRecruiterAutoScroll() {
-      stopRecruiterAutoScroll();
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      recruiterAutoScrollTimer = window.setInterval(function () {
-        if (recruiterAutoScrollPaused || document.hidden || recruiterPages.length < 2) return;
-        goToRecruiterPage(recruiterPageIndex >= recruiterPages.length - 1 ? 0 : recruiterPageIndex + 1, true);
-      }, 3800);
-    }
-
-    function layoutRecruiterLogos(category) {
+    function buildRecruiterMarquee(category) {
       recruiterCategory = category;
-      buildRecruiterPages();
-      startRecruiterAutoScroll();
-    }
-
-    if (recruiterPrev) recruiterPrev.addEventListener('click', function () {
-      goToRecruiterPage(recruiterPageIndex - 1, true);
-      startRecruiterAutoScroll();
-    });
-    if (recruiterNext) recruiterNext.addEventListener('click', function () {
-      goToRecruiterPage(recruiterPageIndex + 1, true);
-      startRecruiterAutoScroll();
-    });
-
-    var recruiterScrollFrame = null;
-    logoTrack.addEventListener('scroll', function () {
-      if (recruiterScrollFrame) window.cancelAnimationFrame(recruiterScrollFrame);
-      recruiterScrollFrame = window.requestAnimationFrame(function () {
-        if (logoTrack.clientWidth > 0) {
-          recruiterPageIndex = Math.max(0, Math.min(
-            Math.round(logoTrack.scrollLeft / logoTrack.clientWidth),
-            recruiterPages.length - 1
-          ));
-          syncRecruiterArrows();
-        }
+      var visibleLogos = allRecruiterLogos.filter(function (logo) {
+        return category === 'all' || logo.getAttribute('data-cat') === category;
       });
-    }, { passive: true });
 
-    if (recruiterCarousel) {
-      recruiterCarousel.addEventListener('mouseenter', function () { recruiterAutoScrollPaused = true; });
-      recruiterCarousel.addEventListener('mouseleave', function () { recruiterAutoScrollPaused = false; });
-      recruiterCarousel.addEventListener('focusin', function () { recruiterAutoScrollPaused = true; });
-      recruiterCarousel.addEventListener('focusout', function () { recruiterAutoScrollPaused = false; });
-      recruiterCarousel.addEventListener('touchstart', function () { recruiterAutoScrollPaused = true; }, { passive: true });
-      recruiterCarousel.addEventListener('touchend', function () { recruiterAutoScrollPaused = false; }, { passive: true });
+      logoTrack.innerHTML = '';
+      var rows = [[], [], []];
+      visibleLogos.forEach(function (logo, index) {
+        rows[index % 3].push(logo);
+      });
+
+      rows.forEach(function (rowLogos, index) {
+        var row = document.createElement('div');
+        row.className = 'b-logo-row';
+        row.setAttribute('aria-label', 'Recruiter logos row ' + (index + 1));
+
+        var marquee = document.createElement('div');
+        marquee.className = 'b-logo-marquee-track ' + (index === 1 ? 'is-left-to-right' : 'is-right-to-left');
+
+        var group = document.createElement('div');
+        group.className = 'b-logo-marquee-group';
+        rowLogos.forEach(function (logo) {
+          logo.hidden = false;
+          group.appendChild(logo);
+        });
+
+        row.appendChild(marquee);
+        logoTrack.appendChild(row);
+        marquee.appendChild(group);
+
+        // Repeat short filtered rows until there is enough width for a clean loop.
+        var safety = 0;
+        while (group.scrollWidth < logoTrack.clientWidth + 30 && rowLogos.length && safety < 12) {
+          rowLogos.forEach(function (logo) {
+            var card = logo.cloneNode(true);
+            card.hidden = false;
+            group.appendChild(card);
+          });
+          safety++;
+        }
+
+        // Three identical groups make the one-third marquee movement seamless.
+        marquee.appendChild(group.cloneNode(true));
+        marquee.appendChild(group.cloneNode(true));
+      });
+
+      logoTrack.classList.toggle('is-paused', recruiterPaused);
     }
+
+    function pauseRecruiterMarquee(paused) {
+      recruiterPaused = paused;
+      logoTrack.classList.toggle('is-paused', paused);
+    }
+
+    logoTrack.addEventListener('mouseenter', function () { pauseRecruiterMarquee(true); });
+    logoTrack.addEventListener('mouseleave', function () { pauseRecruiterMarquee(false); });
+    logoTrack.addEventListener('focusin', function () { pauseRecruiterMarquee(true); });
+    logoTrack.addEventListener('focusout', function () { pauseRecruiterMarquee(false); });
+    logoTrack.addEventListener('touchstart', function () { pauseRecruiterMarquee(true); }, { passive: true });
+    logoTrack.addEventListener('touchend', function () { pauseRecruiterMarquee(false); }, { passive: true });
 
     var recruiterResizeTimer = null;
     window.addEventListener('resize', function () {
       window.clearTimeout(recruiterResizeTimer);
       recruiterResizeTimer = window.setTimeout(function () {
-        buildRecruiterPages();
-        startRecruiterAutoScroll();
-      }, 120);
+        buildRecruiterMarquee(recruiterCategory);
+      }, 160);
     });
-
-    layoutRecruiterLogos('all');
 
     document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
       btn.addEventListener('click', function () {
@@ -162,7 +129,7 @@
           item.setAttribute('aria-selected', active ? 'true' : 'false');
         });
 
-        layoutRecruiterLogos(btn.getAttribute('data-cat'));
+        buildRecruiterMarquee(btn.getAttribute('data-cat'));
 
         var nextTab = all[index + 1];
         if (nextTab && recruiterTabs) {
@@ -177,6 +144,8 @@
         }
       });
     });
+
+    buildRecruiterMarquee('all');
   }
 
   // ---- "Know more" toggles ----
