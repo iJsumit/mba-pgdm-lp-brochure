@@ -2158,19 +2158,20 @@ ul.jqphone-flags-list,
 
 /* ---------- footer ---------- */
 .b-footer {
-  background: #231f22;
-  color: #e9e2de;
-  padding: 56px 0 40px;
+  /* background: #231f22; */
+  color: #000;
+  padding: 30px 0 60px 0;
+  
 }
 
-.b-footer::before {
+/* .b-footer::before {
   content: "";
   display: block;
-  height: 5px;
+  height: 2px;
   margin-top: -56px;
   margin-bottom: 51px;
   background: linear-gradient(90deg, #b8365f, #c98a6a, #5ab0de);
-}
+} */
 
 .b-contacts {
   display: grid;
@@ -4001,7 +4002,7 @@ ul.jqphone-flags-list,
   width: auto;
   min-height: 270px;
   margin-top: 26px;
-  padding: 0 0 12px;
+  padding: 0;
   overflow: visible;
   border: 0;
   border-radius: 12px;
