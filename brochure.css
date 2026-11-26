@@ -5424,3 +5424,29 @@ ul.jqphone-flags-list,
     flex-basis: calc((100% - 10px) / 2);
   }
 }
+
+/* Recruiters carousel: selected from usp-new */
+#recruiters .b-carousel--logos {
+    padding: 0 38px;
+  }
+
+  #recruiters .b-logo-page {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(108px, auto));
+    gap: 9px;
+  }
+
+  #recruiters .b-logo-page > .b-logo {
+    min-height: 108px;
+    padding: 8px 5px 7px;
+    border-radius: 11px;
+  }
+
+  #recruiters .b-logo-page > .b-logo img {
+    max-height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #recruiters #bLogos { scroll-behavior: auto; }
+}
