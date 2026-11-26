@@ -60,8 +60,9 @@
     function goToRecruiterPage(index, smooth) {
       if (!recruiterPages.length) return;
       recruiterPageIndex = Math.max(0, Math.min(index, recruiterPages.length - 1));
+      var targetPage = recruiterPages[recruiterPageIndex];
       logoTrack.scrollTo({
-        left: recruiterPageIndex * logoTrack.clientWidth,
+        left: targetPage ? targetPage.offsetLeft - logoTrack.offsetLeft : recruiterPageIndex * logoTrack.clientWidth,
         behavior: smooth ? 'smooth' : 'auto'
       });
       syncRecruiterArrows();
