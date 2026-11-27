@@ -1750,106 +1750,6 @@ ul.jqphone-flags-list,
   margin-top: 34px;
 }
 
-/* Recruiter logos: three centered rows of static white cards with manual horizontal scrolling */
-.b-carousel--logos .b-car-track {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 12px;
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  margin-inline: auto;
-}
-
-.b-carousel--logos .b-car-track::-webkit-scrollbar {
-  display: none;
-}
-
-.b-carousel--logos .b-logo-row {
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 14px;
-  width: max-content;
-  min-width: 100%;
-  scroll-snap-align: start;
-}
-
-.b-carousel--logos .b-logo-row[hidden] {
-  display: none;
-}
-
-.b-carousel--logos .b-logo-row>.b-logo {
-  box-sizing: border-box;
-  display: flex;
-  flex: 0 0 180px;
-  align-items: center;
-  justify-content: center;
-  width: 180px;
-  min-width: 180px;
-  max-width: 180px;
-  height: 60px;
-  min-height: 60px;
-  padding: 6px 10px;
-  background: #fff;
-  border: 1.5px solid var(--line);
-  border-radius: 12px;
-}
-
-.b-carousel--logos .b-logo img {
-  display: block;
-  width: auto;
-  height: 35px;
-  max-width: 100%;
-  max-height: 38px;
-  object-fit: contain;
-}
-
-/* Recruiter carousel: reserve clear gutters for navigation so edge logos
-   are never hidden beneath the arrow controls. */
-.b-carousel--logos {
-  box-sizing: border-box;
-  padding-left: 54px;
-  padding-right: 54px;
-}
-
-.b-carousel--logos .b-car-track {
-  width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-  scroll-padding-inline: 0;
-}
-
-.b-carousel--logos .b-car-prev {
-  left: 4px;
-}
-
-.b-carousel--logos .b-car-next {
-  right: 4px;
-}
-
-.b-carousel--logos .b-logo-row {
-  justify-content: flex-start;
-  box-sizing: border-box;
-}
-
-@media (max-width: 760px) {
-  .b-carousel--logos {
-    padding-left: 42px;
-    padding-right: 42px;
-  }
-}
-
 /* ---------- admissions ---------- */
 .b-adm {
   display: grid;
@@ -5347,197 +5247,107 @@ ul.jqphone-flags-list,
 }
 
 
-/* Recruiter carousel: fixed-width pages prevent partial logos at page edges. */
-.b-carousel--logos .b-car-track {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  gap: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 0;
-  overscroll-behavior-x: contain;
-}
-
-.b-carousel--logos .b-logo-page {
-  box-sizing: border-box;
-  display: flex;
-  flex: 0 0 100%;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-content: flex-start;
-  align-items: flex-start;
-  width: 100%;
-  min-width: 100%;
-  max-width: 100%;
-  gap: 12px 14px;
-  padding: 0;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
-.b-carousel--logos .b-logo-page>.b-logo {
-  flex: 0 0 calc((100% - 70px) / 6);
-}
-
-.b-carousel--logos .b-logo-page>.b-logo {
-  box-sizing: border-box;
-  display: flex;
-  flex: initial;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  min-width: 0;
-  max-width: none;
-  height: 60px;
-  min-height: 60px;
-  margin: 0;
-  padding: 6px 10px;
-  background: #fff;
-  border: 1.5px solid var(--line);
-  border-radius: 12px;
-}
-
-.b-carousel--logos .b-logo-page>.b-logo[hidden] {
-  display: none;
-}
-
-@media (max-width: 640px) {
-  .b-carousel--logos .b-logo-page {
-    gap: 12px 10px;
-  }
-
-  .b-carousel--logos .b-logo-page>.b-logo {
-    flex-basis: calc((100% - 10px) / 2);
-  }
-}
-
-/* Recruiters carousel: selected from usp-new */
+/* ===== Recruiter carousel: clean responsive 2-row layout ===== */
 #recruiters .b-carousel--logos {
   position: relative;
-  width: 100%;
-  padding: 0 46px;
   box-sizing: border-box;
+  width: 100%;
+  padding-inline: 48px;
 }
-
 #recruiters .b-carousel--logos .b-car-btn {
   display: grid !important;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 2;
 }
-
-#recruiters .b-carousel--logos .b-car-prev {
-  left: 0;
-}
-
-#recruiters .b-carousel--logos .b-car-next {
-  right: 0;
-}
-
-#recruiters .b-carousel--logos .b-car-track,
+#recruiters .b-carousel--logos .b-car-prev { left: 4px; }
+#recruiters .b-carousel--logos .b-car-next { right: 4px; }
 #recruiters #bLogos {
   box-sizing: border-box;
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
   align-items: stretch;
   gap: 0;
   width: 100%;
-  max-width: 100%;
   min-width: 0;
+  max-width: 100%;
+  margin: 0;
   padding: 0;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
   scrollbar-width: none;
 }
-
-#recruiters #bLogos::-webkit-scrollbar {
-  display: none;
-}
-
+#recruiters #bLogos::-webkit-scrollbar { display: none; }
 #recruiters .b-logo-page {
   box-sizing: border-box;
   display: grid;
   flex: 0 0 100%;
-  width: 100%;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(142px, auto));
+  grid-template-rows: repeat(2, minmax(116px, auto));
   align-content: start;
   gap: 14px;
   width: 100%;
   min-width: 100%;
   max-width: 100%;
-  padding: 0;
+  padding: 2px;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
-
-#recruiters .b-logo-page>.b-logo {
+#recruiters .b-logo-page > .b-logo {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 0;
-  min-height: 142px;
+  min-height: 116px;
   margin: 0;
-  padding: 12px 10px 11px;
+  padding: 12px 10px;
   overflow: hidden;
   border: 1px solid rgba(92, 65, 105, .13);
-  border-radius: 15px;
+  border-radius: 14px;
   background: linear-gradient(155deg, #fff 0%, #fcfaff 100%);
   box-shadow: 0 5px 18px rgba(38, 25, 48, .045);
-  transition: transform .28s cubic-bezier(.2, .75, .25, 1), box-shadow .28s ease, border-color .28s ease;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
-
-#recruiters .b-logo-page>.b-logo:hover {
-  transform: translateY(-5px);
+#recruiters .b-logo-page > .b-logo:hover {
+  transform: translateY(-4px);
   border-color: rgba(142, 71, 121, .34);
-  box-shadow: 0 13px 28px rgba(54, 35, 67, .12);
+  box-shadow: 0 12px 24px rgba(54, 35, 67, .11);
 }
-
-#recruiters .b-logo-page>.b-logo img {
+#recruiters .b-logo-page > .b-logo img {
   display: block;
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 68px;
+  max-height: 64px;
   object-fit: contain;
-  transition: transform .3s cubic-bezier(.2, .75, .25, 1);
+  transition: transform .25s ease;
 }
-
-#recruiters .b-logo-page>.b-logo:hover img {
-  transform: scale(1.055);
-}
-
-#recruiters .b-tabs {
-  margin-top: 24px;
-}
-
+#recruiters .b-logo-page > .b-logo:hover img { transform: scale(1.045); }
+#recruiters .b-logo-page > .b-logo[hidden] { display: none; }
+#recruiters .b-tabs { margin-top: 24px; }
 @media (max-width: 640px) {
-  #recruiters .b-carousel--logos {
-    padding: 0 38px;
-  }
-
+  #recruiters .b-carousel--logos { padding-inline: 38px; }
+  #recruiters .b-carousel--logos .b-car-prev { left: 0; }
+  #recruiters .b-carousel--logos .b-car-next { right: 0; }
   #recruiters .b-logo-page {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(108px, auto));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(92px, auto));
     gap: 9px;
+    padding: 2px;
   }
-
-  #recruiters .b-logo-page>.b-logo {
-    min-height: 108px;
-    padding: 8px 5px 7px;
+  #recruiters .b-logo-page > .b-logo {
+    min-height: 92px;
+    padding: 8px 5px;
     border-radius: 11px;
   }
-
-  #recruiters .b-logo-page>.b-logo img {
-    max-height: 48px;
-  }
+  #recruiters .b-logo-page > .b-logo img { max-height: 48px; }
 }
-
 @media (prefers-reduced-motion: reduce) {
-  #recruiters #bLogos {
-    scroll-behavior: auto;
-  }
+  #recruiters #bLogos { scroll-behavior: auto; }
+  #recruiters .b-logo-page > .b-logo,
+  #recruiters .b-logo-page > .b-logo img { transition: none; }
 }
