@@ -47,7 +47,7 @@
     var recruiterResizeTimer = null;
 
     function recruiterPageSize() {
-      return window.matchMedia('(max-width: 640px)').matches ? 4 : 14;
+      return window.matchMedia('(max-width: 640px)').matches ? 6 : 14;
     }
     function syncRecruiterArrows() {
       var hasMultiple = recruiterPages.length > 1;
