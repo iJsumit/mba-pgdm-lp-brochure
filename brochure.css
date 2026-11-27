@@ -5345,6 +5345,16 @@ ul.jqphone-flags-list,
   }
   #recruiters .b-logo-page > .b-logo img { max-height: 48px; }
 }
+/* Keep the floating Apply Now CTA visible and compact on mobile too. */
+@media (max-width: 640px) {
+  .b-float {
+    padding: 14px 9px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    border-radius: 10px 0 0 10px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   #recruiters #bLogos { scroll-behavior: auto; }
   #recruiters .b-logo-page > .b-logo,
