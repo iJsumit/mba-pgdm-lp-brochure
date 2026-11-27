@@ -5330,9 +5330,9 @@ ul.jqphone-flags-list,
 #recruiters .b-logo-page > .b-logo[hidden] { display: none; }
 #recruiters .b-tabs { margin-top: 24px; }
 @media (max-width: 640px) {
-  #recruiters .b-carousel--logos { padding-inline: 38px; }
-  #recruiters .b-carousel--logos .b-car-prev { left: 0; }
-  #recruiters .b-carousel--logos .b-car-next { right: 0; }
+  #recruiters .b-carousel--logos { padding-inline: 46px; }
+  #recruiters .b-carousel--logos .b-car-prev { left: 3px; }
+  #recruiters .b-carousel--logos .b-car-next { right: 3px; }
   #recruiters .b-logo-page {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: repeat(2, minmax(92px, auto));
