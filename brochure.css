@@ -256,7 +256,7 @@ h3.b-tag {
 .b-header::after {
   content: "";
   display: block;
-  height: 4px;
+  height: 3px;
   background: linear-gradient(90deg, #b8365f, #c98a6a, #5ab0de);
 }
 
@@ -2161,7 +2161,7 @@ ul.jqphone-flags-list,
   /* background: #231f22; */
   color: #000;
   padding: 30px 0 60px 0;
-  
+
 }
 
 /* .b-footer::before {
@@ -5062,18 +5062,6 @@ ul.jqphone-flags-list,
   text-align: center;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* ===== USP tabs: compact numbered navigation and shorter content panel ===== */
 #differentiators .b-usp-layout {
   margin-top: 24px;
@@ -5088,7 +5076,7 @@ ul.jqphone-flags-list,
 #differentiators .b-usp-tab {
   flex: 1 1 0;
   min-height: 0;
-  padding: 8px 14px;
+  padding: 0 14px;
   gap: 12px;
   border-radius: 13px;
 }
@@ -5439,8 +5427,13 @@ ul.jqphone-flags-list,
   transform: translateY(-50%);
 }
 
-#recruiters .b-carousel--logos .b-car-prev { left: 0; }
-#recruiters .b-carousel--logos .b-car-next { right: 0; }
+#recruiters .b-carousel--logos .b-car-prev {
+  left: 0;
+}
+
+#recruiters .b-carousel--logos .b-car-next {
+  right: 0;
+}
 
 #recruiters .b-carousel--logos .b-car-track,
 #recruiters #bLogos {
@@ -5460,7 +5453,9 @@ ul.jqphone-flags-list,
   scrollbar-width: none;
 }
 
-#recruiters #bLogos::-webkit-scrollbar { display: none; }
+#recruiters #bLogos::-webkit-scrollbar {
+  display: none;
+}
 
 #recruiters .b-logo-page {
   box-sizing: border-box;
@@ -5478,7 +5473,7 @@ ul.jqphone-flags-list,
   scroll-snap-align: start;
 }
 
-#recruiters .b-logo-page > .b-logo {
+#recruiters .b-logo-page>.b-logo {
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -5495,13 +5490,13 @@ ul.jqphone-flags-list,
   transition: transform .28s cubic-bezier(.2, .75, .25, 1), box-shadow .28s ease, border-color .28s ease;
 }
 
-#recruiters .b-logo-page > .b-logo:hover {
+#recruiters .b-logo-page>.b-logo:hover {
   transform: translateY(-5px);
   border-color: rgba(142, 71, 121, .34);
   box-shadow: 0 13px 28px rgba(54, 35, 67, .12);
 }
 
-#recruiters .b-logo-page > .b-logo img {
+#recruiters .b-logo-page>.b-logo img {
   display: block;
   width: auto;
   height: auto;
@@ -5511,7 +5506,7 @@ ul.jqphone-flags-list,
   transition: transform .3s cubic-bezier(.2, .75, .25, 1);
 }
 
-#recruiters .b-logo-page > .b-logo:hover img {
+#recruiters .b-logo-page>.b-logo:hover img {
   transform: scale(1.055);
 }
 
@@ -5530,17 +5525,19 @@ ul.jqphone-flags-list,
     gap: 9px;
   }
 
-  #recruiters .b-logo-page > .b-logo {
+  #recruiters .b-logo-page>.b-logo {
     min-height: 108px;
     padding: 8px 5px 7px;
     border-radius: 11px;
   }
 
-  #recruiters .b-logo-page > .b-logo img {
+  #recruiters .b-logo-page>.b-logo img {
     max-height: 48px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #recruiters #bLogos { scroll-behavior: auto; }
+  #recruiters #bLogos {
+    scroll-behavior: auto;
+  }
 }
