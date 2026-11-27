@@ -31,10 +31,9 @@
     });
   });
 
-  // ---- Recruiter logos: 7-column x 7-row paginated carousel + category filters ----
+  // ---- Recruiter logos: responsive two-row paginated carousel ----
   var logoTrack = document.getElementById('bLogos');
   var recruiterTabs = document.querySelector('[data-filter="rec"]');
-
   if (logoTrack) {
     var allRecruiterLogos = Array.prototype.slice.call(logoTrack.querySelectorAll('.b-logo'));
     var recruiterCarousel = logoTrack.closest('.b-carousel');
@@ -48,53 +47,43 @@
     var recruiterResizeTimer = null;
 
     function recruiterPageSize() {
-      return 14;
+      return window.matchMedia('(max-width: 640px)').matches ? 6 : 14;
     }
-
     function syncRecruiterArrows() {
       var hasMultiple = recruiterPages.length > 1;
       if (recruiterPrev) recruiterPrev.disabled = !hasMultiple || recruiterPageIndex <= 0;
       if (recruiterNext) recruiterNext.disabled = !hasMultiple || recruiterPageIndex >= recruiterPages.length - 1;
     }
-
     function goToRecruiterPage(index, smooth) {
       if (!recruiterPages.length) return;
       recruiterPageIndex = Math.max(0, Math.min(index, recruiterPages.length - 1));
       var targetPage = recruiterPages[recruiterPageIndex];
-      logoTrack.scrollTo({
-        left: targetPage ? targetPage.offsetLeft - logoTrack.offsetLeft : recruiterPageIndex * logoTrack.clientWidth,
-        behavior: smooth ? 'smooth' : 'auto'
-      });
+      if (targetPage) {
+        var left = targetPage.getBoundingClientRect().left - logoTrack.getBoundingClientRect().left + logoTrack.scrollLeft;
+        logoTrack.scrollTo({ left: left, behavior: smooth ? 'smooth' : 'auto' });
+      }
       syncRecruiterArrows();
     }
-
     function stopRecruiterAutoplay() {
       if (recruiterTimer) window.clearInterval(recruiterTimer);
       recruiterTimer = null;
     }
-
     function startRecruiterAutoplay() {
       stopRecruiterAutoplay();
       if (recruiterPages.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       recruiterTimer = window.setInterval(function () {
         if (recruiterPaused || document.hidden) return;
-        if (recruiterPageIndex >= recruiterPages.length - 1) {
-          stopRecruiterAutoplay();
-          return;
-        }
-        goToRecruiterPage(recruiterPageIndex + 1, true);
+        var nextIndex = recruiterPageIndex >= recruiterPages.length - 1 ? 0 : recruiterPageIndex + 1;
+        goToRecruiterPage(nextIndex, true);
       }, 3800);
     }
-
     function buildRecruiterPages() {
       var visibleLogos = allRecruiterLogos.filter(function (logo) {
         return recruiterCategory === 'all' || logo.getAttribute('data-cat') === recruiterCategory;
       });
       var perPage = recruiterPageSize();
-
       recruiterPages.forEach(function (page) { page.remove(); });
       recruiterPages = [];
-
       for (var offset = 0; offset < visibleLogos.length; offset += perPage) {
         var page = document.createElement('div');
         page.className = 'b-logo-page';
@@ -105,13 +94,11 @@
         logoTrack.appendChild(page);
         recruiterPages.push(page);
       }
-
       recruiterPageIndex = 0;
       logoTrack.scrollLeft = 0;
       syncRecruiterArrows();
       startRecruiterAutoplay();
     }
-
     if (recruiterPrev) recruiterPrev.addEventListener('click', function () {
       goToRecruiterPage(recruiterPageIndex - 1, true);
       startRecruiterAutoplay();
@@ -120,10 +107,9 @@
       goToRecruiterPage(recruiterPageIndex + 1, true);
       startRecruiterAutoplay();
     });
-
     logoTrack.addEventListener('scroll', function () {
       window.requestAnimationFrame(function () {
-        if (!logoTrack.clientWidth) return;
+        if (!logoTrack.clientWidth || !recruiterPages.length) return;
         recruiterPageIndex = Math.max(0, Math.min(
           Math.round(logoTrack.scrollLeft / logoTrack.clientWidth),
           recruiterPages.length - 1
@@ -131,7 +117,6 @@
         syncRecruiterArrows();
       });
     }, { passive: true });
-
     if (recruiterCarousel) {
       recruiterCarousel.addEventListener('mouseenter', function () { recruiterPaused = true; });
       recruiterCarousel.addEventListener('mouseleave', function () { recruiterPaused = false; });
@@ -140,12 +125,10 @@
       recruiterCarousel.addEventListener('touchstart', function () { recruiterPaused = true; }, { passive: true });
       recruiterCarousel.addEventListener('touchend', function () { recruiterPaused = false; }, { passive: true });
     }
-
     window.addEventListener('resize', function () {
       window.clearTimeout(recruiterResizeTimer);
-      recruiterResizeTimer = window.setTimeout(buildRecruiterPages, 150);
+      recruiterResizeTimer = window.setTimeout(buildRecruiterPages, 180);
     });
-
     document.querySelectorAll('[data-filter="rec"] [data-cat]').forEach(function (btn, index, all) {
       btn.addEventListener('click', function () {
         all.forEach(function (item) {
@@ -155,7 +138,6 @@
         });
         recruiterCategory = btn.getAttribute('data-cat');
         buildRecruiterPages();
-
         var nextTab = all[index + 1];
         if (nextTab && recruiterTabs) {
           var rowRect = recruiterTabs.getBoundingClientRect();
@@ -169,7 +151,6 @@
         }
       });
     });
-
     buildRecruiterPages();
   }
 
@@ -213,14 +194,6 @@
     var prev = car.querySelector('.b-car-prev');
     var next = car.querySelector('.b-car-next');
     function step() {
-      if (car.classList.contains('b-carousel--logos')) {
-        var row = track.querySelector('.b-logo-row:not([hidden])');
-        var firstLogo = row && row.querySelector('.b-logo');
-        var gap = row ? (parseFloat(window.getComputedStyle(row).columnGap) || 14) : 14;
-        // Viewport is fitted to N full cards, so add the trailing gap to
-        // move by exactly N card pitches instead of stopping mid-logo.
-        return firstLogo ? track.clientWidth + gap : track.clientWidth;
-      }
       return Math.max(track.clientWidth * 0.9, 200);
     }
     function sync() {
